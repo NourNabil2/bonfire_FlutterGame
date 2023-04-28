@@ -1,0 +1,14 @@
+{ "columns":1,
+ "image":"wizard_idle.png",
+ "imageheight":20,
+ "imagewidth":32,
+ "margin":0,
+ "name":"Wizard_Tiled",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.10.1",
+ "tileheight":20,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}
