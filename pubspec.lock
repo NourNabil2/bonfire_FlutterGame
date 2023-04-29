@@ -154,7 +154,7 @@ packages:
     source: hosted
     version: "6.1.4"
   flame:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flame
       sha256: c38e1be5827aa839c166c6ed08a2733bb4523bf153d8c670739c20c842fa1844

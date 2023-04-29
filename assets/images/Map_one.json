@@ -51,7 +51,7 @@
          "name":"Object Layer 1",
          "objects":[
                 {
-                 "gid":114,
+                 "gid":113,
                  "height":20,
                  "id":45,
                  "name":"Wizard_oldMan",
@@ -61,6 +61,102 @@
                  "width":32,
                  "x":192.666666666667,
                  "y":62.6666666666667
+                }, 
+                {
+                 "gid":114,
+                 "height":16,
+                 "id":47,
+                 "name":"Dark_Ninja",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":200.666666666667,
+                 "y":247.333333333333
+                }, 
+                {
+                 "gid":114,
+                 "height":16,
+                 "id":48,
+                 "name":"Dark_Ninja",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":357,
+                 "y":170
+                }, 
+                {
+                 "gid":114,
+                 "height":16,
+                 "id":49,
+                 "name":"Dark_Ninja",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":585,
+                 "y":317
+                }, 
+                {
+                 "gid":114,
+                 "height":16,
+                 "id":50,
+                 "name":"Dark_Ninja",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":357,
+                 "y":437
+                }, 
+                {
+                 "gid":114,
+                 "height":16,
+                 "id":51,
+                 "name":"Dark_Ninja",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":837,
+                 "y":156
+                }, 
+                {
+                 "gid":114,
+                 "height":16,
+                 "id":52,
+                 "name":"Dark_Ninja",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":828,
+                 "y":675
+                }, 
+                {
+                 "gid":114,
+                 "height":16,
+                 "id":53,
+                 "name":"Dark_Ninja",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":579,
+                 "y":676
+                }, 
+                {
+                 "gid":114,
+                 "height":16,
+                 "id":54,
+                 "name":"Dark_Ninja",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":878,
+                 "y":391
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -80,7 +176,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":47,
+ "nextobjectid":55,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
@@ -91,8 +187,12 @@
          "source":"DashGame.json"
         }, 
         {
-         "firstgid":114,
+         "firstgid":113,
          "source":"Wizard_Tiled.tsj"
+        }, 
+        {
+         "firstgid":114,
+         "source":"Dark_Ninja_tiled.tsj"
         }],
  "tilewidth":32,
  "type":"map",

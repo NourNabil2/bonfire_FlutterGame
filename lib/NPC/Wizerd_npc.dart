@@ -4,8 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import '../GreenNinjaGame.dart';
-
-class WizerdMan extends SimpleNpc with ObjectCollision , TapGesture{
+TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , fontSize: 10 ) );
+bool isobserve = false ;
+class WizerdMan extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,TapGesture{
 
   WizerdMan(Vector2 position)
       : super(
@@ -14,8 +15,45 @@ class WizerdMan extends SimpleNpc with ObjectCollision , TapGesture{
     animation: PlayerSpriteSheet.simpleDirectionAnimation,
     speed: 100,
     initDirection: Direction.down,
-  );
+  ){
+    setupCollision(
+      CollisionConfig(collisions: [
+        CollisionArea.rectangle(
+          size: Vector2(18, 20),
+          align: Vector2(18, 20),
+        ),
+      ]),
+    );
+  }
+@override
+void render(Canvas canvas)
+{
 
+  super.render(canvas);
+  if (isobserve)
+    {
+      textPaint.render(canvas, 'Tap me!', position);
+    }
+}
+  @override
+  void update(double dt) {
+    super.update(dt);
+    seePlayer(
+        observed: (p0) {
+      if(!isobserve)
+        {
+          isobserve = true ;
+        }
+    },
+        notObserved: () {
+          {
+            isobserve = false ;
+          }
+        },
+        radiusVision:80
+
+    );
+  }
   @override
   void onTap() {
     ShowDialogTalk();
@@ -25,7 +63,7 @@ class WizerdMan extends SimpleNpc with ObjectCollision , TapGesture{
     gameRef.camera.moveToTargetAnimated(this,zoom: 2 , finish: () {
       TalkDialog.show(gameRef.context, [
         speak(text: 'Hello warrior, What Are you doing here in this place ', isPlayer: false),
-        speak(text: 'really i dont know', isPlayer: true),
+        speak(text: 'really i don\'t know', isPlayer: true),
         speak(text: 'go and find your goals', isPlayer: false),
       ],logicalKeyboardKeysToNext:[LogicalKeyboardKey.space],
       //onChangeTalk: (value) => gameRef.camera.shake(intensity: 2 ) ,

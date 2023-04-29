@@ -1,0 +1,14 @@
+{ "columns":4,
+ "image":"dark_ninja.png",
+ "imageheight":112,
+ "imagewidth":64,
+ "margin":0,
+ "name":"Dark_Ninja_tiled",
+ "spacing":0,
+ "tilecount":28,
+ "tiledversion":"1.10.1",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}
