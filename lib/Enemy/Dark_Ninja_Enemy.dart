@@ -1,18 +1,20 @@
 
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../GreenNinjaGame.dart';
 bool isobserve = false ;
-double life = 100 ;
+
+double damage = 10 ;
 class DarkNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
 
   DarkNinja(Vector2 position )
       : super(
     position: position,
     size: Vector2(tiledSize,tiledSize),
-    animation:PlayerSpriteSheet2.simpleDirectionAnimation ,
-    life: life,
+    animation:PlayerSpriteSheet.simpleDirectionAnimation ,
+    life: 100,
     speed: 50,
     initDirection: Direction.down,
   )
@@ -36,13 +38,13 @@ class DarkNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   }
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-    if (attacker == AttackFromEnum.ENEMY) {
+
      // FlameAudio.play(Globals.explosionSound);
       showDamage(
         damage,
         config: TextStyle(fontSize: width / 3, color: Colors.red),
       );
-    }
+
     super.receiveDamage(attacker, damage, identify);
   }
   @override
@@ -58,50 +60,73 @@ class DarkNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
     super.die();
   }
 
-  @override
-  void render(Canvas canvas)
-  {
-    super.render(canvas);
-
-
-    if (isobserve)
-    {
-
-    }
-
-  }
 
   void update(double dt) {
-    super.update(dt);
+
+if (!gameRef.sceneBuilderStatus.isRunning)
+  {
+    isobserve = false ;
     seeAndMoveToPlayer(
-        observed: () {
-          if(!isobserve)
-          {
+      closePlayer: (Player) {
+        if (!Player.isDead)
+        {
+          simpleAttackMelee(
 
-
-            isobserve = true ;
-          }
-        },
-        notObserved: () {
-          {
-            isobserve = false ;
-
-            runRandomMovement(dt,maxDistance: 80 ,minDistance: 20 ,);
-          }
-        },
-        radiusVision:80,
-        closePlayer: (Player ) {
-
-        },
-
+              withPush: false,
+              damage: damage *2 ,
+              size: size,
+              animationRight: PlayerSpriteSheet2.CutSword()
+          );
+        }
+      },
+      observed: () {
+          isobserve = true ;
+      },
+      radiusVision:80,
     );
+
+
+ if (!isobserve)
+   {
+          seeAndMoveToAttackRange(
+          minDistanceFromPlayer: 128,
+          positioned: (Player) {
+       if (!Player.isDead)
+       {
+         simpleAttackRange(
+             speed: 200,
+             damage: damage/2,
+             animationDestroy: PlayerSpriteSheet.SmokeAnimation(),
+             animationRight: PlayerSpriteSheet2.Shuriken(),
+             collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
+               size: Vector2.all(width / 2),
+               align: Vector2(width * 0.25, width * 0.25),
+
+             ),]),
+             size: size  );
+       }
+     } ,
+            radiusVision: 80,
+            runOnlyVisibleInScreen: false,
+            notObserved: () {
+              runRandomMovement(dt,maxDistance: 70,minDistance: 30);
+            },
+     );
+   }
+  }
+super.update(dt);
   }
 
 }
 
 
 
-class PlayerSpriteSheet2 {
+class PlayerSpriteSheet {
+
+  static Future<SpriteAnimation> SmokeAnimation() => SpriteAnimation.load(
+      "smoke.png",
+      SpriteAnimationData.variable(amount: 6 , stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16))
+  );
 
   static Future<SpriteAnimation> get runDown => SpriteAnimation.load(
       "dark_ninja.png",

@@ -1,10 +1,12 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../GreenNinjaGame.dart';
 double damage = 10 ;
-class Kinght extends SimplePlayer with ObjectCollision{
+class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife{
 
   Kinght(Vector2 position)
       : super(
@@ -16,6 +18,13 @@ class Kinght extends SimplePlayer with ObjectCollision{
     initDirection: Direction.right,
   )
   {
+    setupBarLife(
+      barLifePosition: BarLifePorition.top,
+      showLifeText: false,
+      borderRadius: BorderRadius.circular(2),
+      borderWidth: 2,
+
+    );
     setupCollision(
       CollisionConfig(collisions: [
         CollisionArea.rectangle(
@@ -26,7 +35,26 @@ class Kinght extends SimplePlayer with ObjectCollision{
     );
 
   }
-
+  @override
+  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
+    if (attacker == AttackFromEnum.ENEMY) {
+      // FlameAudio.play(Globals.explosionSound);
+      showDamage(
+        damage,
+        config: TextStyle(fontSize: width / 3, color: Colors.red),
+      );
+    }
+    super.receiveDamage(attacker, damage, identify);
+  }
+  @override
+  void die() {
+   // FlameAudio.play(Globals.gameOverSound);
+    gameRef.camera.shake(intensity: 4);
+    removeFromParent();
+   // gameRef.pauseEngine();
+   // gameRef.overlayManager.add(GameOverScreen.id);
+    super.die();
+  }
   @override
   void joystickAction (JoystickActionEvent press) {
     if (press.event == ActionEvent.DOWN) {
