@@ -157,6 +157,42 @@
                  "width":16,
                  "x":878,
                  "y":391
+                }, 
+                {
+                 "gid":142,
+                 "height":50,
+                 "id":55,
+                 "name":"demon",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":559,
+                 "y":112
+                }, 
+                {
+                 "gid":142,
+                 "height":50,
+                 "id":56,
+                 "name":"demon",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":511,
+                 "y":422
+                }, 
+                {
+                 "gid":142,
+                 "height":50,
+                 "id":57,
+                 "name":"demon",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":294,
+                 "y":277
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -168,7 +204,19 @@
          "draworder":"topdown",
          "id":3,
          "name":"Object Layer 2",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":147,
+                 "height":16,
+                 "id":59,
+                 "name":"Boss",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":452,
+                 "y":92
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -176,7 +224,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":55,
+ "nextobjectid":60,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
@@ -193,6 +241,14 @@
         {
          "firstgid":114,
          "source":"Dark_Ninja_tiled.tsj"
+        }, 
+        {
+         "firstgid":142,
+         "source":"demon.tsj"
+        }, 
+        {
+         "firstgid":147,
+         "source":"Boss.tsj"
         }],
  "tilewidth":32,
  "type":"map",

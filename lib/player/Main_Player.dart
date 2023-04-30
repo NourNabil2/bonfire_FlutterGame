@@ -102,6 +102,14 @@ class PlayerSpriteSheet2 {
       textureSize: Vector2(32, 32),
     ),
   );
+  static Future<SpriteAnimation> CutSlash() => SpriteAnimation.load(
+    "circular_slash.png",
+    SpriteAnimationData.sequenced(
+      amount: 6,
+      stepTime: 0.1,
+      textureSize: Vector2(32, 32),
+    ),
+  );
 
 
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(

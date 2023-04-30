@@ -1,5 +1,7 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/Enemy/Dark_Ninja_Enemy.dart';
+import 'package:bonfire_flutter_game/Enemy/Demon_enemy.dart';
 import 'package:bonfire_flutter_game/NPC/Wizerd_npc.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
@@ -25,6 +27,9 @@ class _GreenNinjaGameState extends State<GreenNinjaGame> {
             objectsBuilder: {
           'Wizard_oldMan' :(properties) => WizerdMan(properties.position),
               'Dark_Ninja' : (properties) => DarkNinja(properties.position),
+              'Boss' : (properties) => BossNinja(properties.position),
+              'demon' : (properties) => Demon(properties.position),
+
             }
         ),
         joystick: Joystick(
