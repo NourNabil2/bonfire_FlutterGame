@@ -1,0 +1,14 @@
+{ "columns":6,
+ "image":"torch_spritesheet.png",
+ "imageheight":16,
+ "imagewidth":96,
+ "margin":0,
+ "name":"torch",
+ "spacing":0,
+ "tilecount":6,
+ "tiledversion":"1.10.1",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}

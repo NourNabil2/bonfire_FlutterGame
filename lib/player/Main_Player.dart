@@ -1,12 +1,16 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
+import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
+import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../GreenNinjaGame.dart';
 double damage = 10 ;
-class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife{
+
+class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
 
   Kinght(Vector2 position)
       : super(
@@ -18,6 +22,8 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife{
     initDirection: Direction.right,
   )
   {
+
+
     setupBarLife(
       barLifePosition: BarLifePorition.top,
       showLifeText: false,
@@ -36,6 +42,23 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife{
 
   }
   @override
+  void update(double dt) {
+
+    if (islight)
+    {
+      setupLighting(
+        LightingConfig(
+          radius: width * 2,
+          blurBorder: width * 2,
+          color: Colors.yellow.withOpacity(0.1),
+        ),
+      );
+    }
+
+  super.update(dt);
+  }
+
+    @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
     if (attacker == AttackFromEnum.ENEMY) {
       // FlameAudio.play(Globals.explosionSound);
@@ -51,8 +74,8 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife{
    // FlameAudio.play(Globals.gameOverSound);
     gameRef.camera.shake(intensity: 4);
     removeFromParent();
-   // gameRef.pauseEngine();
-   // gameRef.overlayManager.add(GameOverScreen.id);
+    gameRef.pauseEngine();
+    gameRef.overlayManager.add(GameOverScreen.id);
     super.die();
   }
   @override
@@ -76,6 +99,7 @@ simpleAttackRange(
     animationLeft: PlayerSpriteSheet2.Shuriken(),
     animationUp: PlayerSpriteSheet2.Shuriken(),
     animationDown: PlayerSpriteSheet2.Shuriken(),
+    animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
     size: Vector2(16, 16));
       }
     }

@@ -1,5 +1,9 @@
 
+import 'dart:math';
+
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
+import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,11 +55,10 @@ class DarkNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   void die() {
     gameRef.camera.shake(intensity: 4);
     removeFromParent();
-
-    // bool dropPickup = Random().nextBool();
-    // if (dropPickup) {
-    //   gameRef.add(Medipack(position: position));
-    // }
+     bool dropPickup = Random().nextBool();
+     if (dropPickup) {
+       gameRef.add(PotionLife(position: position));
+    }
 
     super.die();
   }
@@ -96,17 +99,17 @@ if (!gameRef.sceneBuilderStatus.isRunning)
          simpleAttackRange(
              speed: 200,
              damage: damage/2,
-             animationDestroy: PlayerSpriteSheet.SmokeAnimation(),
+             animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
              animationRight: PlayerSpriteSheet2.Shuriken(),
              collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
-               size: Vector2.all(width / 2),
-               align: Vector2(width * 0.25, width * 0.25),
+               size: Vector2(16, 16),
+               //align: Vector2(width * 0.25, width * 0.25),
 
              ),]),
              size: size  );
        }
      } ,
-            radiusVision: 80,
+            radiusVision: 80*2,
             runOnlyVisibleInScreen: false,
             notObserved: () {
               runRandomMovement(dt,maxDistance: 70,minDistance: 30);
@@ -122,11 +125,6 @@ super.update(dt);
 
 
 class PlayerSpriteSheet {
-
-  static Future<SpriteAnimation> SmokeAnimation() => SpriteAnimation.load(
-      "smoke.png",
-      SpriteAnimationData.variable(amount: 6 , stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16))
-  );
 
   static Future<SpriteAnimation> get runDown => SpriteAnimation.load(
       "dark_ninja.png",

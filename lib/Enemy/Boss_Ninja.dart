@@ -1,5 +1,6 @@
 
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
       : super(
     position: position,
     size: Vector2(tiledSize,tiledSize),
-    animation:PlayerSpriteSheet.simpleDirectionAnimation ,
+    animation:PlayerSpriteSheet3.simpleDirectionAnimation ,
     life: 100,
     speed: 50,
     initDirection: Direction.down,
@@ -51,11 +52,8 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   void die() {
     gameRef.camera.shake(intensity: 4);
     removeFromParent();
+    gameRef.add(Chest(position: position));
 
-    // bool dropPickup = Random().nextBool();
-    // if (dropPickup) {
-    //   gameRef.add(Medipack(position: position));
-    // }
 
     super.die();
   }
@@ -73,7 +71,7 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
             simpleAttackMelee(
 
                 withPush: false,
-                damage: damage *2 ,
+                damage: damage *2.8 ,
                 size: size,
                 animationRight: PlayerSpriteSheet2.CutSword()
             );
@@ -95,8 +93,8 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
             {
               simpleAttackRange(
                   speed: 200,
-                  damage: damage/2,
-                  animationDestroy: PlayerSpriteSheet.SmokeAnimation(),
+                  damage: damage*2,
+                  animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
                   animationRight: PlayerSpriteSheet2.Shuriken(),
                   collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
                     size: Vector2.all(width / 2),
@@ -106,7 +104,7 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
                   size: size  );
             }
           } ,
-          radiusVision: 80,
+          radiusVision: 80*2,
           runOnlyVisibleInScreen: false,
           notObserved: () {
             runRandomMovement(dt,maxDistance: 70,minDistance: 30);
@@ -121,11 +119,11 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
 
 
 
-class PlayerSpriteSheet {
+class PlayerSpriteSheet3 {
 
   static Future<SpriteAnimation> SmokeAnimation() => SpriteAnimation.load(
       "smoke.png",
-      SpriteAnimationData.variable(amount: 6 , stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16))
+      SpriteAnimationData.sequenced(amount: 6 , stepTime: 0.1, textureSize: Vector2(32, 32))
   );
 
   static Future<SpriteAnimation> get runDown => SpriteAnimation.load(

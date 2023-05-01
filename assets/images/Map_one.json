@@ -193,6 +193,90 @@
                  "width":50,
                  "x":294,
                  "y":277
+                }, 
+                {
+                 "gid":175,
+                 "height":16,
+                 "id":60,
+                 "name":"torch",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":146,
+                 "y":33
+                }, 
+                {
+                 "gid":175,
+                 "height":16,
+                 "id":62,
+                 "name":"torch",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":974,
+                 "y":47
+                }, 
+                {
+                 "gid":175,
+                 "height":16,
+                 "id":63,
+                 "name":"torch",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":964,
+                 "y":966
+                }, 
+                {
+                 "gid":175,
+                 "height":16,
+                 "id":64,
+                 "name":"torch",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":64,
+                 "y":951
+                }, 
+                {
+                 "gid":175,
+                 "height":16,
+                 "id":65,
+                 "name":"torch",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":268,
+                 "y":464
+                }, 
+                {
+                 "gid":175,
+                 "height":16,
+                 "id":66,
+                 "name":"torch",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":644,
+                 "y":466
+                }, 
+                {
+                 "gid":175,
+                 "height":16,
+                 "id":67,
+                 "name":"picktorch",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":172,
+                 "y":93
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -224,7 +308,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":60,
+ "nextobjectid":70,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
@@ -249,6 +333,10 @@
         {
          "firstgid":147,
          "source":"Boss.tsj"
+        }, 
+        {
+         "firstgid":175,
+         "source":"torch.tsj"
         }],
  "tilewidth":32,
  "type":"map",
