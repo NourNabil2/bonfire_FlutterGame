@@ -3,7 +3,7 @@ import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-import '../GreenNinjaGame.dart';
+import '../MainGame.dart';
 TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , fontSize: 10 ) );
 bool isobserve = false ;
 class WizerdMan extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,TapGesture{

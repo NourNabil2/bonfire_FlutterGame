@@ -4,7 +4,7 @@ import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../GreenNinjaGame.dart';
+import '../MainGame.dart';
 bool isobserve = false ;
 
 double damage = 10 ;
@@ -95,7 +95,7 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
                   speed: 200,
                   damage: damage*2,
                   animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
-                  animationRight: PlayerSpriteSheet2.Shuriken(),
+                  animationRight: PlayerSpriteSheet2.big_energy_ball(),
                   collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
                     size: Vector2.all(width / 2),
                     align: Vector2(width * 0.25, width * 0.25),

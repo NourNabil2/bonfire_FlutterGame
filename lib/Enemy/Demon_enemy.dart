@@ -2,7 +2,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../GreenNinjaGame.dart';
+import '../MainGame.dart';
 
 bool isobserve = false ;
 class Demon extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{

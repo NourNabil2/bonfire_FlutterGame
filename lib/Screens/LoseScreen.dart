@@ -1,5 +1,5 @@
-import 'package:bonfire_flutter_game/GreenNinjaGame.dart';
-import 'package:bonfire_flutter_game/constant/Maps.dart';
+import 'package:bonfire_flutter_game/MainGame.dart';
+import 'package:bonfire_flutter_game/constant/NameOfMaps.dart';
 import 'package:flutter/material.dart';
 
 
@@ -16,10 +16,10 @@ class GameOverScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            'Sorry, you lose.',
+            'You lose',
             style: TextStyle(
               color: Colors.red,
-              fontSize: 100,
+              fontSize: 80,
               fontWeight: FontWeight.bold,
             ),
           ),

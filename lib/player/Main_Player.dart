@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../GreenNinjaGame.dart';
+import '../MainGame.dart';
 double damage = 10 ;
 
 class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
@@ -43,7 +43,6 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
   }
   @override
   void update(double dt) {
-
     if (islight)
     {
       setupLighting(
@@ -78,6 +77,7 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
     gameRef.overlayManager.add(GameOverScreen.id);
     super.die();
   }
+
   @override
   void joystickAction (JoystickActionEvent press) {
     if (press.event == ActionEvent.DOWN) {
@@ -106,6 +106,8 @@ simpleAttackRange(
 
     super.joystickAction(press);
   }
+
+
 }
 
 
@@ -116,6 +118,14 @@ class PlayerSpriteSheet2 {
       amount: 2,
       stepTime: 0.1,
       textureSize: Vector2(16, 16),
+    ),
+  );
+  static Future<SpriteAnimation> big_energy_ball() => SpriteAnimation.load(
+    "big_energy_ball.png",
+    SpriteAnimationData.sequenced(
+      amount: 4,
+      stepTime: 0.1,
+      textureSize: Vector2(24, 24),
     ),
   );
   static Future<SpriteAnimation> CutSword() => SpriteAnimation.load(

@@ -1,5 +1,5 @@
-import 'package:bonfire_flutter_game/GreenNinjaGame.dart';
-import 'package:bonfire_flutter_game/constant/Maps.dart';
+import 'package:bonfire_flutter_game/MainGame.dart';
+import 'package:bonfire_flutter_game/constant/NameOfMaps.dart';
 import 'package:flutter/material.dart';
 
 
@@ -14,12 +14,13 @@ class LevelWonScreen extends StatelessWidget {
     child: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            'You won, Green Ninja!',
+            'You won',
             style: TextStyle(
               color: Colors.green,
-              fontSize: 100,
+              fontSize: 80,
               fontWeight: FontWeight.bold,
             ),
           ),

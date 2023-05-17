@@ -7,7 +7,7 @@ import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../GreenNinjaGame.dart';
+import '../MainGame.dart';
 bool isobserve = false ;
 
 double damage = 10 ;
@@ -55,6 +55,7 @@ class DarkNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   void die() {
     gameRef.camera.shake(intensity: 4);
     removeFromParent();
+
      bool dropPickup = Random().nextBool();
      if (dropPickup) {
        gameRef.add(PotionLife(position: position));
@@ -102,7 +103,7 @@ if (!gameRef.sceneBuilderStatus.isRunning)
              animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
              animationRight: PlayerSpriteSheet2.Shuriken(),
              collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
-               size: Vector2(16, 16),
+               size: Vector2(8, 8),
                //align: Vector2(width * 0.25, width * 0.25),
 
              ),]),
@@ -136,7 +137,7 @@ class PlayerSpriteSheet {
   );
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
     "dark_ninja.png",
-      SpriteAnimationData.range(amountPerRow: 3 ,amount: 3, stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16), start: 2, end: 2)
+      SpriteAnimationData.range( amountPerRow: 3 ,amount: 3, stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16), start: 2, end: 2)
   );
   static Future<SpriteAnimation> get idleUp => SpriteAnimation.load(
     "dark_ninja.png",

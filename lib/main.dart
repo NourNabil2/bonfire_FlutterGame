@@ -1,13 +1,12 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire_flutter_game/TESTing.dart';
+import 'package:bonfire_flutter_game/Screens/Start_Screen.dart';
 import 'package:flutter/material.dart';
-
-import 'GreenNinjaGame.dart';
+import 'MainGame.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // Flame.device.setLandscape();
-  // Flame.device.fullScreen();
+   Flame.device.setLandscape();
+   Flame.device.fullScreen();
 
   runApp( const MyApp() );
 }
@@ -16,10 +15,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+
       debugShowCheckedModeBanner: false,
-      title: 'Game',
-      home: const GreenNinjaGame(),
+      title: 'Just Like You',
+      theme: ThemeData(bannerTheme: MaterialBannerThemeData(backgroundColor: Colors.white) ,badgeTheme: BadgeThemeData(backgroundColor: Colors.grey[800])),
+      home:Start_Screen(),
+
     );
   }
 }
