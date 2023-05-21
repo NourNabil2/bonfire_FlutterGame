@@ -78,6 +78,9 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
     super.die();
   }
 
+
+
+
   @override
   void joystickAction (JoystickActionEvent press) {
     if (press.event == ActionEvent.DOWN) {

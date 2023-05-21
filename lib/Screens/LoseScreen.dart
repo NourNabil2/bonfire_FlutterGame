@@ -9,6 +9,7 @@ class GameOverScreen extends StatelessWidget {
   static const String id = 'game_over';
 
   @override
+
   Widget build(BuildContext context) => Material(
     color: Colors.transparent.withOpacity(0.5),
     child: Center(

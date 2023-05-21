@@ -16,6 +16,7 @@ class Start_Screen extends StatefulWidget {
 
 class _Start_ScreenState extends State<Start_Screen> {
 
+  @override
   void initState() {
     isPressed;
     // TODO: implement initState
@@ -29,7 +30,7 @@ class _Start_ScreenState extends State<Start_Screen> {
         body: Stack(
           children:
           [
-            Image(image: AssetImage('assets/images/image_Interface/BG.gif'),width: double.infinity,fit: BoxFit.fill),
+          const Image(image: AssetImage('assets/images/image_Interface/BG.gif'),width: double.infinity,fit: BoxFit.fill),
             ClipPath(
               child: Container(
                 decoration: BoxDecoration(color: Colors.grey.withOpacity(0.7)),
@@ -72,14 +73,14 @@ class _Start_ScreenState extends State<Start_Screen> {
                   ),
                 ),
               ),
-              clipper:tringle() ,
+              clipper:Tringle() ,
             ),
           ]
         ),
     );
   }
 }
-class tringle extends CustomClipper<Path>
+class Tringle extends CustomClipper<Path>
 {
   @override
   Path getClip(Size size) {
