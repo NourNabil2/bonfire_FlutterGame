@@ -6,11 +6,10 @@ import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
 import 'package:bonfire_flutter_game/Screens/PauseScreen.dart';
 import 'package:bonfire_flutter_game/Screens/WinScreen.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
-import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:bonfire/bonfire.dart';
+
 
 Widget MainMap (
 {

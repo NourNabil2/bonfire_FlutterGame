@@ -1,6 +1,8 @@
 
 import 'package:bonfire_flutter_game/MainGame.dart';
+import 'package:bonfire_flutter_game/Screens/settingScreen.dart';
 import 'package:bonfire_flutter_game/constant/Buttons.dart';
+import 'package:bonfire_flutter_game/constant/Hero_Dialog.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
@@ -22,8 +24,8 @@ class _Start_ScreenState extends State<Start_Screen> {
     // TODO: implement initState
     super.initState();
   }
-  @override
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
 
@@ -32,9 +34,10 @@ class _Start_ScreenState extends State<Start_Screen> {
           [
           const Image(image: AssetImage('assets/images/image_Interface/BG.gif'),width: double.infinity,fit: BoxFit.fill),
             ClipPath(
+              clipper:Tringle() ,
               child: Container(
                 decoration: BoxDecoration(color: Colors.grey.withOpacity(0.7)),
-                width: 500,
+                width: 400,
                 height: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.all(30.0),
@@ -53,12 +56,21 @@ class _Start_ScreenState extends State<Start_Screen> {
                           isPressed=!isPressed;
                         });
                       }),
-                      SizedBox(height: 50,),
-                      Button(width: width_Button,height: height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Settings', Function: (){}),
-                      SizedBox(height: 15,),
-                      Button(width: width_Button+50,height: height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){}),
-                      SizedBox(height: 15,),
-                      Button(width: width_Button+100,height: height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Exit', Function: (){
+                     const SizedBox(height: 40,),
+                      Button(width: Width_Button,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Settings',
+                          Function: () async {
+                         await  Navigator.of(context).push(
+                                HeroDialogRoute(builder: (context) {
+                                  return SettingPopupCard();
+                                }
+                                )
+                            );
+                          }
+    ),
+                      const SizedBox(height: 15,),
+                      Button(width: Width_Button+50,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){}),
+                      const SizedBox(height: 15,),
+                      Button(width: Width_Button+100,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Exit', Function: (){
                         SystemNavigator.pop();
                       }),
 
@@ -73,27 +85,12 @@ class _Start_ScreenState extends State<Start_Screen> {
                   ),
                 ),
               ),
-              clipper:Tringle() ,
+
             ),
           ]
         ),
     );
   }
 }
-class Tringle extends CustomClipper<Path>
-{
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(size.width/2,0 );
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
-    return path;
-  }
 
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
-
-}
 

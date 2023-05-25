@@ -1,9 +1,12 @@
 import 'package:bonfire/base/bonfire_game.dart';
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire_flutter_game/MainGame.dart';
+import 'package:bonfire_flutter_game/Screens/Start_Screen.dart';
+import 'package:bonfire_flutter_game/Screens/settingScreen.dart';
+import 'package:bonfire_flutter_game/constant/Hero_Dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:bonfire_flutter_game/constant/constant.dart';
 
 class PauseScreen extends StatelessWidget {
   final BonfireGame game ;
@@ -27,13 +30,30 @@ class PauseScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 100),
-          ElevatedButton(
+          MaterialButton(
+              onPressed: () {
+                game.overlayManager.remove(PauseScreen.id);
+                game.gameController!.gameRef.resumeEngine();
+              },
+              child: TextMenu(title: 'Resume')
+          ),
+          MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    HeroDialogRoute(builder: (context) {
+                      return SettingPopupCard();
+                    }
+                    ));
+              },
+
+              child: TextMenu(title: 'Settings')
+          ),
+          MaterialButton(
             onPressed: () {
-              game.overlayManager.remove(PauseScreen.id);
-              game.gameController!.gameRef.resumeEngine();
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Start_Screen(),), (route) => false);
             },
-            child: const Text('Resume'),
-          )
+            child: TextMenu(title: 'Main Menu')
+          ),
         ],
       ),
     );

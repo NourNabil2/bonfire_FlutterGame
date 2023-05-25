@@ -1,11 +1,13 @@
-// id for typeattack
 import 'package:flutter/material.dart';
 
+
+// id for typeattack
 enum AttackType { melee, range }
+
 // numbers
 double lifePotion = 20 ;
-double width_Button = 200 ;
-double height_Button = 50 ;
+double Width_Button = 200 ;
+double Height_Button = 50 ;
 
 // themes
 ThemeData light = ThemeData.light().copyWith(
@@ -15,3 +17,56 @@ ThemeData light = ThemeData.light().copyWith(
 ThemeData dark = ThemeData.dark().copyWith(
   primaryColor: Colors.blueGrey,
 );
+
+//style
+TextStyle style =const TextStyle(color: Colors.black ,decoration: TextDecoration.none,overflow: TextOverflow.fade,fontSize: 18);
+
+
+Text TextMenu({required String title}) => Text(
+    title,
+  style: const TextStyle( fontWeight: FontWeight.bold,
+      fontSize: 18,
+      color: Colors.blueGrey ,
+      shadows: [ BoxShadow(color: Colors.black54 ,blurRadius: 8.0,offset: Offset(4, 4))])
+
+);
+
+ //Tringle style
+class Tringle1 extends CustomClipper<Path>
+{
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+
+    path.lineTo(size.width/16,0 );
+    path.lineTo(size.width/3.5,size.height );
+    path.lineTo(size.width,size.height );
+    path.lineTo(size.width,0 );
+
+
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+
+}
+
+
+class Tringle extends CustomClipper<Path>
+{
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(size.width/2,0 );
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+
+}

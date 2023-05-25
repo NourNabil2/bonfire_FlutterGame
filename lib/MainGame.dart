@@ -56,6 +56,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
                 Picktorch(position: properties.position),
 
           }
+
       ),Player: Kinght(Vector2(90,90)),);
     }
   }

@@ -19,7 +19,20 @@ class MyApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
       title: 'Just Like You',
-      theme: ThemeData(bannerTheme: MaterialBannerThemeData(backgroundColor: Colors.white) ,badgeTheme: BadgeThemeData(backgroundColor: Colors.grey[800])),
+      theme: ThemeData(
+          fontFamily: 'Playfair',
+          primaryColor: Colors.blueGrey,
+          textTheme:const TextTheme(
+              titleLarge: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+              bodyMedium: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+              bodyLarge: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+              bodySmall: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+
+          ),
+          hoverColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+      ),
       home:Start_Screen(),
 
     );
