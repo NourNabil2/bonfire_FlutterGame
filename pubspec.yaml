@@ -42,6 +42,7 @@ dependencies:
   hive:
   provider:
   hive_flutter:
+  onboarding:
 
 dev_dependencies:
   build_runner: 2.3.3

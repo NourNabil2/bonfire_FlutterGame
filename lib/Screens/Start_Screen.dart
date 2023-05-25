@@ -4,6 +4,7 @@ import 'package:bonfire_flutter_game/Screens/settingScreen.dart';
 import 'package:bonfire_flutter_game/constant/Buttons.dart';
 import 'package:bonfire_flutter_game/constant/Hero_Dialog.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
+import 'package:bonfire_flutter_game/constant/onBoarding.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:flutter/services.dart';
@@ -68,9 +69,11 @@ class _Start_ScreenState extends State<Start_Screen> {
                           }
     ),
                       const SizedBox(height: 15,),
-                      Button(width: Width_Button+40,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){}),
+                      Button(width: Width_Button+30,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoarding(Story: boarding),)) ;
+                      }),
                       const SizedBox(height: 15,),
-                      Button(width: Width_Button+80,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Exit', Function: (){
+                      Button(width: Width_Button+60,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Exit', Function: (){
                         SystemNavigator.pop();
                       }),
 

@@ -70,3 +70,26 @@ class Tringle extends CustomClipper<Path>
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 
 }
+
+
+// story board
+class boardingModel {
+
+  late final String image;
+  late final String title;
+  late final String body;
+
+  boardingModel({
+    required this.image,
+    required this.title,
+    required this.body,
+
+  });
+
+}
+List<boardingModel> boarding = [
+  boardingModel(image: 'assets/images/6.jpg', title: 'on board 1 shop app', body: 'body shop app'),
+  boardingModel(image: 'assets/images/6.jpg', title: 'on board 2 shop app', body: 'body shop app'),
+  boardingModel(image: 'assets/images/6.jpg', title: 'on board 3 shop app', body: 'body shop app'),
+
+];
