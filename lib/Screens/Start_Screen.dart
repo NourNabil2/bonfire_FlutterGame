@@ -37,7 +37,7 @@ class _Start_ScreenState extends State<Start_Screen> {
               clipper:Tringle() ,
               child: Container(
                 decoration: BoxDecoration(color: Colors.grey.withOpacity(0.7)),
-                width: 400,
+                width: 350,
                 height: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.all(30.0),
@@ -68,9 +68,9 @@ class _Start_ScreenState extends State<Start_Screen> {
                           }
     ),
                       const SizedBox(height: 15,),
-                      Button(width: Width_Button+50,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){}),
+                      Button(width: Width_Button+40,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){}),
                       const SizedBox(height: 15,),
-                      Button(width: Width_Button+100,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Exit', Function: (){
+                      Button(width: Width_Button+80,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Exit', Function: (){
                         SystemNavigator.pop();
                       }),
 
