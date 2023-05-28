@@ -2,8 +2,10 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/material.dart';
+
 bool islight = false ;
 class torch extends GameDecoration with Lighting {
+
   torch({required Vector2 position})
       : super.withAnimation(
     animation: SpriteAnimation.load(
@@ -50,11 +52,12 @@ class Picktorch extends GameDecoration with Sensor<Kinght> {
     size: Vector2.all(16),
   ) {
 
-  }
 
+
+  }
   @override
   void onContact(GameComponent component) {
-    islight = true ;
+    islight = true;
     removeFromParent();
     // component = component as GreenNinjaPlayer;
     // FlameAudio.play(Globals.fireSound);

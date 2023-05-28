@@ -9,6 +9,7 @@ import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/material.dart';
 import 'constant/NameOfMaps.dart';
 double tiledSize = 32 ;
+bool istrue = false ;
 MapId currentMapId = MapId.one;
 late Function(MapId) selectMap;
 
@@ -43,8 +44,8 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
       case MapId.two:
       case MapId.three:
       default:
-      return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
-          mapone,
+      return  MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
+          istrue? RoadMap : mapone,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
             'Wizard_oldMan': (properties) => WizerdMan(properties.position),
@@ -54,10 +55,9 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'torch': (properties) => torch(position: properties.position),
             'picktorch': (properties) =>
                 Picktorch(position: properties.position),
-
           }
+      ),Player: Kinght(Vector2(90,90)));
 
-      ),Player: Kinght(Vector2(90,90)),);
     }
   }
 }

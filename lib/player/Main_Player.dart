@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
@@ -6,17 +8,16 @@ import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../MainGame.dart';
 double damage = 10 ;
 
 class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
 
-  Kinght(Vector2 position)
-      : super(
+  Kinght(Vector2 position )
+      : super (
     position: position,
     size: Vector2(tiledSize,tiledSize),
-    animation: PlayerSpriteSheet2.simpleDirectionAnimation,
+    animation: PlayerSpriteSheet2.simpleDirectionAnimation2,
     life: 200,
     speed: 100,
     initDirection: Direction.right,
@@ -41,20 +42,25 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
     );
 
   }
+
   @override
-  void update(double dt) {
-    if (islight)
-    {
-      setupLighting(
-        LightingConfig(
-          radius: width * 2,
-          blurBorder: width * 2,
-          color: Colors.yellow.withOpacity(0.1),
-        ),
-      );
-    }
+  Future<void> update(double dt) async {
+
+        if (islight)
+        {
+          super.animation?.idleRight = await PlayerSpriteSheet2.idleRight2 ;
+          setupLighting(
+            LightingConfig(
+              radius: width * 2,
+              blurBorder: width * 2,
+              color: Colors.yellow.withOpacity(0.1),
+            ),
+          );
+        }
+
 
   super.update(dt);
+
   }
 
     @override
@@ -192,4 +198,33 @@ class PlayerSpriteSheet2 {
         runRight: runRight,
         runLeft: runLeft,
       );
+  static Future<SpriteAnimation> get idleRight2 => SpriteAnimation.load(
+    'knight_idle_Light.png',
+    SpriteAnimationData.sequenced(
+      amount:6,
+      stepTime: 0.1,
+      textureSize: Vector2(16, 16),
+    ),
+  );
+  static SimpleDirectionAnimation get simpleDirectionAnimation2 {
+    switch (islight) {
+      case false:return SimpleDirectionAnimation(
+        idleRight: idleRight,
+        idleLeft: idleLeft,
+        runRight: runRight,
+        runLeft: runLeft,
+      );
+      default: return SimpleDirectionAnimation(
+        idleRight: idleRight2,
+        idleLeft: idleLeft,
+        runRight: runRight,
+        runLeft: runLeft,
+
+      );
+    }
+
+  }
 }
+
+
+

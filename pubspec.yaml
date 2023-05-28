@@ -41,7 +41,6 @@ dependencies:
   flame:
   hive:
   provider:
-  hive_flutter:
   onboarding:
 
 dev_dependencies:
