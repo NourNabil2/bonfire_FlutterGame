@@ -128,31 +128,31 @@ super.update(dt);
 class PlayerSpriteSheet {
 
   static Future<SpriteAnimation> get runDown => SpriteAnimation.load(
-      "dark_ninja.png",
+      "Enemy/dark_ninja.png",
       SpriteAnimationData.variable(amountPerRow: 1,amount: 4 , stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16))
   );
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-    "dark_ninja.png",
+    "Enemy/dark_ninja.png",
       SpriteAnimationData.range(amountPerRow: 4 ,amount: 4 , stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16), start: 3, end: 3)
   );
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
-    "dark_ninja.png",
+    "Enemy/dark_ninja.png",
       SpriteAnimationData.range( amountPerRow: 3 ,amount: 3, stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16), start: 2, end: 2)
   );
   static Future<SpriteAnimation> get idleUp => SpriteAnimation.load(
-    "dark_ninja.png",
+    "Enemy/dark_ninja.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(16, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
     ]),
   );
   static Future<SpriteAnimation> get idleDown => SpriteAnimation.load(
-    "dark_ninja.png",
+    "Enemy/dark_ninja.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(0, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
     ]),
   );
   static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
-    "dark_ninja.png",
+    "Enemy/dark_ninja.png",
       SpriteAnimationData([
         SpriteAnimationFrameData(srcPosition: Vector2(48, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
         SpriteAnimationFrameData(srcPosition: Vector2(48, 16), srcSize: Vector2(16, 16), stepTime: 0.1),
@@ -162,7 +162,7 @@ class PlayerSpriteSheet {
 
   );
   static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
-    "dark_ninja.png",
+    "Enemy/dark_ninja.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(32, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
       SpriteAnimationFrameData(srcPosition: Vector2(32, 16), srcSize: Vector2(16, 16), stepTime: 0.1),
@@ -171,7 +171,7 @@ class PlayerSpriteSheet {
     ]),
   );
   static Future<SpriteAnimation> get runUp => SpriteAnimation.load(
-    "dark_ninja.png",
+    "Enemy/dark_ninja.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(16, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
       SpriteAnimationFrameData(srcPosition: Vector2(16, 16), srcSize: Vector2(16, 16), stepTime: 0.1),

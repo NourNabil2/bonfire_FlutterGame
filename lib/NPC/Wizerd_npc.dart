@@ -86,7 +86,7 @@ void render(Canvas canvas)
 class PlayerSpriteSheet {
 
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-    "wizard_idle.png",
+    "NPC/wizard_idle.png",
     SpriteAnimationData.sequenced(
       amount: 2,
       stepTime: 0.2,
@@ -94,7 +94,7 @@ class PlayerSpriteSheet {
     ),
   );
   static Future<SpriteAnimation> get RunRight => SpriteAnimation.load(
-    "wizard_idle.png",
+    "NPC/wizard_idle.png",
     SpriteAnimationData.sequenced(
       amount: 2,
       stepTime: 0.2,

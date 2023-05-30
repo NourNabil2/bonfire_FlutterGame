@@ -8,7 +8,7 @@ import 'package:flame_audio/flame_audio.dart';
 
 class PotionLife extends GameDecoration with Sensor<Kinght>
 {
-  PotionLife({required Vector2 position}): super.withSprite(sprite: Sprite.load("potion_life.png",), position: position, size: Vector2.all(15.0));
+  PotionLife({required Vector2 position}): super.withSprite(sprite: Sprite.load("items/potion_life.png",), position: position, size: Vector2.all(15.0));
 
 
   @override
@@ -24,7 +24,7 @@ class PotionLife extends GameDecoration with Sensor<Kinght>
 class Chest extends GameDecoration with Sensor<Kinght>
 {
   Chest({required Vector2 position}): super.withAnimation(size:  Vector2.all(25.0) ,animation: SpriteAnimation.load(
-    "chest_spritesheet.png",
+    "items/chest_spritesheet.png",
     SpriteAnimationData.sequenced(
       amount: 8,
       stepTime: 0.2,
@@ -42,4 +42,35 @@ class Chest extends GameDecoration with Sensor<Kinght>
     gameRef.overlayManager.add(LevelWonScreen.id);
   }
 
+}
+
+
+bool islight = false ;
+class Picktorch extends GameDecoration with Sensor<Kinght> {
+  Picktorch({required Vector2 position})
+      : super.withAnimation(
+    animation: SpriteAnimation.load(
+      "Interface/torch_spritesheet.png",
+      SpriteAnimationData.sequenced(
+        amount: 6,
+        stepTime: 0.2,
+        textureSize: Vector2(16, 16),
+      ),
+    ),
+    position: position,
+    size: Vector2.all(16),
+  ) {
+
+
+
+  }
+  @override
+  void onContact(GameComponent component) {
+    islight = true;
+    removeFromParent();
+    // component = component as GreenNinjaPlayer;
+    // FlameAudio.play(Globals.fireSound);
+    // component.showDamage(_damage);
+    // component.removeLife(_damage);
+  }
 }

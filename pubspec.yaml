@@ -70,6 +70,15 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/NPC/
+    - assets/images/Enemy/
+    - assets/images/Effects/
+    - assets/images/Interface/
+    - assets/images/Maps/
+    - assets/images/Player/Joystick/
+    - assets/images/Player/MainMovement/
+    - assets/images/Player/Picktorch/
+    - assets/images/items/
     - assets/images/image_Interface/
     - assets/audio/
 

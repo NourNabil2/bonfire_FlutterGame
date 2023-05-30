@@ -1,14 +1,12 @@
-import 'dart:ui';
-
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
-import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../MainGame.dart';
+import '../decorations/Items.dart';
 double damage = 10 ;
 
 class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
@@ -17,7 +15,7 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
       : super (
     position: position,
     size: Vector2(tiledSize,tiledSize),
-    animation: PlayerSpriteSheet2.simpleDirectionAnimation2,
+    animation: islight? PlayerSpriteSheet2.simpleDirectionAnimation2:PlayerSpriteSheet2.simpleDirectionAnimation,
     life: 200,
     speed: 100,
     initDirection: Direction.right,
@@ -122,7 +120,7 @@ simpleAttackRange(
 
 class PlayerSpriteSheet2 {
   static Future<SpriteAnimation> Shuriken() => SpriteAnimation.load(
-    "shuriken.png",
+    "Effects/shuriken.png",
     SpriteAnimationData.sequenced(
       amount: 2,
       stepTime: 0.1,
@@ -130,7 +128,7 @@ class PlayerSpriteSheet2 {
     ),
   );
   static Future<SpriteAnimation> big_energy_ball() => SpriteAnimation.load(
-    "big_energy_ball.png",
+    "Effects/big_energy_ball.png",
     SpriteAnimationData.sequenced(
       amount: 4,
       stepTime: 0.1,
@@ -138,7 +136,7 @@ class PlayerSpriteSheet2 {
     ),
   );
   static Future<SpriteAnimation> CutSword() => SpriteAnimation.load(
-    "cut.png",
+    "Effects/cut.png",
     SpriteAnimationData.sequenced(
       amount: 7,
       stepTime: 0.1,
@@ -146,7 +144,7 @@ class PlayerSpriteSheet2 {
     ),
   );
   static Future<SpriteAnimation> CutSlash() => SpriteAnimation.load(
-    "circular_slash.png",
+    "Effects/circular_slash.png",
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
@@ -156,7 +154,7 @@ class PlayerSpriteSheet2 {
 
 
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-    "knight_idle.png",
+    "Player/MainMovement/knight_idle.png",
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
@@ -165,16 +163,15 @@ class PlayerSpriteSheet2 {
   );
 
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
-    "knight_idle_left.png",
+    "Player/MainMovement/knight_idle_left.png",
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
       textureSize: Vector2(16, 16),
     ),
   );
-
   static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
-    "knight_run.png",
+    "Player/MainMovement/knight_run.png",
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
@@ -183,7 +180,7 @@ class PlayerSpriteSheet2 {
   );
 
   static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
-    "knight_run_left.png",
+    "Player/MainMovement/knight_run_left.png",
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
@@ -199,31 +196,23 @@ class PlayerSpriteSheet2 {
         runLeft: runLeft,
       );
   static Future<SpriteAnimation> get idleRight2 => SpriteAnimation.load(
-    'knight_idle_Light.png',
+    'Player/Picktorch/knight_idle_Light.png',
     SpriteAnimationData.sequenced(
       amount:6,
       stepTime: 0.1,
       textureSize: Vector2(16, 16),
     ),
   );
-  static SimpleDirectionAnimation get simpleDirectionAnimation2 {
-    switch (islight) {
-      case false:return SimpleDirectionAnimation(
-        idleRight: idleRight,
-        idleLeft: idleLeft,
-        runRight: runRight,
-        runLeft: runLeft,
-      );
-      default: return SimpleDirectionAnimation(
+  static SimpleDirectionAnimation get simpleDirectionAnimation2 =>
+
+      SimpleDirectionAnimation(
         idleRight: idleRight2,
         idleLeft: idleLeft,
         runRight: runRight,
         runLeft: runLeft,
-
       );
-    }
 
-  }
+
 }
 
 

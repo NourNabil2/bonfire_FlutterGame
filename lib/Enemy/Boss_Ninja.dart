@@ -122,36 +122,36 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
 class PlayerSpriteSheet3 {
 
   static Future<SpriteAnimation> SmokeAnimation() => SpriteAnimation.load(
-      "smoke.png",
+      "Effects/smoke.png",
       SpriteAnimationData.sequenced(amount: 6 , stepTime: 0.1, textureSize: Vector2(32, 32))
   );
 
   static Future<SpriteAnimation> get runDown => SpriteAnimation.load(
-      "Boss.png",
+      "Enemy/Boss.png",
       SpriteAnimationData.variable(amountPerRow: 1,amount: 4 , stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16))
   );
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-      "Boss.png",
+      "Enemy/Boss.png",
       SpriteAnimationData.range(amountPerRow: 4 ,amount: 4 , stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16), start: 3, end: 3)
   );
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
-      "Boss.png",
+      "Enemy/Boss.png",
       SpriteAnimationData.range(amountPerRow: 3 ,amount: 3, stepTimes: [0.1 , 0.1 , 0.1 ,0.1 ], textureSize: Vector2(16, 16), start: 2, end: 2)
   );
   static Future<SpriteAnimation> get idleUp => SpriteAnimation.load(
-    "Boss.png",
+    "Enemy/Boss.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(16, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
     ]),
   );
   static Future<SpriteAnimation> get idleDown => SpriteAnimation.load(
-    "Boss.png",
+    "Enemy/Boss.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(0, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
     ]),
   );
   static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
-    "Boss.png",
+    "Enemy/Boss.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(48, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
       SpriteAnimationFrameData(srcPosition: Vector2(48, 16), srcSize: Vector2(16, 16), stepTime: 0.1),
@@ -161,7 +161,7 @@ class PlayerSpriteSheet3 {
 
   );
   static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
-    "Boss.png",
+    "Enemy/Boss.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(32, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
       SpriteAnimationFrameData(srcPosition: Vector2(32, 16), srcSize: Vector2(16, 16), stepTime: 0.1),
@@ -170,7 +170,7 @@ class PlayerSpriteSheet3 {
     ]),
   );
   static Future<SpriteAnimation> get runUp => SpriteAnimation.load(
-    "Boss.png",
+    "Enemy/Boss.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(16, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
       SpriteAnimationFrameData(srcPosition: Vector2(16, 16), srcSize: Vector2(16, 16), stepTime: 0.1),

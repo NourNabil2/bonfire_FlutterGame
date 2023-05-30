@@ -93,7 +93,7 @@ class Demon extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
 class PlayerSpriteSheet {
 
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-    "demon_cyclop_idle.png",
+    "Enemy/demon_cyclop_idle.png",
     SpriteAnimationData.sequenced(
       amount: 5,
       stepTime: 0.2,
@@ -101,7 +101,7 @@ class PlayerSpriteSheet {
     ),
   );
   static Future<SpriteAnimation> get RunRight => SpriteAnimation.load(
-    "demon_cyclop_walk.png",
+    "Enemy/demon_cyclop_walk.png",
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.2,

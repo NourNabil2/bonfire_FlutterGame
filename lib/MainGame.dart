@@ -8,8 +8,9 @@ import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/material.dart';
 import 'constant/NameOfMaps.dart';
+import 'decorations/Items.dart';
 double tiledSize = 32 ;
-bool istrue = false ;
+bool istrue = true ;
 MapId currentMapId = MapId.one;
 late Function(MapId) selectMap;
 
