@@ -37,3 +37,5 @@ class torch extends GameDecoration with Lighting {
   }
 }
 
+
+

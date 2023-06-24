@@ -15,7 +15,7 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
       : super (
     position: position,
     size: Vector2(tiledSize,tiledSize),
-    animation: islight? PlayerSpriteSheet2.simpleDirectionAnimation2:PlayerSpriteSheet2.simpleDirectionAnimation,
+    animation: PlayerSpriteSheet2.simpleDirectionAnimation,
     life: 200,
     speed: 100,
     initDirection: Direction.right,
@@ -44,24 +44,27 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
   @override
   Future<void> update(double dt) async {
 
-        if (islight)
-        {
-          super.animation?.idleRight = await PlayerSpriteSheet2.idleRight2 ;
-          setupLighting(
-            LightingConfig(
-              radius: width * 2,
-              blurBorder: width * 2,
-              color: Colors.yellow.withOpacity(0.1),
-            ),
-          );
-        }
+    if (islight)
+    {
+      super.animation?.idleRight = await PlayerSpriteSheet2.idleRight2 ;
+      super.animation?.idleLeft = await PlayerSpriteSheet2.idleLeft2 ;
+      super.animation?.runRight = await PlayerSpriteSheet2.runRight2 ;
+      super.animation?.runLeft = await PlayerSpriteSheet2.runLeft2 ;
+      setupLighting(
+        LightingConfig(
+          radius: width * 2,
+          blurBorder: width * 2,
+          color: Colors.yellow.withOpacity(0.1),
+        ),
+      );
+    }
 
 
-  super.update(dt);
+    super.update(dt);
 
   }
 
-    @override
+  @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
     if (attacker == AttackFromEnum.ENEMY) {
       // FlameAudio.play(Globals.explosionSound);
@@ -74,7 +77,7 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
   }
   @override
   void die() {
-   // FlameAudio.play(Globals.gameOverSound);
+    // FlameAudio.play(Globals.gameOverSound);
     gameRef.camera.shake(intensity: 4);
     removeFromParent();
     gameRef.pauseEngine();
@@ -90,24 +93,24 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
     if (press.event == ActionEvent.DOWN) {
       if (press.id == AttackType.melee || press.id == LogicalKeyboardKey.space.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
-          simpleAttackMelee(
+        simpleAttackMelee(
             damage: damage *2 ,
             size: size,
             animationRight: PlayerSpriteSheet2.CutSword()
-          );
+        );
       }
 
       if (press.id == AttackType.range || press.id == LogicalKeyboardKey.controlLeft.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
-simpleAttackRange(
-    speed: 200,
-    damage: damage,
-    animationRight: PlayerSpriteSheet2.Shuriken(),
-    animationLeft: PlayerSpriteSheet2.Shuriken(),
-    animationUp: PlayerSpriteSheet2.Shuriken(),
-    animationDown: PlayerSpriteSheet2.Shuriken(),
-    animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
-    size: Vector2(16, 16));
+        simpleAttackRange(
+            speed: 200,
+            damage: damage,
+            animationRight: PlayerSpriteSheet2.Shuriken(),
+            animationLeft: PlayerSpriteSheet2.Shuriken(),
+            animationUp: PlayerSpriteSheet2.Shuriken(),
+            animationDown: PlayerSpriteSheet2.Shuriken(),
+            animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
+            size: Vector2(16, 16));
       }
     }
 
@@ -156,18 +159,18 @@ class PlayerSpriteSheet2 {
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
     "Player/MainMovement/knight_idle.png",
     SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.1,
-      textureSize: Vector2(16, 16),
+      amount: 2,
+      stepTime: 0.2,
+      textureSize: Vector2(32, 32),
     ),
   );
 
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
     "Player/MainMovement/knight_idle_left.png",
     SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.1,
-      textureSize: Vector2(16, 16),
+      amount: 2,
+      stepTime: 0.2,
+      textureSize: Vector2(32, 32),
     ),
   );
   static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
@@ -175,7 +178,7 @@ class PlayerSpriteSheet2 {
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
-      textureSize: Vector2(16, 16),
+      textureSize: Vector2(32, 32),
     ),
   );
 
@@ -184,7 +187,7 @@ class PlayerSpriteSheet2 {
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
-      textureSize: Vector2(16, 16),
+      textureSize: Vector2(32, 32),
     ),
   );
 
@@ -198,22 +201,43 @@ class PlayerSpriteSheet2 {
   static Future<SpriteAnimation> get idleRight2 => SpriteAnimation.load(
     'Player/Picktorch/knight_idle_Light.png',
     SpriteAnimationData.sequenced(
-      amount:6,
+      amount:2,
+      stepTime: 0.2,
+      textureSize: Vector2(32, 32),
+    ),
+  );
+  static Future<SpriteAnimation> get idleLeft2 => SpriteAnimation.load(
+    'Player/Picktorch/knight_idle_Light_left.png',
+    SpriteAnimationData.sequenced(
+      amount:2,
+      stepTime: 0.2,
+      textureSize: Vector2(32, 32),
+    ),
+  );
+  static Future<SpriteAnimation> get runRight2 => SpriteAnimation.load(
+    "Player/Picktorch/knight_run.png",
+    SpriteAnimationData.sequenced(
+      amount: 6,
       stepTime: 0.1,
-      textureSize: Vector2(16, 16),
+      textureSize: Vector2(32, 32),
+    ),
+  );
+  static Future<SpriteAnimation> get runLeft2 => SpriteAnimation.load(
+    "Player/Picktorch/knight_run_left.png",
+    SpriteAnimationData.sequenced(
+      amount: 6,
+      stepTime: 0.1,
+      textureSize: Vector2(32, 32),
     ),
   );
   static SimpleDirectionAnimation get simpleDirectionAnimation2 =>
 
       SimpleDirectionAnimation(
         idleRight: idleRight2,
-        idleLeft: idleLeft,
-        runRight: runRight,
-        runLeft: runLeft,
+        idleLeft: idleLeft2,
+        runRight: runRight2,
+        runLeft: runLeft2,
       );
 
 
 }
-
-
-

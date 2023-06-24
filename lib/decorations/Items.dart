@@ -1,6 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/MainGame.dart';
 import 'package:bonfire_flutter_game/Screens/WinScreen.dart';
+import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/NameOfMaps.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
@@ -13,7 +14,8 @@ class PotionLife extends GameDecoration with Sensor<Kinght>
 
   @override
   void onContact(GameComponent component) {
-    FlameAudio.play('power_up.wav');
+
+    CashSaver.getData(key: 'SFX') ==true ? FlameAudio.play('power_up.wav') : null ;
     gameRef.player!.addLife(lifePotion);
     removeFromParent();
   }

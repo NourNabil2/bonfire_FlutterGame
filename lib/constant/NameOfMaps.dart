@@ -1,5 +1,5 @@
-const String mapone = 'Maps/Map_one.json';
 const String RoadMap = 'Road1.json';
+const String nothingness = 'Space.tmj';
 
 
 enum MapId { one, two, three }

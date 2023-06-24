@@ -1,39 +1,49 @@
-
+import 'dart:math';
 import 'package:bonfire_flutter_game/MainGame.dart';
 import 'package:bonfire_flutter_game/Screens/settingScreen.dart';
 import 'package:bonfire_flutter_game/constant/Buttons.dart';
 import 'package:bonfire_flutter_game/constant/Hero_Dialog.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:bonfire_flutter_game/constant/onBoarding.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:flutter/services.dart';
+
+import '../SharedPreferences/Cash_Save.dart';
+import '../constant/NameOfMaps.dart';
 
 class Start_Screen extends StatefulWidget {
   const Start_Screen({Key? key}) : super(key: key);
 
   @override
   State<Start_Screen> createState() => _Start_ScreenState();
+
 }
 
+List<String> background = ['assets/images/image_Interface/BG.gif','assets/images/image_Interface/Coffee_in_rain.gif'] ;
 
 class _Start_ScreenState extends State<Start_Screen> {
-
   @override
+
   void initState() {
+
+    setState(() {
+      CashSaver.getData(key: 'BackGround Music') == true ? FlameAudio.bgm.play('Rain_Noise.wav'): FlameAudio.bgm.play('Rain_Noise.wav').then((value) => FlameAudio.bgm.pause() ) ;
+    });
+
     isPressed;
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
 
+    return Scaffold(
         body: Stack(
           children:
           [
-          const Image(image: AssetImage('assets/images/image_Interface/BG.gif'),width: double.infinity,fit: BoxFit.fill),
+          Image(image: AssetImage(background[Random().nextInt(2)]) ,width: double.infinity,fit: BoxFit.fill),
             ClipPath(
               clipper:Tringle() ,
               child: Container(
@@ -48,6 +58,7 @@ class _Start_ScreenState extends State<Start_Screen> {
                     children:[
 
                       Button(width: 100,height: 100,isboxShadow: true,border: true,radius: 50, ColorOfButton: Colors.red, text: 'start', Function: () async{
+                          FlameAudio.bgm.stop();
                         setState(() {
                           isPressed=!isPressed;
                         });
@@ -60,6 +71,7 @@ class _Start_ScreenState extends State<Start_Screen> {
                      const SizedBox(height: 40,),
                       Button(width: Width_Button,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Settings',
                           Function: () async {
+
                          await  Navigator.of(context).push(
                                 HeroDialogRoute(builder: (context) {
                                   return SettingPopupCard();

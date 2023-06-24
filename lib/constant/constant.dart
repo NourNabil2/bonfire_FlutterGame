@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../SharedPreferences/Cash_Save.dart';
+
 
 // id for typeattack
 enum AttackType { melee, range }
@@ -8,6 +10,11 @@ enum AttackType { melee, range }
 double lifePotion = 20 ;
 double Width_Button = 200 ;
 double Height_Button = 50 ;
+
+
+//Music
+bool backgroundMusic =  CashSaver.getData(key: 'BackGround Music') ?? true ;
+bool SFX        =  CashSaver.getData(key: 'SFX') ?? true;
 
 // themes
 ThemeData light = ThemeData.light().copyWith(
