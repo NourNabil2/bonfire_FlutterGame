@@ -230,14 +230,15 @@ class PlayerSpriteSheet2 {
       textureSize: Vector2(32, 32),
     ),
   );
-  static SimpleDirectionAnimation get simpleDirectionAnimation2 =>
 
-      SimpleDirectionAnimation(
-        idleRight: idleRight2,
-        idleLeft: idleLeft2,
-        runRight: runRight2,
-        runLeft: runLeft2,
-      );
+  // static SimpleDirectionAnimation get simpleDirectionAnimation2 =>
+  //
+  //     SimpleDirectionAnimation(
+  //       idleRight: idleRight2,
+  //       idleLeft: idleLeft2,
+  //       runRight: runRight2,
+  //       runLeft: runLeft2,
+  //     );
 
 
 }

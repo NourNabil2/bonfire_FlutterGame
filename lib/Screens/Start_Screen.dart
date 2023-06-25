@@ -29,7 +29,7 @@ class _Start_ScreenState extends State<Start_Screen> {
   void initState() {
 
     setState(() {
-      CashSaver.getData(key: 'BackGround Music') == true ? FlameAudio.bgm.play('Rain_Noise.wav'): FlameAudio.bgm.play('Rain_Noise.wav').then((value) => FlameAudio.bgm.pause() ) ;
+      backgroundMusic == true ? FlameAudio.bgm.play('Rain_Noise.wav'): FlameAudio.bgm.play('Rain_Noise.wav').then((value) => FlameAudio.bgm.pause() ) ;
     });
 
     isPressed;
@@ -52,51 +52,53 @@ class _Start_ScreenState extends State<Start_Screen> {
                 height: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.all(30.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children:[
+                  child: ListView(
+                    children: [Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:[
 
-                      Button(width: 100,height: 100,isboxShadow: true,border: true,radius: 50, ColorOfButton: Colors.red, text: 'start', Function: () async{
+                        Button(width: 100,height: 100,isboxShadow: true,border: true,radius: 50, ColorOfButton: Colors.red, text: 'start', Function: () async{
                           FlameAudio.bgm.stop();
-                        setState(() {
-                          isPressed=!isPressed;
-                        });
-                        await Future.delayed(Duration(milliseconds: 300));
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Just_Like_YouGame(),), (route) => false);
-                        setState(() {
-                          isPressed=!isPressed;
-                        });
-                      }),
-                     const SizedBox(height: 40,),
-                      Button(width: Width_Button,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Settings',
-                          Function: () async {
+                          setState(() {
+                            isPressed=!isPressed;
+                          });
+                          await Future.delayed(Duration(milliseconds: 300));
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Just_Like_YouGame(),), (route) => false);
+                          setState(() {
+                            isPressed=!isPressed;
+                          });
+                        }),
+                        const SizedBox(height: 40,),
+                        Button(width: Width_Button,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Settings',
+                            Function: () async {
 
-                         await  Navigator.of(context).push(
-                                HeroDialogRoute(builder: (context) {
-                                  return SettingPopupCard();
-                                }
-                                )
-                            );
-                          }
-    ),
-                      const SizedBox(height: 15,),
-                      Button(width: Width_Button+30,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoarding(Story: boarding),)) ;
-                      }),
-                      const SizedBox(height: 15,),
-                      Button(width: Width_Button+60,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Exit', Function: (){
-                        SystemNavigator.pop();
-                      }),
-
-
+                              await  Navigator.of(context).push(
+                                  HeroDialogRoute(builder: (context) {
+                                    return SettingPopupCard();
+                                  }
+                                  )
+                              );
+                            }
+                        ),
+                        const SizedBox(height: 15,),
+                        Button(width: Width_Button+30,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoarding(Story: boarding),)) ;
+                        }),
+                        const SizedBox(height: 15,),
+                        Button(width: Width_Button+60,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Exit', Function: (){
+                          SystemNavigator.pop();
+                        }),
 
 
 
 
 
 
-                    ],
+
+
+                      ],
+                    ),]
                   ),
                 ),
               ),

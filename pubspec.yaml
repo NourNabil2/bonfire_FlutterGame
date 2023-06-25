@@ -75,6 +75,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/images/NPC/
+    - assets/images/NPC/partner/
     - assets/images/Enemy/
     - assets/images/Effects/
     - assets/images/Interface/
