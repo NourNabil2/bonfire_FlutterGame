@@ -1,0 +1,14 @@
+{ "columns":25,
+ "image":"idle left.png",
+ "imageheight":100,
+ "imagewidth":400,
+ "margin":0,
+ "name":"idle left",
+ "spacing":0,
+ "tilecount":150,
+ "tiledversion":"1.10.1",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}
