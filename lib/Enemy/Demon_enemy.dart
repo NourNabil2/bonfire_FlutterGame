@@ -3,6 +3,7 @@ import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/NameOfMaps.dart';
 
 bool isobserve = false ;
 class Demon extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
@@ -47,6 +48,7 @@ class Demon extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
   void die() {
     gameRef.camera.shake(intensity: 4);
     removeFromParent();
+
 
     // bool dropPickup = Random().nextBool();
     // if (dropPickup) {

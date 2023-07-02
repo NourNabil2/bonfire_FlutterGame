@@ -73,18 +73,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'nothing': (properties) => Shadow(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
-      case MapId.two: return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
-          RoadMap,
-          forceTileSize: Vector2(tiledSize, tiledSize),
-          objectsBuilder: {
-            'Wizard_oldMan': (properties) => WizerdMan(properties.position),
-            'Dark_Ninja': (properties) => DarkNinja(properties.position),
-            'Boss': (properties) => BossNinja(properties.position),
-            'demon': (properties) => Demon(properties.position),
-            'torch': (properties) => torch(position: properties.position),
-            'picktorch': (properties) => Picktorch(position: properties.position),
-          }
-      ),Player: Kinght(Vector2(90,90))) ;
+      case MapId.two:
       case MapId.three:
       default:
       return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(

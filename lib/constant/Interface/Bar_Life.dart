@@ -20,11 +20,11 @@ class BarLife_Component extends InterfaceComponent {
 
   @override
   void update(double t) {
-    if (this.gameRef.player != null) {
-      life = this.gameRef.player!.life;
-      maxLife = this.gameRef.player!.maxLife;
-      if (this.gameRef.player is Kinght) {
-        stamina = (this.gameRef.player as Kinght).stamina;
+    if (gameRef.player != null) {
+      life = gameRef.player!.life;
+      maxLife = gameRef.player!.maxLife;
+      if (gameRef.player is Kinght) {
+        stamina = (gameRef.player as Kinght).stamina;
       }
     }
     super.update(t);
@@ -34,7 +34,7 @@ class BarLife_Component extends InterfaceComponent {
   void render(Canvas c) {
     try {
       _drawLife(c);
-      //_drawStamina(c);
+      _drawStamina(c);
     } catch (e) {}
     super.render(c);
   }
@@ -61,20 +61,20 @@ class BarLife_Component extends InterfaceComponent {
           ..style = PaintingStyle.fill);
   }
 
-  // void _drawStamina(Canvas canvas) {
-  //   double xBar = 48;
-  //   double yBar = 47;
-  //
-  //   double currentBarStamina = (stamina * widthBar) / maxStamina;
-  //
-  //   canvas.drawLine(
-  //       Offset(xBar, yBar),
-  //       Offset(xBar + currentBarStamina, yBar),
-  //       Paint()
-  //         ..color = Colors.yellow
-  //         ..strokeWidth = strokeWidth
-  //         ..style = PaintingStyle.fill);
-  // }
+  void _drawStamina(Canvas canvas) {
+    double xBar = 113;
+    double yBar = (width - 11) / 3;
+
+    double currentBarStamina = (stamina * widthBar) / maxStamina;
+
+    canvas.drawLine(
+        Offset(xBar, yBar),
+        Offset(xBar + currentBarStamina, yBar),
+        Paint()
+          ..color = Colors.orangeAccent
+          ..strokeWidth = strokeWidth
+          ..style = PaintingStyle.fill);
+  }
 
   Color _getColorLife(double currentBarLife) {
     if (currentBarLife > widthBar - (widthBar / 3)) {

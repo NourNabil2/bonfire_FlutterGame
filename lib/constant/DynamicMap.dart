@@ -6,6 +6,7 @@ import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
 import 'package:bonfire_flutter_game/Screens/PauseScreen.dart';
 import 'package:bonfire_flutter_game/Screens/WinScreen.dart';
 import 'package:bonfire_flutter_game/constant/Interface/player_InterFace.dart';
+import 'package:bonfire_flutter_game/constant/Sounds/background.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ Widget MainMap (
         onPressed: (){
         game.overlayManager.add(PauseScreen.id);
         game.gameController!.gameRef.pauseEngine();
+        Sounds.pauseBackgroundSound();
         },
    ),
     )

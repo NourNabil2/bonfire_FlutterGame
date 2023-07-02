@@ -3,6 +3,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Screens/Start_Screen.dart';
 import 'package:bonfire_flutter_game/Screens/settingScreen.dart';
 import 'package:bonfire_flutter_game/constant/Hero_Dialog.dart';
+import 'package:bonfire_flutter_game/constant/Sounds/background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,18 +21,12 @@ class PauseScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Pause',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 80,
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.none
-            ),
-          ),
-          const SizedBox(height: 100),
+
+          const Image(image: AssetImage('assets/images/image_Interface/pause_Screen.png'),width: 250),
+          const SizedBox(height: 50),
           MaterialButton(
               onPressed: () {
+                Sounds.resumeBackgroundSound();
                 game.overlayManager.remove(PauseScreen.id);
                 game.gameController!.gameRef.resumeEngine();
               },
@@ -39,6 +34,7 @@ class PauseScreen extends StatelessWidget {
           ),
           MaterialButton(
               onPressed: () {
+
                 Navigator.of(context).push(
                     HeroDialogRoute(builder: (context) {
                       return SettingPopupCard();
@@ -50,6 +46,7 @@ class PauseScreen extends StatelessWidget {
           ),
           MaterialButton(
             onPressed: () {
+              Sounds.resumeBackgroundSound();
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Start_Screen(),), (route) => false);
             },
             child: TextMenu(title: 'Main Menu')

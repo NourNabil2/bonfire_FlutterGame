@@ -162,6 +162,7 @@ class PlayerSpriteSheet {
 
   );
   static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
+
     "Enemy/dark_ninja.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(32, 0), srcSize: Vector2(16, 16), stepTime: 0.1),

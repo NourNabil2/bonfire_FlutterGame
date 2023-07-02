@@ -1,11 +1,10 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire_flutter_game/constant/constant.dart';
-import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'dart:async' as async;
+import '../Enemy/Bat_purble.dart';
 import '../MainGame.dart';
 import '../constant/NameOfMaps.dart';
 
@@ -89,8 +88,12 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
         //onChangeTalk: (value) => gameRef.camera.shake(intensity: 2 ) ,
         onClose: () {
           gameRef.camera.moveToPlayerAnimated(zoom: 1.5);
+          close = true ;
+          gameRef.add(Bat_purble(Vector2(200, 200) ));
+          gameRef.add(Bat_purble(Vector2(200, 250) ));
+          gameRef.add(Bat_purble(Vector2(200, 300) ));
+          async.Timer(const Duration(seconds: 50),() =>  selectMap(MapId.two),);
 
-           close = true ;
 
         },
       //  onFinish: () => selectMap(MapId.two),
