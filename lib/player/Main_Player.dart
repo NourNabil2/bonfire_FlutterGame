@@ -7,10 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../MainGame.dart';
 import '../decorations/Items.dart';
+import 'dart:async' as async;
 double damage = 10 ;
 
-class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
+class Kinght extends SimplePlayer with ObjectCollision,Lighting {
+  double stamina = 100;
 
+  async.Timer? _timerStamina;
   Kinght(Vector2 position )
       : super (
     position: position,
@@ -21,15 +24,6 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
     initDirection: Direction.right,
   )
   {
-
-
-    setupBarLife(
-      barLifePosition: BarLifePorition.top,
-      showLifeText: false,
-      borderRadius: BorderRadius.circular(2),
-      borderWidth: 2,
-
-    );
     setupCollision(
       CollisionConfig(collisions: [
         CollisionArea.rectangle(
@@ -43,6 +37,18 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
 
   @override
   Future<void> update(double dt) async {
+
+
+if(isDead)
+  {
+    return;
+  }
+else
+  {
+    _verifyStamina();
+
+  }
+
 
     if (islight)
     {
@@ -93,30 +99,69 @@ class Kinght extends SimplePlayer with ObjectCollision ,UseBarLife,Lighting{
     if (press.event == ActionEvent.DOWN) {
       if (press.id == AttackType.melee || press.id == LogicalKeyboardKey.space.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
-        simpleAttackMelee(
-            damage: damage *2 ,
-            size: size,
-            animationRight: PlayerSpriteSheet2.CutSword()
-        );
+        if (stamina < 15) {
+          return;
+        }
+        else {
+          decrementStamina(15);
+          simpleAttackMelee(
+              damage: damage * 2,
+              size: size,
+              animationRight: PlayerSpriteSheet2.CutSword()
+          );
+        }
       }
 
       if (press.id == AttackType.range || press.id == LogicalKeyboardKey.controlLeft.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
-        simpleAttackRange(
-            speed: 200,
-            damage: damage,
-            animationRight: PlayerSpriteSheet2.Shuriken(),
-            animationLeft: PlayerSpriteSheet2.Shuriken(),
-            animationUp: PlayerSpriteSheet2.Shuriken(),
-            animationDown: PlayerSpriteSheet2.Shuriken(),
-            animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
-            size: Vector2(16, 16));
+
+        if (stamina < 10) {
+          return;
+        }
+        else
+          {
+            decrementStamina(15);
+            simpleAttackRange(
+                speed: 200,
+                damage: damage,
+                animationRight: PlayerSpriteSheet2.Shuriken(),
+                animationLeft: PlayerSpriteSheet2.Shuriken(),
+                animationUp: PlayerSpriteSheet2.Shuriken(),
+                animationDown: PlayerSpriteSheet2.Shuriken(),
+                animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
+                size: Vector2(16, 16));
+          }
+
+
       }
     }
 
     super.joystickAction(press);
   }
 
+  void _verifyStamina() {
+
+    if (_timerStamina == null) {
+
+      _timerStamina = async.Timer(Duration(milliseconds: 150), () {
+        _timerStamina = null;
+      });
+    } else {
+      return;
+    }
+    stamina += 2;
+
+    if (stamina > 100) {
+      stamina = 100;
+    }
+  }
+
+  void decrementStamina(int i) {
+    stamina -= i;
+    if (stamina < 0) {
+      stamina = 0;
+    }
+  }
 
 }
 

@@ -10,6 +10,7 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'constant/NameOfMaps.dart';
 import 'package:bonfire_flutter_game/NPC/Shadow.dart';
+import 'constant/Sounds/background.dart';
 import 'constant/constant.dart';
 import 'decorations/Items.dart';
 double tiledSize = 32 ;
@@ -41,7 +42,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
 
         switch (currentMapId) {
           case MapId.one:
-            backgroundMusic == true ? FlameAudio.bgm.play('SpaceSound.wav',volume: 0.5) : FlameAudio.bgm.play('SpaceSound.wav',volume: 0.5).then((value) => FlameAudio.bgm.pause());
+            backgroundMusic == true ? Sounds.playBackground_SpaceSound() : Sounds.stop_Space();
             break;
           case MapId.two:
           // TODO: Handle this case.
@@ -72,7 +73,18 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'nothing': (properties) => Shadow(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
-      case MapId.two:
+      case MapId.two: return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
+          RoadMap,
+          forceTileSize: Vector2(tiledSize, tiledSize),
+          objectsBuilder: {
+            'Wizard_oldMan': (properties) => WizerdMan(properties.position),
+            'Dark_Ninja': (properties) => DarkNinja(properties.position),
+            'Boss': (properties) => BossNinja(properties.position),
+            'demon': (properties) => Demon(properties.position),
+            'torch': (properties) => torch(position: properties.position),
+            'picktorch': (properties) => Picktorch(position: properties.position),
+          }
+      ),Player: Kinght(Vector2(90,90))) ;
       case MapId.three:
       default:
       return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(

@@ -79,6 +79,7 @@ flutter:
     - assets/images/Enemy/
     - assets/images/Effects/
     - assets/images/Interface/
+    - assets/images/Interface/player_Interface/
     - assets/images/Interface/Plants/
     - assets/images/Maps/
     - assets/images/Player/Joystick/

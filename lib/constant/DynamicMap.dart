@@ -5,6 +5,7 @@ import 'package:bonfire/widgets/mini_map/mini_map.dart';
 import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
 import 'package:bonfire_flutter_game/Screens/PauseScreen.dart';
 import 'package:bonfire_flutter_game/Screens/WinScreen.dart';
+import 'package:bonfire_flutter_game/constant/Interface/player_InterFace.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ Widget MainMap (
 }
     )=>BonfireWidget(
   key: Key(DateTime.now().toIso8601String()),
+  interface: KnightInterface(),
   gameController: GameController(),
   overlayBuilderMap: {
     GameOverScreen.id: (context, game) => const GameOverScreen(),
@@ -51,7 +53,7 @@ Widget MainMap (
   initialActiveOverlays: const <String>['mini_map','Pause'],
 
   lightingColorGame: Colors.black54,
-  cameraConfig: CameraConfig(zoom: 1.2),
+  cameraConfig: CameraConfig(zoom: 1.5),
   map: map,
   joystick: Joystick(
     directional: JoystickDirectional(

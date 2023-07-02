@@ -1,15 +1,18 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../MainGame.dart';
+import '../constant/NameOfMaps.dart';
 
 TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , fontSize: 10 ) );
 bool isobserve = false ;
 bool close = false ;
-class Shadow extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,TapGesture{
+class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMovement ,TapGesture{
 
   Shadow(Vector2 position)
       : super(
@@ -20,6 +23,13 @@ class Shadow extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,T
     speed: 100,
     initDirection: Direction.down,
   ){
+    setupLighting(
+      LightingConfig(
+        radius: width/2 ,
+        blurBorder: width,
+        color: Colors.white.withOpacity(0.1),
+      ),
+    );
     setupCollision(
       CollisionConfig(collisions: [
         CollisionArea.rectangle(
@@ -33,6 +43,7 @@ class Shadow extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,T
     Future<void> update(double dt) async {
     if(close)
       {
+
         super.animation?.runRight = await PlayerSpriteSheet.DeathRight;
         moveRight(2);
 
@@ -44,6 +55,7 @@ class Shadow extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,T
           if(!isobserve)
           {
             isobserve = true ;
+            close ? removeFromParent() : null ;
           }
         },
         notObserved: () {
@@ -65,15 +77,23 @@ class Shadow extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,T
     {
     gameRef.camera.moveToTargetAnimated(this,zoom: 2 , finish: () {
       TalkDialog.show(gameRef.context, [
-        speak(text: 'Hello warrior, What Are you doing here in this place ', isPlayer: false),
-        speak(text: 'really i don\'t know', isPlayer: true),
-        speak(text: 'go and find your goals', isPlayer: false),
+        speak(text: 'Who are you, and where am I, why don\'t I suffocate, am I dead?! Are you death?!! ', isPlayer: true),
+        speak(text: 'Don\'t ask where you are or who I am, this didn\'t and won\'t matter in your situation right now.', isPlayer: false),
+        speak(text: 'The only death is you', isPlayer: false),
+        speak(text: 'Me?!', isPlayer: true),
+        speak(text: 'Please take me back to my life', isPlayer: true),
+        speak(text: 'I am your destructive mind, which you are the cause of, and I live in it until I control you. Unfortunately, there is nothing you can do but surrender', isPlayer: false),
+        speak(text: 'Listen to the darkness, or is it your heart?', isPlayer: false),
+        speak(text: 'What do you say and where are you going?!!!!', isPlayer: true),
       ],logicalKeyboardKeysToNext:[LogicalKeyboardKey.space],
         //onChangeTalk: (value) => gameRef.camera.shake(intensity: 2 ) ,
         onClose: () {
-          gameRef.camera.moveToPlayerAnimated(zoom: 2);
+          gameRef.camera.moveToPlayerAnimated(zoom: 1.5);
+
            close = true ;
-        }
+
+        },
+      //  onFinish: () => selectMap(MapId.two),
       );
     },);
   }
@@ -83,6 +103,7 @@ class Shadow extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,T
     person: SizedBox(height: 100,width: 100,child: isPlayer ? PlayerSpriteSheet2.idleRight.asWidget() : PlayerSpriteSheet.idleRight.asWidget() ,),
     personSayDirection: isPlayer ? PersonSayDirection.LEFT :PersonSayDirection.RIGHT ,
   );
+
 
 
 }

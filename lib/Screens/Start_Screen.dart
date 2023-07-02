@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:bonfire_flutter_game/MainGame.dart';
 import 'package:bonfire_flutter_game/Screens/settingScreen.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/services.dart';
 
 import '../SharedPreferences/Cash_Save.dart';
 import '../constant/NameOfMaps.dart';
+import '../constant/Sounds/background.dart';
 
 class Start_Screen extends StatefulWidget {
   const Start_Screen({Key? key}) : super(key: key);
@@ -29,7 +31,7 @@ class _Start_ScreenState extends State<Start_Screen> {
   void initState() {
 
     setState(() {
-      backgroundMusic == true ? FlameAudio.bgm.play('Rain_Noise.wav'): FlameAudio.bgm.play('Rain_Noise.wav').then((value) => FlameAudio.bgm.pause() ) ;
+      backgroundMusic == true ? Sounds.playBackground_Rain_Noise(): Sounds.stop_Rain_Noise() ;
     });
 
     isPressed;
