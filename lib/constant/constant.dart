@@ -20,6 +20,7 @@ String dots = 'Emote/emote_dots.png';
 bool backgroundMusic =  CashSaver.getData(key: 'BackGround Music') ?? true ;
 bool SFX        =  CashSaver.getData(key: 'SFX') ?? true;
 
+
 // themes
 ThemeData light = ThemeData.light().copyWith(
   primaryColor: Colors.green,

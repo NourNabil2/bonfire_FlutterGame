@@ -26,8 +26,8 @@ class KnightInterface extends GameInterface {
   }
 
   void _drawtorch(Canvas c) {
-    if (gameRef.player != null && (gameRef.player as Kinght).torch) {
-      torch.renderRect(c ,Rect.fromLTWH(190, 20, 35, 30));
+    if (gameRef.player != null && (gameRef.player as Kinght).Taketorch) {
+      torch.renderRect(c ,Rect.fromLTWH(150, 20, 35, 30));
     }
   }
 

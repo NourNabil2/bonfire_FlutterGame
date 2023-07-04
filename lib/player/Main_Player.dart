@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../MainGame.dart';
+import '../SharedPreferences/Cash_Save.dart';
 import '../decorations/Items.dart';
 import 'dart:async' as async;
 double damage = 10 ;
@@ -14,7 +15,8 @@ bool showObserveEnemy = false;
 
 class Kinght extends SimplePlayer with ObjectCollision,Lighting {
   double stamina = 100;
-  bool torch = false ;
+  bool Taketorch =  CashSaver.getData(key: 'torch') ?? false ;
+
   async.Timer? _timerStamina;
   Kinght(Vector2 position )
       : super (

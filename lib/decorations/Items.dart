@@ -7,6 +7,7 @@ import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flame_audio/flame_audio.dart';
 
 
+
 class PotionLife extends GameDecoration with Sensor<Kinght>
 {
   PotionLife({required Vector2 position}): super.withSprite(sprite: Sprite.load("items/potion_life.png",), position: position, size: Vector2.all(15.0));
@@ -109,8 +110,50 @@ class Chest_easter extends GameDecoration with Sensor<Kinght>
 
 }
 
+
+class Mirror_C_B extends GameDecoration with Sensor<Kinght>
+{
+  Mirror_C_B({required Vector2 position}): super.withAnimation(size:  Vector2.all(16) ,animation: SpriteAnimation.load(
+    "Interface/Mirror_C.png",
+    SpriteAnimationData.sequenced(
+      amount: 4 ,
+      loop:false,
+      stepTime: 0.1,
+      textureSize: Vector2(32, 32),
+    ),
+  ) ,position: position );
+
+
+  @override
+  void onContact(GameComponent component) {
+
+ //TODO add Audio
+
+
+  }
+
+}
+
+class Mirror_C extends GameDecoration with Sensor<Kinght>
+{
+  Mirror_C({required Vector2 position}): super.withSprite(size:  Vector2.all(16) ,sprite: Sprite.load('Interface/Mirror_C.png',srcSize: Vector2(32, 32)) ,position: position );
+
+
+  @override
+  void onContact(GameComponent component) {
+
+removeFromParent();
+gameRef.add(Mirror_C_B(position: position));
+
+
+  }
+
+}
+
+
 bool islight = false ;
-class Picktorch extends GameDecoration with Sensor<Kinght> {
+class Picktorch extends GameDecoration with Sensor<Kinght>
+{
   Picktorch({required Vector2 position})
       : super.withAnimation(
     animation: SpriteAnimation.load(
@@ -131,7 +174,8 @@ class Picktorch extends GameDecoration with Sensor<Kinght> {
   @override
   void onContact(GameComponent component) {
     if (component is Kinght) {
-      component.torch = true;
+      component.Taketorch = true ;
+      CashSaver.SaveData(key: 'torch', value: true);
     }
     islight = true;
     removeFromParent();

@@ -60,7 +60,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
   Widget build(BuildContext context) {
     switch (currentMapId) {
       case MapId.one: return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
-          istrue? RoadMap : Green,
+          istrue? Green : RoadMap,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
             'Wizard_oldMan': (properties) => WizerdMan(properties.position),
@@ -73,6 +73,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'radio': (properties) => Radio_House(position: properties.position),
             'bed_door': (properties) => BedRoom_Door(position: properties.position),
             'chest_1': (properties) => Chest_easter(position: properties.position),
+            'Mirror_C': (properties) => Mirror_C(position: properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case MapId.two:

@@ -63,7 +63,7 @@ class BarLife_Component extends InterfaceComponent {
 
   void _drawStamina(Canvas canvas) {
     double xBar = 113;
-    double yBar = (width - 11) / 3;
+    double yBar = (width - 31) / 3;
 
     double currentBarStamina = (stamina * widthBar) / maxStamina;
 
@@ -72,7 +72,7 @@ class BarLife_Component extends InterfaceComponent {
         Offset(xBar + currentBarStamina, yBar),
         Paint()
           ..color = Colors.orange
-          ..strokeWidth = strokeWidth
+          ..strokeWidth = 2
           ..style = PaintingStyle.fill);
   }
 
