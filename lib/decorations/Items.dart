@@ -118,7 +118,7 @@ class Mirror_C_B extends GameDecoration with Sensor<Kinght>
     SpriteAnimationData.sequenced(
       amount: 4 ,
       loop:false,
-      stepTime: 0.1,
+      stepTime: 0.2,
       textureSize: Vector2(32, 32),
     ),
   ) ,position: position );
