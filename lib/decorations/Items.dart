@@ -1,11 +1,11 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/MainGame.dart';
-import 'package:bonfire_flutter_game/Screens/WinScreen.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/NameOfMaps.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flame_audio/flame_audio.dart';
+
 
 class PotionLife extends GameDecoration with Sensor<Kinght>
 {
@@ -17,6 +17,48 @@ class PotionLife extends GameDecoration with Sensor<Kinght>
 
     CashSaver.getData(key: 'SFX') ==true ? FlameAudio.play('power_up.wav') : null ;
     gameRef.player!.addLife(lifePotion);
+    removeFromParent();
+  }
+
+}
+
+
+class Radio_House extends GameDecoration with Sensor<Kinght>
+{
+  Radio_House({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
+
+    "Maps/House.png",
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(0, 384), srcSize: Vector2(16, 16), stepTime: 0.1),
+    ],loop: false),
+
+  ), position: position, size: Vector2.all(20));
+
+
+  @override
+  void onContact(GameComponent component) {
+
+    CashSaver.getData(key: 'SFX') ==true ? FlameAudio.play('power_up.wav') : null ;
+    gameRef.player!.addLife(lifePotion);
+    removeFromParent();
+  }
+
+}
+
+class BedRoom_Door extends GameDecoration with Sensor<Kinght>
+{
+  BedRoom_Door({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
+
+    "Maps/House.png",
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(32, 352), srcSize: Vector2(16, 16), stepTime: 0.1),
+    ],loop: false),
+
+  ), position: position, size: Vector2(30,30));
+
+
+  @override
+  void onContact(GameComponent component) {
     removeFromParent();
   }
 
@@ -47,6 +89,26 @@ class Chest extends GameDecoration with Sensor<Kinght>
 }
 
 
+class Chest_easter extends GameDecoration with Sensor<Kinght>
+{
+  Chest_easter({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
+
+    "Maps/House.png",
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(112, 384), srcSize: Vector2(16, 16), stepTime: 0.1),
+    ],loop: false),
+
+  ), position: position, size: Vector2(30,30));
+
+
+  @override
+  void onContact(GameComponent component) {
+    SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+    removeFromParent();
+  }
+
+}
+
 bool islight = false ;
 class Picktorch extends GameDecoration with Sensor<Kinght> {
   Picktorch({required Vector2 position})
@@ -68,6 +130,9 @@ class Picktorch extends GameDecoration with Sensor<Kinght> {
   }
   @override
   void onContact(GameComponent component) {
+    if (component is Kinght) {
+      component.torch = true;
+    }
     islight = true;
     removeFromParent();
     // component = component as GreenNinjaPlayer;

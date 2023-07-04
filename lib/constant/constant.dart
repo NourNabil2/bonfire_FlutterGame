@@ -11,6 +11,10 @@ double lifePotion = 20 ;
 double Width_Button = 200 ;
 double Height_Button = 50 ;
 
+//String Emote
+String wonder = 'Emote/emote.png';
+String love = 'Emote/emote_love.png';
+String dots = 'Emote/emote_dots.png';
 
 //Music
 bool backgroundMusic =  CashSaver.getData(key: 'BackGround Music') ?? true ;

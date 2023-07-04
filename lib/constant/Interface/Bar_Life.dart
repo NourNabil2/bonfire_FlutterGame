@@ -71,7 +71,7 @@ class BarLife_Component extends InterfaceComponent {
         Offset(xBar, yBar),
         Offset(xBar + currentBarStamina, yBar),
         Paint()
-          ..color = Colors.orangeAccent
+          ..color = Colors.orange
           ..strokeWidth = strokeWidth
           ..style = PaintingStyle.fill);
   }

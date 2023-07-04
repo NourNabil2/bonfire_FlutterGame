@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async' as async;
 import '../Enemy/Bat_purble.dart';
+import '../Enemy/Boss_Ninja.dart';
 import '../MainGame.dart';
 import '../constant/NameOfMaps.dart';
 
 TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , fontSize: 10 ) );
 bool isobserve = false ;
 bool close = false ;
+final GameController _controller = GameController();
 class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMovement ,TapGesture{
 
   Shadow(Vector2 position)
@@ -89,10 +91,11 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
         onClose: () {
           gameRef.camera.moveToPlayerAnimated(zoom: 1.5);
           close = true ;
-          gameRef.add(Bat_purble(Vector2(200, 200) ));
-          gameRef.add(Bat_purble(Vector2(200, 250) ));
-          gameRef.add(Bat_purble(Vector2(200, 300) ));
-          async.Timer(const Duration(seconds: 50),() =>  selectMap(MapId.two),);
+          gameRef.add(Bat_purble(Vector2(150, 200) ));
+          gameRef.add(Bat_purble(Vector2(170, 210) ));
+          gameRef.add(Bat_purble(Vector2(190, 230) ));
+          gameRef.add(Bat_purble(Vector2(210, 220) ));
+          async.Timer(const Duration(seconds: 30),() =>  selectMap(MapId.two),);
 
 
         },

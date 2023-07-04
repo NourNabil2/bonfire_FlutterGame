@@ -6,7 +6,6 @@ import 'package:bonfire_flutter_game/NPC/Wizerd_npc.dart';
 import 'package:bonfire_flutter_game/constant/DynamicMap.dart';
 import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'constant/NameOfMaps.dart';
 import 'package:bonfire_flutter_game/NPC/Shadow.dart';
@@ -61,7 +60,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
   Widget build(BuildContext context) {
     switch (currentMapId) {
       case MapId.one: return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
-          istrue? nothingness : RoadMap,
+          istrue? RoadMap : Green,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
             'Wizard_oldMan': (properties) => WizerdMan(properties.position),
@@ -71,6 +70,9 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'torch': (properties) => torch(position: properties.position),
             'picktorch': (properties) => Picktorch(position: properties.position),
             'nothing': (properties) => Shadow(properties.position),
+            'radio': (properties) => Radio_House(position: properties.position),
+            'bed_door': (properties) => BedRoom_Door(position: properties.position),
+            'chest_1': (properties) => Chest_easter(position: properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case MapId.two:
@@ -86,6 +88,8 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'demon': (properties) => Demon(properties.position),
             'torch': (properties) => torch(position: properties.position),
             'picktorch': (properties) => Picktorch(position: properties.position),
+            'radio': (properties) => Radio_House(position: properties.position),
+            'bed_door': (properties) => BedRoom_Door(position: properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
 

@@ -8,7 +8,7 @@ import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
-import '../decorations/die_enemy.dart';
+import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
 
 double damage = 10 ;
@@ -27,8 +27,9 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
     setupBarLife(
       barLifePosition: BarLifePorition.top,
       showLifeText: false,
-      borderRadius: BorderRadius.circular(2),
-      borderWidth: 2,
+      size: Vector2(10, 1),
+      borderWidth: 0,
+
 
     );
     setupCollision(
@@ -55,6 +56,7 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
   @override
   Future<void> die() async {
      removeFromParent();
+
     gameRef.add(Bat_death(position: position));
     super.die();
   }
@@ -81,7 +83,7 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
         observed: () {
           isobserve = true ;
         },
-        radiusVision:80,
+        radiusVision:150,
       );
 
     }

@@ -1,4 +1,5 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/Enemy/Bat_purble.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
@@ -9,10 +10,11 @@ import '../MainGame.dart';
 import '../decorations/Items.dart';
 import 'dart:async' as async;
 double damage = 10 ;
+bool showObserveEnemy = false;
 
 class Kinght extends SimplePlayer with ObjectCollision,Lighting {
   double stamina = 100;
-
+  bool torch = false ;
   async.Timer? _timerStamina;
   Kinght(Vector2 position )
       : super (
@@ -37,8 +39,6 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
 
   @override
   Future<void> update(double dt) async {
-
-
 if(isDead)
   {
     return;
@@ -46,6 +46,18 @@ if(isDead)
 else
   {
     _verifyStamina();
+    seeEnemy(
+      radiusVision:  200,
+      notObserved: () {
+        showObserveEnemy = false;
+      },
+      observed: (enemies) {
+        if (showObserveEnemy) return;
+        showObserveEnemy = true;
+        _showEmote(emote: wonder);
+
+
+      }, );
 
   }
 
@@ -163,7 +175,28 @@ else
     }
   }
 
+
+  Future<void> _showEmote({required String emote }) async {
+    gameRef.add(
+      AnimatedFollowerObject(
+        animation: SpriteAnimation.load(
+          emote,
+          SpriteAnimationData.sequenced(
+            amount: 8,
+            stepTime: 0.1,
+            textureSize: Vector2(32, 32),
+          ),
+        ),
+        target: gameRef.player,
+        size: Vector2(16, 16),
+        positionFromTarget: Vector2(18, -15),
+      ),
+    );
+  }
+
 }
+
+
 
 
 class PlayerSpriteSheet2 {
@@ -252,7 +285,7 @@ class PlayerSpriteSheet2 {
     ),
   );
   static Future<SpriteAnimation> get idleLeft2 => SpriteAnimation.load(
-    'Player/Picktorch/knight_idle_Light_left.png',
+    'Player/Picktorch/knight_idle_Light_Left.png',
     SpriteAnimationData.sequenced(
       amount:2,
       stepTime: 0.2,

@@ -53,7 +53,7 @@ class _Start_ScreenState extends State<Start_Screen> {
                 width: 350,
                 height: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.all(30.0),
+                  padding: const EdgeInsets.all(25.0),
                   child: ListView(
                     children: [Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -71,7 +71,7 @@ class _Start_ScreenState extends State<Start_Screen> {
                             isPressed=!isPressed;
                           });
                         }),
-                        const SizedBox(height: 40,),
+                        const SizedBox(height: 20,),
                         Button(width: Width_Button,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Settings',
                             Function: () async {
 
