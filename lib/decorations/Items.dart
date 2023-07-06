@@ -134,22 +134,34 @@ class Mirror_C_B extends GameDecoration with Sensor<Kinght>
 
 }
 
-class Mirror_C extends GameDecoration with Sensor<Kinght>
-{
-  Mirror_C({required Vector2 position}): super.withSprite(size:  Vector2.all(16) ,sprite: Sprite.load('Interface/Mirror_C.png',srcSize: Vector2(32, 32)) ,position: position );
-
+class Mirror_C extends GameDecoration with Sensor<Kinght> ,ObjectCollision {
+  Mirror_C({required Vector2 position}) : super.withSprite(
+      size: Vector2.all(16),
+      sprite: Sprite.load('Interface/Mirror_C.png', srcSize: Vector2(32, 32)),
+      position: position);
 
   @override
   void onContact(GameComponent component) {
-
-removeFromParent();
-gameRef.add(Mirror_C_B(position: position));
-
-
+    removeFromParent();
+    gameRef.add(Mirror_C_B(position: position));
+    FlameAudio.play('Mirror_Crack.mp3');
+    gameRef.add(
+      AnimatedFollowerObject(
+        animation: SpriteAnimation.load(
+          unclear,
+          SpriteAnimationData.sequenced(
+            amount: 8,
+            stepTime: 0.1,
+            textureSize: Vector2(32, 32),
+          ),
+        ),
+        target: gameRef.player,
+        size: Vector2(16, 16),
+        positionFromTarget: Vector2(18, -15),
+      ),
+    );
   }
-
 }
-
 
 bool islight = false ;
 class Picktorch extends GameDecoration with Sensor<Kinght>
@@ -177,7 +189,7 @@ class Picktorch extends GameDecoration with Sensor<Kinght>
       component.Taketorch = true ;
       CashSaver.SaveData(key: 'torch', value: true);
     }
-    islight = true;
+
     removeFromParent();
     // component = component as GreenNinjaPlayer;
     // FlameAudio.play(Globals.fireSound);

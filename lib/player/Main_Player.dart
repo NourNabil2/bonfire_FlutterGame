@@ -77,7 +77,21 @@ else
           color: Colors.yellow.withOpacity(0.1),
         ),
       );
+
     }
+    else
+      {
+        super.animation?.idleRight = await PlayerSpriteSheet2.idleRight ;
+        super.animation?.idleLeft = await PlayerSpriteSheet2.idleLeft ;
+        super.animation?.runRight = await PlayerSpriteSheet2.runRight ;
+        super.animation?.runLeft = await PlayerSpriteSheet2.runLeft ;
+        setupLighting(
+        LightingConfig(radius: 0, color: Colors.transparent),
+
+        );
+
+      }
+
 
 
     super.update(dt);
@@ -111,6 +125,8 @@ else
   @override
   void joystickAction (JoystickActionEvent press) {
     if (press.event == ActionEvent.DOWN) {
+
+
       if (press.id == AttackType.melee || press.id == LogicalKeyboardKey.space.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
         if (stamina < 15) {
@@ -125,6 +141,24 @@ else
           );
         }
       }
+
+      if (press.id == AttackType.light || press.id == LogicalKeyboardKey.gameButtonZ.keyId) {
+        if (gameRef.player != null && gameRef.player?.isDead == true) return;
+
+        if (CashSaver.getData(key: 'torch')?? false)
+          {
+            islight == false ? islight = true : islight =false ;
+
+          }
+        else
+          {
+            _showEmote(emote: wrong);
+          }
+
+
+
+        }
+
 
       if (press.id == AttackType.range || press.id == LogicalKeyboardKey.controlLeft.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
@@ -152,6 +186,9 @@ else
 
     super.joystickAction(press);
   }
+
+
+
 
   void _verifyStamina() {
 
@@ -185,7 +222,7 @@ else
           emote,
           SpriteAnimationData.sequenced(
             amount: 8,
-            stepTime: 0.1,
+            stepTime: 0.2,
             textureSize: Vector2(32, 32),
           ),
         ),

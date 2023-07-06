@@ -66,7 +66,8 @@ Widget MainMap (
     keyboardConfig: KeyboardConfig(
       acceptedKeys: [
         LogicalKeyboardKey.space,
-        LogicalKeyboardKey.controlLeft
+        LogicalKeyboardKey.controlLeft,
+        LogicalKeyboardKey.gameButtonZ,
       ],
     ),
     actions: [
@@ -75,6 +76,11 @@ Widget MainMap (
           size: 80,
           margin: const EdgeInsets.only(bottom: 50, right: 50),
           align: JoystickActionAlign.BOTTOM_RIGHT,
+          sprite: Sprite.load('Player/Joystick/sword.png')),
+      JoystickAction(actionId: AttackType.light,
+          size: 20,
+          margin: const EdgeInsets.only(top: 80, left: 50),
+          align: JoystickActionAlign.TOP_LEFT,
           sprite: Sprite.load('Player/Joystick/sword.png')),
       JoystickAction(actionId: AttackType.range,
           size: 50,
