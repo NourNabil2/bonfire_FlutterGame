@@ -58,7 +58,7 @@ class DarkNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
 
      bool dropPickup = Random().nextBool();
      if (dropPickup) {
-       gameRef.add(PotionLife(position: position));
+       gameRef.add(add_stamina(position: position));
     }
 
     super.die();

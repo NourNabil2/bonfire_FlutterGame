@@ -67,7 +67,7 @@ Widget MainMap (
       acceptedKeys: [
         LogicalKeyboardKey.space,
         LogicalKeyboardKey.controlLeft,
-        LogicalKeyboardKey.gameButtonZ,
+        LogicalKeyboardKey.keyZ,
       ],
     ),
     actions: [
@@ -90,6 +90,7 @@ Widget MainMap (
     ],
   ),
   player: Player
+
 
 
 );

@@ -74,6 +74,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/follower/
     - assets/images/Emote/
     - assets/images/NPC/
     - assets/images/NPC/partner/

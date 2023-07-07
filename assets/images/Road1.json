@@ -92,7 +92,7 @@
                  "gid":1025,
                  "height":16,
                  "id":42,
-                 "name":"Boss",
+                 "name":"Dark_Ninja",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -123,6 +123,42 @@
                  "width":16,
                  "x":122,
                  "y":86
+                }, 
+                {
+                 "gid":1025,
+                 "height":16,
+                 "id":48,
+                 "name":"Dark_Ninja",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":127,
+                 "y":115.5
+                }, 
+                {
+                 "gid":1025,
+                 "height":16,
+                 "id":49,
+                 "name":"Dark_Ninja",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":66,
+                 "y":148.5
+                }, 
+                {
+                 "gid":1063,
+                 "height":16,
+                 "id":50,
+                 "name":"fox",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":74.5,
+                 "y":79
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -131,7 +167,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":48,
+ "nextobjectid":51,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
@@ -152,6 +188,10 @@
         {
          "firstgid":1059,
          "source":"NPC\/Wizard_oldMan.tsj"
+        }, 
+        {
+         "firstgid":1061,
+         "source":"Interface\/Plants\/Baren.tsj"
         }],
  "tilewidth":16,
  "type":"map",

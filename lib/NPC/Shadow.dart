@@ -19,7 +19,7 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
       : super(
 
     position: position,
-    size: Vector2(tiledSize,tiledSize),
+    size: Vector2(100,100),
     animation: PlayerSpriteSheet.simpleDirectionAnimation,
     speed: 100,
     initDirection: Direction.down,
@@ -35,7 +35,8 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
       CollisionConfig(collisions: [
         CollisionArea.rectangle(
           size: Vector2(18, 20),
-          align: Vector2(18, 20),
+          align: Vector2(55, 40)
+
         ),
       ]),
     );
@@ -47,21 +48,16 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
 
         super.animation?.runRight = await PlayerSpriteSheet.DeathRight;
         moveRight(2);
-
+        gameRef.player!.isDead ? null : async.Timer(const Duration(seconds: 30),() =>  selectMap(MapId.two),);
       }
-
 
     seePlayer(
         observed: (p0) {
-          if(!isobserve)
-          {
-            isobserve = true ;
             close ? removeFromParent() : null ;
-          }
         },
         notObserved: () {
           {
-            isobserve = false ;
+
           }
         },
         radiusVision:80
@@ -95,7 +91,8 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
           gameRef.add(Bat_purble(Vector2(170, 210) ));
           gameRef.add(Bat_purble(Vector2(190, 230) ));
           gameRef.add(Bat_purble(Vector2(210, 220) ));
-          async.Timer(const Duration(seconds: 30),() =>  selectMap(MapId.two),);
+
+
 
 
         },

@@ -10,19 +10,37 @@ import 'package:flame_audio/flame_audio.dart';
 
 class PotionLife extends GameDecoration with Sensor<Kinght>
 {
-  PotionLife({required Vector2 position}): super.withSprite(sprite: Sprite.load("items/potion_life.png",), position: position, size: Vector2.all(15.0));
+  PotionLife({required Vector2 position}): super.withAnimation(animation:SpriteAnimation.load('items/potion_life.png', SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(16, 16))) , position: position, size: Vector2.all(15.0));
 
 
   @override
   void onContact(GameComponent component) {
 
-    CashSaver.getData(key: 'SFX') ==true ? FlameAudio.play('power_up.wav') : null ;
+    SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+
     gameRef.player!.addLife(lifePotion);
     removeFromParent();
   }
 
 }
 
+class add_stamina extends GameDecoration with Sensor<Kinght>
+{
+  add_stamina({required Vector2 position}): super.withAnimation(animation:SpriteAnimation.load('items/potion_stamina.png', SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(16, 16))) , position: position, size: Vector2.all(15.0));
+  @override
+  void onContact(GameComponent component) {
+
+    SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+    (gameRef.player as Kinght).stamina += 30;
+      if ((gameRef.player as Kinght).stamina > 100) {
+        (gameRef.player as Kinght).stamina = 100;
+    }
+
+
+    removeFromParent();
+  }
+
+}
 
 class Radio_House extends GameDecoration with Sensor<Kinght>
 {
@@ -65,7 +83,6 @@ class BedRoom_Door extends GameDecoration with Sensor<Kinght>
 
 }
 
-
 class Chest extends GameDecoration with Sensor<Kinght>
 {
   Chest({required Vector2 position}): super.withAnimation(size:  Vector2.all(25.0) ,animation: SpriteAnimation.load(
@@ -89,7 +106,6 @@ class Chest extends GameDecoration with Sensor<Kinght>
 
 }
 
-
 class Chest_easter extends GameDecoration with Sensor<Kinght>
 {
   Chest_easter({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
@@ -109,7 +125,6 @@ class Chest_easter extends GameDecoration with Sensor<Kinght>
   }
 
 }
-
 
 class Mirror_C_B extends GameDecoration with Sensor<Kinght>
 {
@@ -134,7 +149,8 @@ class Mirror_C_B extends GameDecoration with Sensor<Kinght>
 
 }
 
-class Mirror_C extends GameDecoration with Sensor<Kinght> ,ObjectCollision {
+class Mirror_C extends GameDecoration with Sensor<Kinght> ,ObjectCollision
+{
   Mirror_C({required Vector2 position}) : super.withSprite(
       size: Vector2.all(16),
       sprite: Sprite.load('Interface/Mirror_C.png', srcSize: Vector2(32, 32)),
@@ -144,14 +160,14 @@ class Mirror_C extends GameDecoration with Sensor<Kinght> ,ObjectCollision {
   void onContact(GameComponent component) {
     removeFromParent();
     gameRef.add(Mirror_C_B(position: position));
-    FlameAudio.play('Mirror_Crack.mp3');
+    FlameAudio.play('Mirror_Crack.mp3',volume: 0.9);
     gameRef.add(
       AnimatedFollowerObject(
         animation: SpriteAnimation.load(
           unclear,
           SpriteAnimationData.sequenced(
             amount: 8,
-            stepTime: 0.1,
+            stepTime: 0.2,
             textureSize: Vector2(32, 32),
           ),
         ),

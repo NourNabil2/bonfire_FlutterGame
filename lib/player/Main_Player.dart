@@ -142,7 +142,7 @@ else
         }
       }
 
-      if (press.id == AttackType.light || press.id == LogicalKeyboardKey.gameButtonZ.keyId) {
+      if (press.id == AttackType.light || press.id == LogicalKeyboardKey.keyZ.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
 
         if (CashSaver.getData(key: 'torch')?? false)
@@ -158,7 +158,6 @@ else
 
 
         }
-
 
       if (press.id == AttackType.range || press.id == LogicalKeyboardKey.controlLeft.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
@@ -222,7 +221,7 @@ else
           emote,
           SpriteAnimationData.sequenced(
             amount: 8,
-            stepTime: 0.2,
+            stepTime: 0.1,
             textureSize: Vector2(32, 32),
           ),
         ),

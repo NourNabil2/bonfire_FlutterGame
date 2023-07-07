@@ -12,6 +12,7 @@ import 'package:bonfire_flutter_game/NPC/Shadow.dart';
 import 'constant/Sounds/background.dart';
 import 'constant/constant.dart';
 import 'decorations/Items.dart';
+import 'followers/Fox.dart';
 double tiledSize = 32 ;
 bool istrue = true ;
 MapId currentMapId = MapId.one;
@@ -60,7 +61,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
   Widget build(BuildContext context) {
     switch (currentMapId) {
       case MapId.one: return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
-          istrue? Green : RoadMap,
+          istrue?  nothingness: House,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
             'Wizard_oldMan': (properties) => WizerdMan(properties.position),
@@ -74,6 +75,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'bed_door': (properties) => BedRoom_Door(position: properties.position),
             'chest_1': (properties) => Chest_easter(position: properties.position),
             'Mirror_C': (properties) => Mirror_C(position: properties.position),
+            'fox': (properties) => Fox(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case MapId.two:
