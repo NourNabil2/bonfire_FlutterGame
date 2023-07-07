@@ -99,7 +99,7 @@ class Chest extends GameDecoration with Sensor<Kinght>
   void onContact(GameComponent component) {
 
     removeFromParent();
-   selectMap(MapId.two);
+   selectMap(1);
     //gameRef.pauseEngine();
    // gameRef.overlayManager.add(LevelWonScreen.id);
   }
@@ -211,5 +211,32 @@ class Picktorch extends GameDecoration with Sensor<Kinght>
     // FlameAudio.play(Globals.fireSound);
     // component.showDamage(_damage);
     // component.removeLife(_damage);
+  }
+}
+
+class Key_silver extends GameDecoration with Sensor<Kinght>
+{
+  Key_silver({required Vector2 position , required String key})
+      : super.withAnimation(
+    animation: SpriteAnimation.load(
+      key,
+      SpriteAnimationData.sequenced(
+        amount: 4,
+        stepTime: 0.2,
+        textureSize: Vector2(16, 16),
+      ),
+    ),
+    position: position,
+    size: Vector2.all(10),
+  ) {}
+
+  @override
+  void onContact(GameComponent component) {
+    if (component is Kinght) {
+      component.silverKey = true ;
+    }
+    // FlameAudio.play(Globals.fireSound);
+    removeFromParent();
+
   }
 }

@@ -3,4 +3,3 @@ const String nothingness = 'Space.tmj';
 const String House = 'Maps/House.tmj';
 
 
-enum MapId { one, two, three }

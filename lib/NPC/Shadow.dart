@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async' as async;
 import '../Enemy/Bat_purble.dart';
-import '../Enemy/Boss_Ninja.dart';
 import '../MainGame.dart';
-import '../constant/NameOfMaps.dart';
+
 
 TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , fontSize: 10 ) );
 bool isobserve = false ;
@@ -48,7 +47,7 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
 
         super.animation?.runRight = await PlayerSpriteSheet.DeathRight;
         moveRight(2);
-        gameRef.player!.isDead ? null : async.Timer(const Duration(seconds: 30),() =>  selectMap(MapId.two),);
+        gameRef.player!.isDead ? null : async.Timer(const Duration(seconds: 30),() =>  selectMap(1),);
       }
 
     seePlayer(

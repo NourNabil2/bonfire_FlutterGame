@@ -22,6 +22,9 @@ String wrong = 'Emote/emote_wrong.png';
 bool backgroundMusic =  CashSaver.getData(key: 'BackGround Music') ?? true ;
 bool SFX        =  CashSaver.getData(key: 'SFX') ?? true;
 
+//save Maps
+int Map =  CashSaver.getData(key: 'Current_Map') ?? 0 ;
+
 
 // themes
 ThemeData light = ThemeData.light().copyWith(

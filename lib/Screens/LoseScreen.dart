@@ -1,4 +1,5 @@
 import 'package:bonfire_flutter_game/MainGame.dart';
+import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/NameOfMaps.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,7 @@ class GameOverScreen extends StatelessWidget {
           ),
           const SizedBox(height: 100),
           ElevatedButton(
-            onPressed: () => selectMap(MapId.one),
+            onPressed: () => selectMap(currentMap),
             child: const Text('Play Again?'),
           )
         ],

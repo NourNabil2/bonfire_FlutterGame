@@ -1,5 +1,4 @@
 import 'package:bonfire/bonfire.dart';
-import '../MainGame.dart';
 import '../constant/constant.dart';
 import '../player/Main_Player.dart';
 
@@ -37,7 +36,7 @@ class Fox extends SimpleAlly with ObjectCollision ,TapGesture{
               closeEnemy: (p0) {
                 simpleAttackMelee(
                     withPush: false,
-                    damage: 10,
+                    damage: 5,
                     size: size,
                     animationRight: PlayerSpriteSheet2.CutSword()
                 );
@@ -57,9 +56,32 @@ class Fox extends SimpleAlly with ObjectCollision ,TapGesture{
               },
             );
           },
-          radiusVision: 50,
+          radiusVision: 80,
           notObserved: ()  {
-
+            seeAndMoveToEnemy(
+              radiusVision: 50,
+              closeEnemy: (p0) {
+                simpleAttackMelee(
+                    withPush: false,
+                    damage: 5,
+                    size: size,
+                    animationRight: PlayerSpriteSheet2.CutSword()
+                );
+              },
+              observed: () {
+                seeAndMoveToEnemy(
+                  radiusVision: 50,
+                  closeEnemy: (p0) {
+                    simpleAttackMelee(
+                        withPush: false,
+                        damage: 10,
+                        size: size,
+                        animationRight: PlayerSpriteSheet2.CutSword()
+                    );
+                  },
+                );
+              },
+            );
           },
         );
 
@@ -84,14 +106,14 @@ class Fox extends SimpleAlly with ObjectCollision ,TapGesture{
         ),
         target: Fox(position),
         size: Vector2(16, 16),
-        positionFromTarget: Vector2(18, -15),
+        positionFromTarget: Vector2(10, -15),
       ),
     );
   }
 
   @override
   bool onCollision(GameComponent component, bool active) {
-    if (component is FlyingAttackObject) {
+    if (component is FlyingAttackObject ) {
       return false;
     }
     return super.onCollision(component, active);

@@ -3,6 +3,7 @@ import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/Enemy/Dark_Ninja_Enemy.dart';
 import 'package:bonfire_flutter_game/Enemy/Demon_enemy.dart';
 import 'package:bonfire_flutter_game/NPC/Wizerd_npc.dart';
+import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/DynamicMap.dart';
 import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
@@ -15,8 +16,8 @@ import 'decorations/Items.dart';
 import 'followers/Fox.dart';
 double tiledSize = 32 ;
 bool istrue = true ;
-MapId currentMapId = MapId.one;
-late Function(MapId) selectMap;
+int currentMap = CashSaver.getData(key: 'Map') ?? 0 ;
+late Function(int) selectMap;
 
 class Just_Like_YouGame extends StatefulWidget {
   const Just_Like_YouGame({Key? key}) : super(key: key);
@@ -28,26 +29,27 @@ class Just_Like_YouGame extends StatefulWidget {
 class _GreenNinjaGameState extends State<Just_Like_YouGame> {
   @override
   void dispose() {
-    currentMapId = MapId.one;
+    currentMap = 0 ;
     super.dispose();
   }
 
   @override
   void initState() {
-    selectMap = (MapId id) {
+    selectMap = (int id) {
       setState(() {
-        currentMapId = id;
+        currentMap = id ;
+        CashSaver.SaveData(key: 'Map', value: currentMap);
       });
     };
 
-        switch (currentMapId) {
-          case MapId.one:
+        switch (currentMap) {
+          case 0:
             backgroundMusic == true ? Sounds.playBackground_SpaceSound() : Sounds.stop_Space();
             break;
-          case MapId.two:
+          case 1:
           // TODO: Handle this case.
             break;
-          case MapId.three:
+          case 2:
           // TODO: Handle this case.
             break;
         }
@@ -59,9 +61,10 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
 
   @override
   Widget build(BuildContext context) {
-    switch (currentMapId) {
-      case MapId.one: return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
-          istrue?  nothingness: House,
+    switch (currentMap) {
+
+      case 0: return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
+          nothingness,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
             'Wizard_oldMan': (properties) => WizerdMan(properties.position),
@@ -78,8 +81,25 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'fox': (properties) => Fox(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
-      case MapId.two:
-      case MapId.three:
+      case 1:return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
+          House,
+          forceTileSize: Vector2(tiledSize, tiledSize),
+          objectsBuilder: {
+            'Wizard_oldMan': (properties) => WizerdMan(properties.position),
+            'Dark_Ninja': (properties) => DarkNinja(properties.position),
+            'Boss': (properties) => BossNinja(properties.position),
+            'demon': (properties) => Demon(properties.position),
+            'torch': (properties) => torch(position: properties.position),
+            'picktorch': (properties) => Picktorch(position: properties.position),
+            'nothing': (properties) => Shadow(properties.position),
+            'radio': (properties) => Radio_House(position: properties.position),
+            'bed_door': (properties) => BedRoom_Door(position: properties.position),
+            'chest_1': (properties) => Chest_easter(position: properties.position),
+            'Mirror_C': (properties) => Mirror_C(position: properties.position),
+            'fox': (properties) => Fox(properties.position),
+          }
+      ),Player: Kinght(Vector2(90,90))) ;
+      case 2:
       default:
       return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
            RoadMap,

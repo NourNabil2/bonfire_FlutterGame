@@ -26,7 +26,7 @@ class LevelWonScreen extends StatelessWidget {
           ),
           const SizedBox(height: 100),
           ElevatedButton(
-            onPressed: () => selectMap(MapId.one),
+            onPressed: () => selectMap(currentMap),
             child: const Text('Play Again?'),
           )
         ],
