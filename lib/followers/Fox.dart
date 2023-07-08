@@ -3,7 +3,7 @@ import '../constant/constant.dart';
 import '../player/Main_Player.dart';
 
 class Fox extends SimpleAlly with ObjectCollision ,TapGesture{
-
+bool see = false;
   Fox(Vector2 position)
       : super(
     position: position,
@@ -12,6 +12,7 @@ class Fox extends SimpleAlly with ObjectCollision ,TapGesture{
     speed: 100,
     initDirection: Direction.right,
   ){
+
     setupCollision(
       CollisionConfig(collisions: [
         CollisionArea.rectangle(
@@ -28,7 +29,11 @@ class Fox extends SimpleAlly with ObjectCollision ,TapGesture{
         seeAndMoveToPlayer(
           closePlayer: (player) {},
           observed: () async {
-            super.animation?.idleRight = await PlayerSpriteSheet.idleRight;
+            if (!see)
+            {
+              see = true ;
+              super.animation?.idleRight = await PlayerSpriteSheet.idleRight ;
+            }
             seeAndMoveToEnemy(
               radiusVision: 50,
               closeEnemy: (p0) {
@@ -55,7 +60,7 @@ class Fox extends SimpleAlly with ObjectCollision ,TapGesture{
             );
           },
           radiusVision: 80,
-          notObserved: ()  {
+          notObserved: () {
             seeAndMoveToEnemy(
               radiusVision: 50,
               closeEnemy: (p0) {

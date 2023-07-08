@@ -136,7 +136,7 @@ class Chest extends GameDecoration with Sensor<Kinght>
   void onContact(GameComponent component) {
 
     removeFromParent();
-   selectMap(1);
+   selectMap(3);
     //gameRef.pauseEngine();
    // gameRef.overlayManager.add(LevelWonScreen.id);
   }

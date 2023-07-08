@@ -35,10 +35,11 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
 
   @override
   void initState() {
+    currentMap = CashSaver.getData(key: 'Map') ?? 0 ;
     selectMap = (int id) {
       setState(() {
         currentMap = id ;
-        CashSaver.SaveData(key: 'Map', value: currentMap);
+        CashSaver.SaveData(key: 'Map', value: id);
       });
     };
 
@@ -103,6 +104,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'picktorch': (properties) => Picktorch(position: properties.position),
             'radio': (properties) => Radio_House(position: properties.position),
             'bed_door': (properties) => BedRoom_Door(position: properties.position),
+            'fox': (properties) => Fox(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
 
