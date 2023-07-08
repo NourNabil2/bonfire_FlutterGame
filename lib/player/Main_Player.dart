@@ -17,6 +17,7 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
   double stamina = 100;
   bool Taketorch =  CashSaver.getData(key: 'torch') ?? false ;
   bool silverKey = false ;
+  bool goldKey = false ;
 
   async.Timer? _timerStamina;
   Kinght(Vector2 position )

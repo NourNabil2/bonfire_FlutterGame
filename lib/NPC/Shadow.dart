@@ -98,14 +98,15 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
       //  onFinish: () => selectMap(MapId.two),
       );
     },);
-  }
+
+
+    }
 
   Say speak({required String text , required bool isPlayer ,})=> Say(
     text: [TextSpan(text: text),],
     person: SizedBox(height: 100,width: 100,child: isPlayer ? PlayerSpriteSheet2.idleRight.asWidget() : PlayerSpriteSheet.idleRight.asWidget() ,),
     personSayDirection: isPlayer ? PersonSayDirection.LEFT :PersonSayDirection.RIGHT ,
   );
-
 
 
 }

@@ -67,18 +67,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
           nothingness,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
-            'Wizard_oldMan': (properties) => WizerdMan(properties.position),
-            'Dark_Ninja': (properties) => DarkNinja(properties.position),
-            'Boss': (properties) => BossNinja(properties.position),
-            'demon': (properties) => Demon(properties.position),
-            'torch': (properties) => torch(position: properties.position),
-            'picktorch': (properties) => Picktorch(position: properties.position),
             'nothing': (properties) => Shadow(properties.position),
-            'radio': (properties) => Radio_House(position: properties.position),
-            'bed_door': (properties) => BedRoom_Door(position: properties.position),
-            'chest_1': (properties) => Chest_easter(position: properties.position),
-            'Mirror_C': (properties) => Mirror_C(position: properties.position),
-            'fox': (properties) => Fox(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 1:return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
@@ -97,6 +86,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'chest_1': (properties) => Chest_easter(position: properties.position),
             'Mirror_C': (properties) => Mirror_C(position: properties.position),
             'fox': (properties) => Fox(properties.position),
+            'Silver_Key': (properties) => Key_silver(position: properties.position, keyImage: SilverKey),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 2:

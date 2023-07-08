@@ -12,8 +12,6 @@ class Fox extends SimpleAlly with ObjectCollision ,TapGesture{
     speed: 100,
     initDirection: Direction.right,
   ){
-
-
     setupCollision(
       CollisionConfig(collisions: [
         CollisionArea.rectangle(

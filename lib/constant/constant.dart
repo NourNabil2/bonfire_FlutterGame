@@ -1,6 +1,10 @@
+import 'package:bonfire/bonfire.dart';
+import 'package:bonfire/util/talk/say.dart';
 import 'package:flutter/material.dart';
 
+import '../Enemy/Bat_purble.dart';
 import '../SharedPreferences/Cash_Save.dart';
+import '../player/Main_Player.dart';
 
 
 // id for typeattack
@@ -11,12 +15,24 @@ double lifePotion = 20 ;
 double Width_Button = 200 ;
 double Height_Button = 50 ;
 
+//talk
+bool showDialog = false;
+Say speak({required String text , required bool isPlayer , spritesheet })=> Say(
+  text: [TextSpan(text: text),],
+  person: SizedBox(height: 100,width: 100,child: isPlayer ? PlayerSpriteSheet2.idleRight.asWidget() : spritesheet ,),
+  personSayDirection: isPlayer ? PersonSayDirection.LEFT :PersonSayDirection.RIGHT ,
+);
+
 //String Emote
 String wonder = 'Emote/emote.png';
 String love = 'Emote/emote_love.png';
 String dots = 'Emote/emote_dots.png';
 String unclear = 'Emote/emote_unclear.png';
 String wrong = 'Emote/emote_wrong.png';
+
+//String Key
+String SilverKey = 'items/keys_silver.png';
+String GoldrKey = 'items/keys_gold.png';
 
 //Music
 bool backgroundMusic =  CashSaver.getData(key: 'BackGround Music') ?? true ;

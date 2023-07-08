@@ -1,10 +1,10 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/MainGame.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
-import 'package:bonfire_flutter_game/constant/NameOfMaps.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/services.dart';
 
 
 
@@ -64,21 +64,58 @@ class Radio_House extends GameDecoration with Sensor<Kinght>
 
 }
 
-class BedRoom_Door extends GameDecoration with Sensor<Kinght>
+class BedRoom_Door extends GameDecoration with ObjectCollision
 {
   BedRoom_Door({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
-
     "Maps/House.png",
     SpriteAnimationData([
       SpriteAnimationFrameData(srcPosition: Vector2(32, 352), srcSize: Vector2(16, 16), stepTime: 0.1),
     ],loop: false),
 
-  ), position: position, size: Vector2(30,30));
+  ),
 
 
+      position: position, size: Vector2(30,30)) {
+    setupCollision(
+      CollisionConfig(
+        collisions: [
+          CollisionArea.rectangle(
+            size: Vector2(30,20),
+            align: Vector2(1,10),
+          ),
+        ],
+      ),
+    );
+  }
   @override
-  void onContact(GameComponent component) {
-    removeFromParent();
+  void update(double dt) {
+    super.update(dt);
+    if (gameRef.player != null) {
+      seeComponent(
+        gameRef.player!,
+        radiusVision: 10,
+        observed: (player) {
+          Kinght p = player as Kinght;
+          if (p.silverKey == true) {
+            p.silverKey = false;
+            removeFromParent();
+          } else {
+            if (!showDialog) {
+              showDialog = true;
+              TalkDialog.show(gameRef.context, [
+                speak(text: 'The door is locked, I have to find the key',
+                    isPlayer: true),
+
+              ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space]
+
+              );
+            }
+
+          }
+        },
+        notObserved: () => showDialog = false,
+      );
+    }
   }
 
 }
@@ -149,34 +186,43 @@ class Mirror_C_B extends GameDecoration with Sensor<Kinght>
 
 }
 
-class Mirror_C extends GameDecoration with Sensor<Kinght> ,ObjectCollision
+class Mirror_C extends GameDecoration
 {
+  bool finish = false ;
   Mirror_C({required Vector2 position}) : super.withSprite(
       size: Vector2.all(16),
       sprite: Sprite.load('Interface/Mirror_C.png', srcSize: Vector2(32, 32)),
       position: position);
-
   @override
-  void onContact(GameComponent component) {
-    removeFromParent();
-    gameRef.add(Mirror_C_B(position: position));
-    FlameAudio.play('Mirror_Crack.mp3',volume: 0.9);
-    gameRef.add(
-      AnimatedFollowerObject(
-        animation: SpriteAnimation.load(
-          unclear,
-          SpriteAnimationData.sequenced(
-            amount: 8,
-            stepTime: 0.2,
-            textureSize: Vector2(32, 32),
-          ),
-        ),
-        target: gameRef.player,
-        size: Vector2(16, 16),
-        positionFromTarget: Vector2(18, -15),
-      ),
-    );
+  void update(double dt) {
+    super.update(dt);
+      seeComponent(
+        gameRef.player!,
+        observed: (player) {
+          if (!finish) {
+            finish = true ;
+            gameRef.add(Mirror_C_B(position: position));
+            FlameAudio.play('Mirror_Crack.mp3',volume: 0.9);
+            gameRef.add(AnimatedFollowerObject(
+              animation: SpriteAnimation.load(
+                unclear,
+                SpriteAnimationData.sequenced(
+                  amount: 8,
+                  stepTime: 0.2,
+                  textureSize: Vector2(32, 32),
+                ),
+              ),
+              target: gameRef.player,
+              size: Vector2(16, 16),
+              positionFromTarget: Vector2(18, -15),
+            ),);
+            removeFromParent();
+          }
+        },
+      );
   }
+
+
 }
 
 bool islight = false ;
@@ -216,10 +262,10 @@ class Picktorch extends GameDecoration with Sensor<Kinght>
 
 class Key_silver extends GameDecoration with Sensor<Kinght>
 {
-  Key_silver({required Vector2 position , required String key})
+  Key_silver({required Vector2 position , required String keyImage})
       : super.withAnimation(
     animation: SpriteAnimation.load(
-      key,
+      keyImage,
       SpriteAnimationData.sequenced(
         amount: 4,
         stepTime: 0.2,
