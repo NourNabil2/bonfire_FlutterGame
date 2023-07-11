@@ -5,6 +5,7 @@ import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../decorations/Gate_translate.dart';
 bool isobserve = false ;
 
 double damage = 10 ;
@@ -52,7 +53,7 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   void die() {
     gameRef.camera.shake(intensity: 4);
     removeFromParent();
-    gameRef.add(Chest(position: position));
+    gameRef.add(Portal(position: position));
 
 
     super.die();

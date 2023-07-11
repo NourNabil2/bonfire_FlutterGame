@@ -1,5 +1,5 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire_flutter_game/MainGame.dart';
+import 'dart:async' as async ;
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
@@ -42,6 +42,23 @@ class add_stamina extends GameDecoration with Sensor<Kinght>
 
 }
 
+class PotionFast extends GameDecoration with Sensor<Kinght>
+{
+bool speedup = false ;
+ PotionFast({required Vector2 position}): super.withAnimation(animation:SpriteAnimation.load('items/potion_Fast.png', SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(16, 16))) , position: position, size: Vector2.all(15.0));
+
+ @override
+  void onContact(GameComponent component) {
+   Future.delayed(const Duration(seconds: 3));
+    SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+    (gameRef.player as Kinght).speed += 50 ;
+    Future.delayed(const Duration(seconds: 3));
+    (gameRef.player as Kinght).speed -= 50 ;
+
+  }
+
+}
+
 class Radio_House extends GameDecoration with TapGesture
 {
   Radio_House({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
@@ -55,10 +72,67 @@ class Radio_House extends GameDecoration with TapGesture
 
   @override
   void onTap() {
+    FlameAudio.play('Radio.mp3');
 
-        FlameAudio.play('power_up.wav');
+  }
 
 
+
+
+
+}
+
+class safe extends GameDecoration with TapGesture ,ObjectCollision
+{
+  bool showDialog = false ;
+  safe({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
+    "Maps/House.png",
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(16, 384), srcSize: Vector2(16, 16), stepTime: 0.1),
+    ],loop: false),
+
+  ), position: position, size: Vector2.all(20))
+  {
+    setupCollision(
+      CollisionConfig(
+        collisions: [
+          CollisionArea.rectangle(
+            size: Vector2(1,1),
+            align: Vector2(1,-16),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void update(dt) {
+
+    seeComponent(
+      gameRef.player!,
+      radiusVision: 100,
+      observed: (player) {
+        if (!showDialog) {
+          showDialog = true;
+          TalkDialog.show(gameRef.context, [
+            speak(text: 'Ha?! What happened, how?',
+                isPlayer: true),
+
+          ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space]
+
+          );
+        }
+
+      },
+
+    );
+
+    super.update(dt);
+  }
+  @override
+  void onTap() {
+
+    (gameRef.player as Kinght).silverKey = true ;
 
   }
 
@@ -124,6 +198,8 @@ class BedRoom_Door extends GameDecoration with ObjectCollision
 
 }
 
+
+
 class Chest extends GameDecoration with Sensor<Kinght>
 {
   Chest({required Vector2 position}): super.withAnimation(size:  Vector2.all(25.0) ,animation: SpriteAnimation.load(
@@ -139,13 +215,13 @@ class Chest extends GameDecoration with Sensor<Kinght>
   @override
   void onContact(GameComponent component) {
 
-    removeFromParent();
-   selectMap(3);
-    //gameRef.pauseEngine();
    // gameRef.overlayManager.add(LevelWonScreen.id);
   }
 
 }
+
+
+
 
 class Chest_easter extends GameDecoration with Sensor<Kinght>
 {

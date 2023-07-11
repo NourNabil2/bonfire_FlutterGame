@@ -6,9 +6,12 @@ import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../Enemy/Rat.dart';
 import '../SharedPreferences/Cash_Save.dart';
 import '../decorations/Items.dart';
 import 'dart:async' as async;
+
+import '../decorations/die_Decoration.dart';
 double damage = 10 ;
 bool showObserveEnemy = false;
 
@@ -25,7 +28,7 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
     size: Vector2(50,37),
     animation: PlayerSpriteSheet2.simpleDirectionAnimation,
     life: 200,
-    speed: 120,
+    speed: 100,
     initDirection: Direction.right,
   )
   {
@@ -113,12 +116,28 @@ else
     super.receiveDamage(attacker, damage, identify);
   }
   @override
-  void die() {
+  Future<void> die() async {
     // FlameAudio.play(Globals.gameOverSound);
-    gameRef.camera.shake(intensity: 4);
-    removeFromParent();
+
+   await animation?.playOnce(
+      SpriteAnimation.load(
+          "Player/MainMovement/player-death.png",
+          SpriteAnimationData.sequenced(amount: 7, stepTime: 0.1, textureSize: Vector2(50, 37),loop: false )
+
+      ),
+      runToTheEnd: true ,
+      flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
+      onFinish: () => lastDirectionHorizontal == Direction.right ? gameRef.add(Player_death_R(position: position)) : gameRef.add(Player_death(position: position)) ,
+    );
+   gameRef.camera.shake(intensity: 4);
+  await Future.delayed(const Duration(milliseconds: 700));
+   removeFromParent();
+    die_rat = 0 ;
     gameRef.pauseEngine();
     gameRef.overlayManager.add(GameOverScreen.id);
+
+
+
     super.die();
   }
 
@@ -266,7 +285,7 @@ class PlayerSpriteSheet2 {
     ),
   );
   static Future<SpriteAnimation> CutSword() => SpriteAnimation.load(
-    "Effects/Piskel.png",
+    "Effects/cut.png",
     SpriteAnimationData.sequenced(
       amount: 7,
       stepTime: 0.1,

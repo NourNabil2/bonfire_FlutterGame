@@ -2,10 +2,11 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../decorations/Items.dart';
 import '../decorations/die_Decoration.dart';
 import '../player/Main_Player.dart';
 bool isobserve = false ;
-
+int die_rat =0 ;
 double damage = 5 ;
 class Rat extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
 
@@ -14,7 +15,7 @@ class Rat extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,Us
     position: position,
     size: Vector2(40,40),
     animation:PlayerSpriteSheet.simpleDirectionAnimation ,
-    life: 100,
+    life: 50,
     speed: 80,
     initDirection: Direction.down,
   )
@@ -53,6 +54,16 @@ class Rat extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,Us
     removeFromParent();
     gameRef.add(Rat_death(position: position));
     super.die();
+    if (die_rat == 11)
+      {
+        selectMap(2);
+      }
+    else
+      {
+        die_rat++ ;
+        print(die_rat);
+      }
+
   }
 
 
