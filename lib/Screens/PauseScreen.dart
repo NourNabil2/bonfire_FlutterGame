@@ -17,41 +17,44 @@ class PauseScreen extends StatelessWidget {
   @override
 
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+    return Container(
+      color: Colors.black54,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
 
-          const Image(image: AssetImage('assets/images/image_Interface/pause_Screen.png'),width: 250),
-          const SizedBox(height: 50),
-          MaterialButton(
+            const Image(image: AssetImage('assets/images/image_Interface/pause_Screen.png'),width: 250),
+            const SizedBox(height: 50),
+            MaterialButton(
+                onPressed: () {
+                  backgroundMusic ? Sounds.resumeBackgroundSound() : null ;
+                  game.overlayManager.remove(PauseScreen.id);
+                  game.gameController!.gameRef.resumeEngine();
+                },
+                child: TextMenu(title: 'Resume')
+            ),
+            MaterialButton(
+                onPressed: () {
+
+                  Navigator.of(context).push(
+                      HeroDialogRoute(builder: (context) {
+                        return SettingPopupCard();
+                      }
+                      ));
+                },
+
+                child: TextMenu(title: 'Settings')
+            ),
+            MaterialButton(
               onPressed: () {
                 Sounds.resumeBackgroundSound();
-                game.overlayManager.remove(PauseScreen.id);
-                game.gameController!.gameRef.resumeEngine();
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Start_Screen(),), (route) => false);
               },
-              child: TextMenu(title: 'Resume')
-          ),
-          MaterialButton(
-              onPressed: () {
-
-                Navigator.of(context).push(
-                    HeroDialogRoute(builder: (context) {
-                      return SettingPopupCard();
-                    }
-                    ));
-              },
-
-              child: TextMenu(title: 'Settings')
-          ),
-          MaterialButton(
-            onPressed: () {
-              Sounds.resumeBackgroundSound();
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Start_Screen(),), (route) => false);
-            },
-            child: TextMenu(title: 'Main Menu')
-          ),
-        ],
+              child: TextMenu(title: 'Main Menu')
+            ),
+          ],
+        ),
       ),
     );
   }

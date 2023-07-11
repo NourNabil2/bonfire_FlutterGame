@@ -18,6 +18,7 @@ Widget MainMap (
   required double tiledSize ,
   required GameMap map ,
   required Player Player ,
+  Color lightingMap = Colors.transparent ,
 
 }
     )=>BonfireWidget(
@@ -54,7 +55,7 @@ Widget MainMap (
 
   initialActiveOverlays: const <String>['mini_map','Pause'],
 
-  lightingColorGame: Colors.black54,
+  lightingColorGame: lightingMap,
   cameraConfig: CameraConfig(zoom: 1.5),
   map: map,
   joystick: Joystick(

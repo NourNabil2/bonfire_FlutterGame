@@ -38,3 +38,15 @@ class Bat_death extends GameDecoration {
 
   ), position: position, size: Vector2.all(64.64));
 }
+
+
+class Rat_death extends GameDecoration {
+  Rat_death({required Vector2 position})
+      : super.withAnimation(animation: SpriteAnimation.load(
+
+    "Enemy/Rats/Rat_Death.png",
+    SpriteAnimationData.sequenced(amount: 5, stepTime: 0.1, textureSize: Vector2(64, 64),loop: false )
+
+  ), position: position, size: Vector2.all(64.64));
+}
+

@@ -5,9 +5,11 @@ import 'package:bonfire_flutter_game/Enemy/Demon_enemy.dart';
 import 'package:bonfire_flutter_game/NPC/Wizerd_npc.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/DynamicMap.dart';
+import 'package:bonfire_flutter_game/constant/onBoarding.dart';
 import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/material.dart';
+import 'Enemy/Rat.dart';
 import 'constant/NameOfMaps.dart';
 import 'package:bonfire_flutter_game/NPC/Shadow.dart';
 import 'constant/Sounds/background.dart';
@@ -27,6 +29,7 @@ class Just_Like_YouGame extends StatefulWidget {
 }
 
 class _GreenNinjaGameState extends State<Just_Like_YouGame> {
+
   @override
   void dispose() {
     currentMap = 0 ;
@@ -64,35 +67,36 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
   Widget build(BuildContext context) {
     switch (currentMap) {
 
-      case 0: return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
+      case 0: return MainMap(tiledSize: tiledSize, lightingMap: Colors.black38,map: WorldMapByTiled(
           nothingness,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
             'nothing': (properties) => Shadow(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
-      case 1:return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
-          House,
-          forceTileSize: Vector2(tiledSize, tiledSize),
-          objectsBuilder: {
-            'Wizard_oldMan': (properties) => WizerdMan(properties.position),
-            'Dark_Ninja': (properties) => DarkNinja(properties.position),
-            'Boss': (properties) => BossNinja(properties.position),
-            'demon': (properties) => Demon(properties.position),
-            'torch': (properties) => torch(position: properties.position),
-            'picktorch': (properties) => Picktorch(position: properties.position),
-            'nothing': (properties) => Shadow(properties.position),
-            'radio': (properties) => Radio_House(position: properties.position),
-            'bed_door': (properties) => BedRoom_Door(position: properties.position),
-            'chest_1': (properties) => Chest_easter(position: properties.position),
-            'Mirror_C': (properties) => Mirror_C(position: properties.position),
-            'fox': (properties) => Fox(properties.position),
-            'Silver_Key': (properties) => Key_silver(position: properties.position, keyImage: SilverKey),
-          }
-      ),Player: Kinght(Vector2(90,90))) ;
+      case 1: return  MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
+            House,
+            forceTileSize: Vector2(tiledSize, tiledSize),
+            objectsBuilder: {
+              'Wizard_oldMan': (properties) => WizerdMan(properties.position),
+              'Dark_Ninja': (properties) => DarkNinja(properties.position),
+              'Boss': (properties) => BossNinja(properties.position),
+              'demon': (properties) => Demon(properties.position),
+              'torch': (properties) => torch(position: properties.position),
+              'picktorch': (properties) => Picktorch(position: properties.position),
+              'nothing': (properties) => Shadow(properties.position),
+              'radio': (properties) => Radio_House(position: properties.position),
+              'bed_door': (properties) => BedRoom_Door(position: properties.position),
+              'chest_1': (properties) => Chest_easter(position: properties.position),
+              'Mirror_C': (properties) => Mirror_C(position: properties.position),
+              'fox': (properties) => Fox(properties.position),
+              'Silver_Key': (properties) => Key_silver(position: properties.position, keyImage: SilverKey),
+              'Rat': (properties) => Rat(properties.position),
+            }
+        ),Player: Kinght(Vector2(90,90))) ;
       case 2:
       default:
-      return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
+      return MainMap(lightingMap:Colors.black38 ,tiledSize: tiledSize, map: WorldMapByTiled(
            RoadMap,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {

@@ -80,6 +80,7 @@ flutter:
     - assets/images/NPC/partner/
     - assets/images/Enemy/
     - assets/images/Enemy/Bats/
+    - assets/images/Enemy/Rats/
     - assets/images/Effects/
     - assets/images/Interface/
     - assets/images/Interface/player_Interface/
@@ -87,6 +88,7 @@ flutter:
     - assets/images/Maps/
     - assets/images/Player/Joystick/
     - assets/images/Player/MainMovement/
+    - assets/images/Player/AttackMovement/
     - assets/images/Player/Picktorch/
     - assets/images/items/
     - assets/images/image_Interface/

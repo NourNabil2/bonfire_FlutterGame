@@ -59,7 +59,7 @@ Widget Button (
 
   ]:null),
 
-    child: Center(child: Text(text,style:const TextStyle(decoration: TextDecoration.none,color: Colors.black,fontWeight: FontWeight.bold),)),
+    child: Center(child: Text(text,textAlign: TextAlign.center ,style:const TextStyle(decoration: TextDecoration.none ,color: Colors.black,fontWeight: FontWeight.bold),)),
 
 
 

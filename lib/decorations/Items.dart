@@ -42,7 +42,7 @@ class add_stamina extends GameDecoration with Sensor<Kinght>
 
 }
 
-class Radio_House extends GameDecoration with Sensor<Kinght>
+class Radio_House extends GameDecoration with TapGesture
 {
   Radio_House({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
 
@@ -53,14 +53,18 @@ class Radio_House extends GameDecoration with Sensor<Kinght>
 
   ), position: position, size: Vector2.all(20));
 
-
   @override
-  void onContact(GameComponent component) {
+  void onTap() {
 
-    CashSaver.getData(key: 'SFX') ==true ? FlameAudio.play('power_up.wav') : null ;
-    gameRef.player!.addLife(lifePotion);
-    removeFromParent();
+        FlameAudio.play('power_up.wav');
+
+
+
   }
+
+
+
+
 
 }
 
@@ -197,6 +201,7 @@ class Mirror_C extends GameDecoration
   void update(double dt) {
     super.update(dt);
       seeComponent(
+        radiusVision: 50,
         gameRef.player!,
         observed: (player) {
           if (!finish) {

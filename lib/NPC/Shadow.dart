@@ -44,7 +44,6 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
     Future<void> update(double dt) async {
     if(close)
       {
-
         super.animation?.runRight = await PlayerSpriteSheet.DeathRight;
         moveRight(2);
         gameRef.player!.isDead ? null : async.Timer(const Duration(seconds: 30),() =>  selectMap(1),);
@@ -59,7 +58,7 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
 
           }
         },
-        radiusVision:80
+
 
     );
         super.update(dt);

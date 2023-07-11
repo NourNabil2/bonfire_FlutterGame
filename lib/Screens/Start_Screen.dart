@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:math';
 import 'package:bonfire_flutter_game/MainGame.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:flutter/services.dart';
 
+import '../NPC/Shadow.dart';
 import '../SharedPreferences/Cash_Save.dart';
 import '../constant/NameOfMaps.dart';
 import '../constant/Sounds/background.dart';
@@ -54,54 +57,66 @@ class _Start_ScreenState extends State<Start_Screen> {
                 height: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: ListView(
-                    children: [Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children:[
+                  child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children:[
+                    Expanded(
+                      child: Button(width: 70,height: 150,isboxShadow: true,border: true,radius: 50, ColorOfButton: Colors.red, text: currentMap == 0 ? 'New Game' : 'Start', Function: () async{
+                        FlameAudio.bgm.stop();
+                        setState(() {
+                          isPressed=!isPressed;
+                        });
+                        await Future.delayed(const Duration(milliseconds: 300));
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Just_Like_YouGame(),), (route) => false);
+                        setState(() {
+                          isPressed=!isPressed;
+                        });
+  }),
+) ,
+                    const SizedBox(height: 20,),
+                    if (currentMap != 0)  Expanded(
+                      child: Button(width: Width_Button-30,height: Height_Button,isboxShadow: false,border: false ,radius: 10, ColorOfButton: Colors.blueGrey, text: 'New Game',
+                          Function: () {
+                        close = false ;
+                        CashSaver.Clearall();
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Just_Like_YouGame(),), (route) => false);
+                          }
+                      ),
+                    ),
+                    const SizedBox(height: 15,),
+                    Expanded(
+                      child: Button(width: Width_Button,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Settings',
+                          Function: () async {
 
-                        Button(width: 100,height: 100,isboxShadow: true,border: true,radius: 50, ColorOfButton: Colors.red, text: 'start', Function: () async{
-                          FlameAudio.bgm.stop();
-                          setState(() {
-                            isPressed=!isPressed;
-                          });
-                          await Future.delayed(Duration(milliseconds: 300));
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Just_Like_YouGame(),), (route) => false);
-                          setState(() {
-                            isPressed=!isPressed;
-                          });
-                        }),
-                        const SizedBox(height: 20,),
-                        Button(width: Width_Button,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Settings',
-                            Function: () async {
-
-                              await  Navigator.of(context).push(
-                                  HeroDialogRoute(builder: (context) {
-                                    return SettingPopupCard();
-                                  }
-                                  )
-                              );
-                            }
-                        ),
-                        const SizedBox(height: 15,),
-                        Button(width: Width_Button+30,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoarding(Story: boarding),)) ;
-                        }),
-                        const SizedBox(height: 15,),
-                        Button(width: Width_Button+60,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Exit', Function: (){
-                          SystemNavigator.pop();
-                        }),
+                            await  Navigator.of(context).push(
+                                HeroDialogRoute(builder: (context) {
+                                  return SettingPopupCard();
+                                }
+                                )
+                            );
+                          }
+                      ),
+                    ),
+                    const SizedBox(height: 15,),
+                    Expanded(
+                      child: Button(width: Width_Button+30,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoarding(Story: boarding),)) ;
+                      }),
+                    ),
+                    const SizedBox(height: 15,),
+                    Expanded(
+                      child: Button(width: Width_Button+60,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'Exit', Function: (){
+                        SystemNavigator.pop();
+                      }),
+                    ),
 
 
 
 
 
-
-
-
-                      ],
-                    ),]
-                  ),
+                  ],
+                    ),
                 ),
               ),
 

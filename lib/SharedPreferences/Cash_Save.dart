@@ -31,5 +31,10 @@ class CashSaver
   {
     return await sharedPreferences?.remove(key);
   }
+
+  static Future Clearall() async
+  {
+    return await sharedPreferences?.clear();
+  }
 }
 

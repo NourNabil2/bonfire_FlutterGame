@@ -6,7 +6,6 @@ import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../MainGame.dart';
 import '../SharedPreferences/Cash_Save.dart';
 import '../decorations/Items.dart';
 import 'dart:async' as async;
@@ -23,10 +22,10 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
   Kinght(Vector2 position )
       : super (
     position: position,
-    size: Vector2(tiledSize,tiledSize),
+    size: Vector2(50,37),
     animation: PlayerSpriteSheet2.simpleDirectionAnimation,
     life: 200,
-    speed: 100,
+    speed: 120,
     initDirection: Direction.right,
   )
   {
@@ -43,7 +42,9 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
 
   @override
   Future<void> update(double dt) async {
-if(isDead)
+
+
+    if(isDead)
   {
     return;
   }
@@ -74,7 +75,7 @@ else
       super.animation?.runLeft = await PlayerSpriteSheet2.runLeft2 ;
       setupLighting(
         LightingConfig(
-          radius: width * 2,
+          radius: width ,
           blurBorder: width * 2,
           color: Colors.yellow.withOpacity(0.1),
         ),
@@ -127,8 +128,6 @@ else
   @override
   void joystickAction (JoystickActionEvent press) {
     if (press.event == ActionEvent.DOWN) {
-
-
       if (press.id == AttackType.melee || press.id == LogicalKeyboardKey.space.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
         if (stamina < 15) {
@@ -136,10 +135,14 @@ else
         }
         else {
           decrementStamina(15);
+          animation?.playOnce(
+            PlayerSpriteSheet2.AttackSwrd_R(),
+            runToTheEnd: true ,
+            flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
+          );
           simpleAttackMelee(
               damage: damage * 2,
               size: size,
-              animationRight: PlayerSpriteSheet2.CutSword()
           );
         }
       }
@@ -170,6 +173,12 @@ else
         else
           {
             decrementStamina(15);
+            animation?.playOnce(
+                PlayerSpriteSheet2.AttackRange_R() ,
+                flipX:  lastDirectionHorizontal == Direction.right ?  false  : true,
+                runToTheEnd: true,
+
+            );
             simpleAttackRange(
                 speed: 200,
                 damage: damage,
@@ -195,7 +204,7 @@ else
 
     if (_timerStamina == null) {
 
-      _timerStamina = async.Timer(Duration(milliseconds: 150), () {
+      _timerStamina = async.Timer(const Duration(milliseconds: 150), () {
         _timerStamina = null;
       });
     } else {
@@ -257,7 +266,7 @@ class PlayerSpriteSheet2 {
     ),
   );
   static Future<SpriteAnimation> CutSword() => SpriteAnimation.load(
-    "Effects/cut.png",
+    "Effects/Piskel.png",
     SpriteAnimationData.sequenced(
       amount: 7,
       stepTime: 0.1,
@@ -273,39 +282,57 @@ class PlayerSpriteSheet2 {
     ),
   );
 
+  static Future<SpriteAnimation> AttackSwrd_R() => SpriteAnimation.load (
+    "Player/AttackMovement/player-attack.png",
+    SpriteAnimationData.sequenced(
+      amount: 6,
+      stepTime: 0.05,
+      textureSize: Vector2(50, 37),
+    ),
+  );
+  static Future<SpriteAnimation> AttackRange_R() => SpriteAnimation.load(
+    "Player/AttackMovement/player-attack-range.png",
+    SpriteAnimationData.sequenced(
+      amount: 3,
+      stepTime: 0.1,
+      textureSize: Vector2(50, 37),
+      loop: false,
+    ),
+  );
+
+
 
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-    "Player/MainMovement/knight_idle.png",
+    "Player/MainMovement/player-idle.png",
     SpriteAnimationData.sequenced(
-      amount: 2,
+      amount: 4,
       stepTime: 0.2,
-      textureSize: Vector2(32, 32),
+      textureSize: Vector2(50, 37),
     ),
   );
-
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
-    "Player/MainMovement/knight_idle_left.png",
+    "Player/MainMovement/player-idle-left.png",
     SpriteAnimationData.sequenced(
-      amount: 2,
+      amount: 4,
       stepTime: 0.2,
-      textureSize: Vector2(32, 32),
-    ),
-  );
-  static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
-    "Player/MainMovement/knight_run.png",
-    SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.1,
-      textureSize: Vector2(32, 32),
+      textureSize: Vector2(50, 37),
     ),
   );
 
-  static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
-    "Player/MainMovement/knight_run_left.png",
+  static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
+    "Player/MainMovement/player-run.png",
     SpriteAnimationData.sequenced(
       amount: 6,
-      stepTime: 0.1,
-      textureSize: Vector2(32, 32),
+      stepTime: 0.15,
+      textureSize: Vector2(50, 37),
+    ),
+  );
+  static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
+    "Player/MainMovement/player-run-left.png",
+    SpriteAnimationData.sequenced(
+      amount: 6,
+      stepTime: 0.15,
+      textureSize: Vector2(50, 37),
     ),
   );
 
@@ -317,46 +344,37 @@ class PlayerSpriteSheet2 {
         runLeft: runLeft,
       );
   static Future<SpriteAnimation> get idleRight2 => SpriteAnimation.load(
-    'Player/Picktorch/knight_idle_Light.png',
+    'Player/Picktorch/player-idle-torch.png',
     SpriteAnimationData.sequenced(
-      amount:2,
+      amount:4,
       stepTime: 0.2,
-      textureSize: Vector2(32, 32),
+      textureSize: Vector2(50, 37),
     ),
   );
   static Future<SpriteAnimation> get idleLeft2 => SpriteAnimation.load(
-    'Player/Picktorch/knight_idle_Light_Left.png',
+    'Player/Picktorch/player-idle-torch-left.png',
     SpriteAnimationData.sequenced(
-      amount:2,
+      amount:4,
       stepTime: 0.2,
-      textureSize: Vector2(32, 32),
+      textureSize: Vector2(50, 37),
     ),
   );
   static Future<SpriteAnimation> get runRight2 => SpriteAnimation.load(
-    "Player/Picktorch/knight_run.png",
+    "Player/Picktorch/player-run-torch.png",
     SpriteAnimationData.sequenced(
       amount: 6,
-      stepTime: 0.1,
-      textureSize: Vector2(32, 32),
+      stepTime: 0.2,
+      textureSize: Vector2(50, 37),
     ),
   );
   static Future<SpriteAnimation> get runLeft2 => SpriteAnimation.load(
-    "Player/Picktorch/knight_run_left.png",
+    "Player/Picktorch/player-run-torch-left.png",
     SpriteAnimationData.sequenced(
       amount: 6,
-      stepTime: 0.1,
-      textureSize: Vector2(32, 32),
+      stepTime: 0.2,
+      textureSize: Vector2(50, 37),
     ),
   );
-
-  // static SimpleDirectionAnimation get simpleDirectionAnimation2 =>
-  //
-  //     SimpleDirectionAnimation(
-  //       idleRight: idleRight2,
-  //       idleLeft: idleLeft2,
-  //       runRight: runRight2,
-  //       runLeft: runLeft2,
-  //     );
 
 
 }
