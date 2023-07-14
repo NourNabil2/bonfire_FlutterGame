@@ -60,34 +60,59 @@ Widget MainMap (
   map: map,
   joystick: Joystick(
     directional: JoystickDirectional(
+      //margin: const EdgeInsets.only(bottom: 120, left: 120),
+      color: Colors.grey,
         size: 100,
-        isFixed: false
+        isFixed: true,
+
     ),
 
     keyboardConfig: KeyboardConfig(
       acceptedKeys: [
         LogicalKeyboardKey.space,
-        LogicalKeyboardKey.controlLeft,
+        LogicalKeyboardKey.keyC,
+        LogicalKeyboardKey.keyX,
+        LogicalKeyboardKey.keyV,
         LogicalKeyboardKey.keyZ,
+        LogicalKeyboardKey.keyS,
+        LogicalKeyboardKey.keyD,
       ],
     ),
     actions: [
 
-      JoystickAction(actionId: AttackType.melee,
-          size: 80,
-          margin: const EdgeInsets.only(bottom: 50, right: 50),
+      JoystickAction(actionId: AttackType.Swrd,
+          size: 50,
+          margin: const EdgeInsets.only(bottom: 150, right: 100),
           align: JoystickActionAlign.BOTTOM_RIGHT,
-          sprite: Sprite.load('Player/Joystick/sword.png')),
+          sprite: Sprite.load('Player/Joystick/swrd.png')),
+      JoystickAction(actionId: AttackType.PowerSwrd,
+          size: 50,
+          margin: const EdgeInsets.only(bottom: 150, right: 40),
+          align: JoystickActionAlign.BOTTOM_RIGHT,
+          sprite: Sprite.load('Player/Joystick/swrd_P.png')
+        ),
       JoystickAction(actionId: AttackType.light,
-          size: 20,
+          size: 35,
           margin: const EdgeInsets.only(top: 80, left: 50),
           align: JoystickActionAlign.TOP_LEFT,
-          sprite: Sprite.load('Player/Joystick/sword.png')),
+          sprite: Sprite.load('Player/Joystick/torch.png')),
       JoystickAction(actionId: AttackType.range,
           size: 50,
-          margin: const EdgeInsets.only(bottom: 50, right: 200),
+          margin: const EdgeInsets.only(bottom: 50, right: 220),
           align: JoystickActionAlign.BOTTOM_RIGHT,
-          sprite: Sprite.load('Player/Joystick/shuriken_single.png')),
+          sprite: Sprite.load('Player/Joystick/range.png')),
+      JoystickAction(actionId: AttackType.Elec,
+        size: 50,
+        margin: const EdgeInsets.only(bottom: 50, right: 150),
+        align: JoystickActionAlign.BOTTOM_RIGHT,
+        sprite: Sprite.load('Player/Joystick/elec.png')
+      ),
+      JoystickAction(actionId: AttackType.Punch,
+        size: 80,
+        margin: const EdgeInsets.only(bottom: 50, right: 50),
+        align: JoystickActionAlign.BOTTOM_RIGHT,
+        sprite: Sprite.load('Player/Joystick/punch.png')
+      ),
     ],
   ),
   player: Player

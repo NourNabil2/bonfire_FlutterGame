@@ -35,15 +35,11 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  bloc:
-  audioplayers:
   shared_preferences:
   flutter_inset_box_shadow: ^1.0.8
   bonfire:
   flame_audio:
   flame:
-  hive:
-  provider:
   onboarding:
   flutter_switch:
 
@@ -79,6 +75,10 @@ flutter:
     - assets/images/NPC/
     - assets/images/NPC/partner/
     - assets/images/Enemy/
+    - assets/images/Enemy/Skull/
+    - assets/images/Enemy/Wizard/
+    - assets/images/Enemy/Skeleton/
+    - assets/images/Enemy/Dogs/
     - assets/images/Enemy/Bats/
     - assets/images/Enemy/Rats/
     - assets/images/Effects/

@@ -324,6 +324,18 @@
                  "width":16,
                  "x":196.5,
                  "y":9.5
+                }, 
+                {
+                 "height":0,
+                 "id":14,
+                 "name":"You",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":153.333333333333,
+                 "y":652
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -554,7 +566,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":14,
+ "nextobjectid":16,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

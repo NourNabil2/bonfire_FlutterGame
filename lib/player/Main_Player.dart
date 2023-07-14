@@ -1,5 +1,4 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire_flutter_game/Enemy/Bat_purble.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
@@ -10,7 +9,6 @@ import '../Enemy/Rat.dart';
 import '../SharedPreferences/Cash_Save.dart';
 import '../decorations/Items.dart';
 import 'dart:async' as async;
-
 import '../decorations/die_Decoration.dart';
 double damage = 10 ;
 bool showObserveEnemy = false;
@@ -118,7 +116,6 @@ else
   @override
   Future<void> die() async {
     // FlameAudio.play(Globals.gameOverSound);
-
    await animation?.playOnce(
       SpriteAnimation.load(
           "Player/MainMovement/player-death.png",
@@ -142,12 +139,10 @@ else
   }
 
 
-
-
   @override
   void joystickAction (JoystickActionEvent press) {
     if (press.event == ActionEvent.DOWN) {
-      if (press.id == AttackType.melee || press.id == LogicalKeyboardKey.space.keyId) {
+      if (press.id == AttackType.Swrd || press.id == LogicalKeyboardKey.keyC.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
         if (stamina < 15) {
           return;
@@ -166,7 +161,69 @@ else
         }
       }
 
-      if (press.id == AttackType.light || press.id == LogicalKeyboardKey.keyZ.keyId) {
+      if (press.id == AttackType.PowerSwrd || press.id == LogicalKeyboardKey.keyX.keyId) {
+        if (gameRef.player != null && gameRef.player?.isDead == true) return;
+        if (stamina < 15) {
+          return;
+        }
+        else {
+          decrementStamina(20);
+          animation?.playOnce(
+            PlayerSpriteSheet2.AttackSwrd_R(),
+            runToTheEnd: true ,
+            flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
+          );
+          simpleAttackMelee(
+              damage: damage * 3,
+              size: size,
+            animationRight: PlayerSpriteSheet2.AttackSwrd_FX(),
+          );
+        }
+      }
+
+      if (press.id == AttackType.Punch || press.id == LogicalKeyboardKey.keyS.keyId) {
+        if (gameRef.player != null && gameRef.player?.isDead == true) return;
+        if (stamina < 15) {
+          return;
+        }
+        else {
+          decrementStamina(5);
+          animation?.playOnce(
+            PlayerSpriteSheet2.AttackPunch_R(),
+            runToTheEnd: true ,
+            flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
+          );
+          simpleAttackMelee(
+              damage: damage / 2,
+              size: size,
+            //animationRight: PlayerSpriteSheet2.AttackPunch_FX(),
+            withPush: true,
+          );
+        }
+      }
+
+      if (press.id == AttackType.Elec || press.id == LogicalKeyboardKey.keyD.keyId) {
+        if (gameRef.player != null && gameRef.player?.isDead == true) return;
+        if (stamina < 15) {
+          return;
+        }
+        else {
+          decrementStamina(35);
+          animation?.playOnce(
+            PlayerSpriteSheet2.AttackRange_R(),
+            runToTheEnd: true ,
+            flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
+          );
+          simpleAttackMelee(
+
+              damage: damage * 3,
+              size: size,
+            animationRight: PlayerSpriteSheet2.AttackElec_FX(),
+          );
+        }
+      }
+
+      if (press.id == AttackType.light || press.id == LogicalKeyboardKey.keyV.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
 
         if (CashSaver.getData(key: 'torch')?? false)
@@ -183,7 +240,7 @@ else
 
         }
 
-      if (press.id == AttackType.range || press.id == LogicalKeyboardKey.controlLeft.keyId) {
+      if (press.id == AttackType.range || press.id == LogicalKeyboardKey.keyZ.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
 
         if (stamina < 10) {
@@ -199,14 +256,16 @@ else
 
             );
             simpleAttackRange(
-                speed: 200,
+                speed: 400,
+                lightingConfig: LightingConfig(radius: 10, color: Colors.blueAccent,blurBorder: 60),
                 damage: damage,
-                animationRight: PlayerSpriteSheet2.Shuriken(),
-                animationLeft: PlayerSpriteSheet2.Shuriken(),
-                animationUp: PlayerSpriteSheet2.Shuriken(),
-                animationDown: PlayerSpriteSheet2.Shuriken(),
-                animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
-                size: Vector2(16, 16));
+                animationRight: PlayerSpriteSheet2.Wave_R(),
+                animationLeft: PlayerSpriteSheet2.Wave_L(),
+                animationUp: PlayerSpriteSheet2.Wave_U(),
+                animationDown: PlayerSpriteSheet2.Wave_D(),
+                animationDestroy: PlayerSpriteSheet2.FX_Wave(),
+                size: Vector2(30,30),
+                );
           }
 
 
@@ -268,6 +327,51 @@ else
 
 
 class PlayerSpriteSheet2 {
+  static Future<SpriteAnimation> Wave_R() => SpriteAnimation.load(
+    "Effects/wave_R.png",
+    SpriteAnimationData.sequenced(
+      amount: 4,
+      stepTime: 0.1,
+      textureSize: Vector2(48, 32),
+    ),
+  );
+  static Future<SpriteAnimation> Wave_L() => SpriteAnimation.load(
+    "Effects/wave_L.png",
+    SpriteAnimationData.sequenced(
+      amount: 4,
+      stepTime: 0.1,
+      textureSize: Vector2(48, 32),
+    ),
+  );
+  static Future<SpriteAnimation> Wave_D() => SpriteAnimation.load(
+    "Effects/wave_D.png",
+    SpriteAnimationData.sequenced(
+      amount: 4,
+      stepTime: 0.1,
+      textureSize: Vector2(32, 48),
+    ),
+  );
+  static Future<SpriteAnimation> Wave_U() => SpriteAnimation.load(
+    "Effects/wave_Up.png",
+    SpriteAnimationData.sequenced(
+      amount: 4,
+      stepTime: 0.1,
+      textureSize: Vector2(32, 48),
+    ),
+  );
+
+
+  static Future<SpriteAnimation> FX_Wave() => SpriteAnimation.load(
+    "Effects/hits-wave.png",
+    SpriteAnimationData.sequenced(
+      amount: 6,
+      stepTime: 0.1,
+      textureSize: Vector2(32, 32),
+    ),
+  );
+
+
+
   static Future<SpriteAnimation> Shuriken() => SpriteAnimation.load(
     "Effects/shuriken.png",
     SpriteAnimationData.sequenced(
@@ -276,6 +380,9 @@ class PlayerSpriteSheet2 {
       textureSize: Vector2(16, 16),
     ),
   );
+
+
+
   static Future<SpriteAnimation> big_energy_ball() => SpriteAnimation.load(
     "Effects/big_energy_ball.png",
     SpriteAnimationData.sequenced(
@@ -309,6 +416,45 @@ class PlayerSpriteSheet2 {
       textureSize: Vector2(50, 37),
     ),
   );
+
+  static Future<SpriteAnimation> AttackPunch_R() => SpriteAnimation.load (
+    "Player/AttackMovement/Player-punch-R.png",
+    SpriteAnimationData.sequenced(
+      amount: 9,
+      stepTime: 0.07,
+      textureSize: Vector2(50, 37),
+    ),
+  );
+
+
+  static Future<SpriteAnimation> AttackSwrd_FX() => SpriteAnimation.load (
+    "Effects/Swrd_FX1.png",
+    SpriteAnimationData.sequenced(
+      amount: 4,
+      stepTime: 0.1,
+      textureSize: Vector2(45, 32),
+    ),
+  );
+
+  static Future<SpriteAnimation> AttackElec_FX() => SpriteAnimation.load (
+    "Effects/Elec.png",
+    SpriteAnimationData.sequenced(
+      amount: 7,
+      stepTime: 0.1,
+      textureSize: Vector2(512, 512),
+    ),
+  );
+
+  static Future<SpriteAnimation> AttackPunch_FX() => SpriteAnimation.load (
+    "Effects/SwrdFX.png",
+    SpriteAnimationData.sequenced(
+      amount: 3,
+      stepTime: 0.1,
+      textureSize: Vector2(65, 27),
+    ),
+  );
+
+
   static Future<SpriteAnimation> AttackRange_R() => SpriteAnimation.load(
     "Player/AttackMovement/player-attack-range.png",
     SpriteAnimationData.sequenced(

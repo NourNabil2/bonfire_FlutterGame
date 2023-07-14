@@ -1,4 +1,5 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/MainGame.dart';
 import 'dart:async' as async ;
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
@@ -114,13 +115,24 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
       observed: (player) {
         if (!showDialog) {
           showDialog = true;
-          TalkDialog.show(gameRef.context, [
-            speak(text: 'Ha?! What happened, how?',
-                isPlayer: true),
+          if (currentMap == 1)
+            {
+              TalkDialog.show(gameRef.context, [
+                 speak(text: 'It\'s my house, was this a nightmare?', isPlayer: true,),
+                speak(text: 'I think we are in this life living in a small dream makes no difference',
+                    isPlayer: true),
 
-          ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space]
+              ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space],);
+            }
+          else if (currentMap == 2)
+            {
+              TalkDialog.show(gameRef.context, [
+                speak(text: 'Ha?! What happened, how?, again?',
+                    isPlayer: true),
 
-          );
+              ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space],);
+            }
+
         }
 
       },
@@ -131,8 +143,11 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
   }
   @override
   void onTap() {
+     if (currentMap == 2)
+    {
+      (gameRef.player as Kinght).silverKey = true ;
+    }
 
-    (gameRef.player as Kinght).silverKey = true ;
 
   }
 
@@ -144,6 +159,7 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
 
 class BedRoom_Door extends GameDecoration with ObjectCollision
 {
+  bool showDialog = false;
   BedRoom_Door({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
     "Maps/House.png",
     SpriteAnimationData([
@@ -171,7 +187,6 @@ class BedRoom_Door extends GameDecoration with ObjectCollision
     if (gameRef.player != null) {
       seeComponent(
         gameRef.player!,
-        radiusVision: 10,
         observed: (player) {
           Kinght p = player as Kinght;
           if (p.silverKey == true) {

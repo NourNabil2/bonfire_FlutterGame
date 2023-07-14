@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: 'Playfair',
           primaryColor: Colors.blueGrey,
-
           textTheme:const TextTheme(
               titleLarge: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
               bodyMedium: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
@@ -38,6 +37,7 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
       ),
+
       home:Start_Screen(),
 
     );

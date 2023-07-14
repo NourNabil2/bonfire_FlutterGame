@@ -10,17 +10,17 @@ import 'package:flutter/material.dart';
 import '../MainGame.dart';
 import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
+double sizeS = 30 ;
+double damage = 20 ;
+class Skeleton extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
 
-double damage = 5 ;
-class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
-
-  Bat_purble(Vector2 position )
+  Skeleton(Vector2 position )
       : super(
     position: position,
-    size: Vector2(40,40),
+    size: Vector2(15,20),
     animation:PlayerSpriteSheet.simpleDirectionAnimation ,
     life: 100,
-    speed: 50,
+    speed: 80,
     initDirection: Direction.down,
   )
   {
@@ -36,7 +36,7 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
       CollisionConfig(collisions: [
         CollisionArea.rectangle(
           size: Vector2(16, 16),
-          align: Vector2(16, 16),
+          align: Vector2(0, 16),
         ),
       ]),
     );
@@ -44,20 +44,20 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
   }
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-
+    lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.Hit(),runToTheEnd: true,size: Vector2.all(sizeS)) :animation?.playOnce(PlayerSpriteSheet.Hit(),runToTheEnd: true,flipX: true,size: Vector2.all(sizeS)) ;
     // FlameAudio.play(Globals.explosionSound);
     showDamage(
       damage,
       config: TextStyle(fontSize: width / 3, color: Colors.red),
+
     );
 
     super.receiveDamage(attacker, damage, identify);
   }
   @override
   Future<void> die() async {
-     removeFromParent();
-
-    gameRef.add(Bat_death(position: position));
+    removeFromParent();
+    lastDirectionHorizontal == Direction.right ? gameRef.add(Skeleton_Death_R(position: position)) : gameRef.add(Skeleton_Death_L(position: position)) ;
     super.die();
   }
 
@@ -72,11 +72,10 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
           if (!Player.isDead)
           {
             simpleAttackMelee(
-
-                withPush: false,
-                damage: damage ,
-                size: size,
-                animationRight: PlayerSpriteSheet.bat_attack(),
+              withPush: false,
+              damage: damage ,
+              size: size,
+              execute: () => lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: Vector2.all(sizeS)) : animation?.playOnce(PlayerSpriteSheet.attack_R(),size: Vector2.all(sizeS),runToTheEnd: true,flipX: true) ,
             );
           }
         },
@@ -95,66 +94,51 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
 
 
 class PlayerSpriteSheet {
+  static Future<SpriteAnimation> Hit() => SpriteAnimation.load('Enemy/Skeleton/Skeleton Hit.png', SpriteAnimationData.sequenced(amount: 8, stepTime: 0.1, textureSize: Vector2(30, 32)));
 
-  static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
-      "Enemy/Bats/Bat_Fly.png",
+static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
+    "Enemy/Skeleton/Skeleton Walk.png",
     SpriteAnimationData.sequenced(
-      amount: 4,
+      amount: 13,
       stepTime: 0.2,
-      textureSize: Vector2(64, 64),
+      textureSize: Vector2(22, 32),
     ),
   );
   static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
-      "Enemy/Bats/Bat_Fly_Left.png",
+    "Enemy/Skeleton/Skeleton_Walk_Left.png",
     SpriteAnimationData.sequenced(
-      amount: 4,
+      amount: 13,
       stepTime: 0.2,
-      textureSize: Vector2(64, 64),
+      textureSize: Vector2(22, 32),
     ),
   );
+
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-      "Enemy/Bats/Bat_idle.png",
+    "Enemy/Skeleton/Skeleton Idle.png",
     SpriteAnimationData.sequenced(
-      amount: 4,
+      amount: 11,
       stepTime: 0.2,
-      textureSize: Vector2(64, 64),
+      textureSize: Vector2(24, 32),
     ),
   );
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
-      "Enemy/Bats/Bat_idle_left.png",
+    "Enemy/Skeleton/Skeleton_Idle_Left.png",
     SpriteAnimationData.sequenced(
-      amount: 4,
+      amount: 11,
       stepTime: 0.2,
-      textureSize: Vector2(64, 64),
-    ),
-  );
-
-  static Future<SpriteAnimation> get bat_death => SpriteAnimation.load(
-      "Enemy/Bats/Bat_Death.png",
-    SpriteAnimationData([
-      SpriteAnimationFrameData(srcPosition: Vector2(192, 0), srcSize: Vector2(16, 16), stepTime: 0.1),
-      SpriteAnimationFrameData(srcPosition: Vector2(0, 64), srcSize: Vector2(16, 16), stepTime: 0.1),
-      SpriteAnimationFrameData(srcPosition: Vector2(64, 64), srcSize: Vector2(16, 16), stepTime: 0.1),
-      SpriteAnimationFrameData(srcPosition: Vector2(128, 64), srcSize: Vector2(16, 16), stepTime: 0.1),
-      SpriteAnimationFrameData(srcPosition: Vector2(192, 64), srcSize: Vector2(16, 16), stepTime: 0.1),
-
-      SpriteAnimationFrameData(srcPosition: Vector2(0, 128), srcSize: Vector2(16, 16), stepTime: 0.1),
-      SpriteAnimationFrameData(srcPosition: Vector2(64, 128), srcSize: Vector2(16, 16), stepTime: 0.1),
-      SpriteAnimationFrameData(srcPosition: Vector2(128, 128), srcSize: Vector2(16, 16), stepTime: 0.1),
-    ]),
-  );
-
-
-  static Future<SpriteAnimation>  bat_attack() => SpriteAnimation.load(
-      "Enemy/Bats/Bat_Attack_FX.png",
-    SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.2,
-      textureSize: Vector2(64, 64),
+      textureSize: Vector2(24, 32),
     ),
   );
 
 
+  static Future<SpriteAnimation>  attack_R() => SpriteAnimation.load(
+    "Enemy/Skeleton/Skeleton Attack.png",
+    SpriteAnimationData.sequenced(
+      amount: 18,
+      stepTime: 0.09,
+      textureSize: Vector2(43, 37),
+    ),
+  );
 
 
 

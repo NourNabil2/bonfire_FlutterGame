@@ -16,8 +16,18 @@ class Portal extends GameDecoration with Sensor<Kinght>
 
   @override
   void onContact(GameComponent component) {
-
-    selectMap(4);
+    if(currentMap == 1 )
+      {
+        selectMap(3);
+      }
+    else if (currentMap == 3)
+      {
+        selectMap(2);
+      }
+    else if (currentMap == 2)
+      {
+        selectMap(1);
+      }
     //gameRef.pauseEngine();
     // gameRef.overlayManager.add(LevelWonScreen.id);
   }

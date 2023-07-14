@@ -53,7 +53,7 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   void die() {
     gameRef.camera.shake(intensity: 4);
     removeFromParent();
-    gameRef.add(Portal(position: position));
+    gameRef.add(Portal(position: position + Vector2(20, 20) ));
 
 
     super.die();
