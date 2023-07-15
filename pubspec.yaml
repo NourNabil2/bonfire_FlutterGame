@@ -75,6 +75,7 @@ flutter:
     - assets/images/NPC/
     - assets/images/NPC/partner/
     - assets/images/Enemy/
+    - assets/images/Enemy/Bringer/
     - assets/images/Enemy/Skull/
     - assets/images/Enemy/Wizard/
     - assets/images/Enemy/Skeleton/

@@ -70,7 +70,7 @@ class Demon extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
           {
             simpleAttackMelee(
                 withPush: false,
-                damage: damage * 2.5 ,
+                damage: damagePlayer * 2.5 ,
                 size: size,
                 animationRight: PlayerSpriteSheet2.CutSlash()
             );

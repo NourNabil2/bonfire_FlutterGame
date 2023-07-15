@@ -10,7 +10,7 @@ import '../SharedPreferences/Cash_Save.dart';
 import '../decorations/Items.dart';
 import 'dart:async' as async;
 import '../decorations/die_Decoration.dart';
-double damage = 10 ;
+double damagePlayer = 6 ;
 bool showObserveEnemy = false;
 
 class Kinght extends SimplePlayer with ObjectCollision,Lighting {
@@ -155,7 +155,7 @@ else
             flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
           );
           simpleAttackMelee(
-              damage: damage * 2,
+              damage: damagePlayer * 2,
               size: size,
           );
         }
@@ -174,7 +174,7 @@ else
             flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
           );
           simpleAttackMelee(
-              damage: damage * 3,
+              damage: damagePlayer * 3,
               size: size,
             animationRight: PlayerSpriteSheet2.AttackSwrd_FX(),
           );
@@ -194,7 +194,7 @@ else
             flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
           );
           simpleAttackMelee(
-              damage: damage / 2,
+              damage: damagePlayer / 2,
               size: size,
             //animationRight: PlayerSpriteSheet2.AttackPunch_FX(),
             withPush: true,
@@ -216,7 +216,7 @@ else
           );
           simpleAttackMelee(
 
-              damage: damage * 3,
+              damage: damagePlayer * 3,
               size: size,
             animationRight: PlayerSpriteSheet2.AttackElec_FX(),
           );
@@ -258,7 +258,7 @@ else
             simpleAttackRange(
                 speed: 400,
                 lightingConfig: LightingConfig(radius: 10, color: Colors.blueAccent,blurBorder: 60),
-                damage: damage,
+                damage: damagePlayer,
                 animationRight: PlayerSpriteSheet2.Wave_R(),
                 animationLeft: PlayerSpriteSheet2.Wave_L(),
                 animationUp: PlayerSpriteSheet2.Wave_U(),

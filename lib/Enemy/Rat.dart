@@ -2,9 +2,9 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
-import '../decorations/Items.dart';
 import '../decorations/die_Decoration.dart';
 import '../player/Main_Player.dart';
+
 bool isobserve = false ;
 int die_rat =0 ;
 double damage = 5 ;
@@ -51,6 +51,7 @@ class Rat extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,Us
   }
   @override
   Future<void> die() async {
+    damagePlayer+= 0.5;
     removeFromParent();
     gameRef.add(Rat_death(position: position));
     super.die();

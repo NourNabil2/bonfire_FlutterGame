@@ -8,8 +8,10 @@ import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/DynamicMap.dart';
 import 'package:bonfire_flutter_game/constant/onBoarding.dart';
 import 'package:bonfire_flutter_game/decorations/Lighting.dart';
+import 'package:bonfire_flutter_game/followers/You.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/material.dart';
+import 'Enemy/Bringer.dart';
 import 'Enemy/Dog_Black.dart';
 import 'Enemy/Rat.dart';
 import 'Enemy/Skeleton.dart';
@@ -77,6 +79,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
             'nothing': (properties) => Shadow(properties.position),
+            'Bringer': (properties) => Bringer(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 1: return  MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
@@ -122,6 +125,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'Silver_Key': (properties) => Key_silver(position: properties.position, keyImage: SilverKey),
             'Rat': (properties) => Rat(properties.position),
             'safe': (properties) => safe(position: properties.position),
+            'You': (properties) => You(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 3: return MainMap(lightingMap:Colors.black54 ,tiledSize: tiledSize, map: WorldMapByTiled(
