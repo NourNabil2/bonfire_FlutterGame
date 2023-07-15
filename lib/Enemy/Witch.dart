@@ -72,8 +72,9 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
   @override
   Future<void> die() async {
     removeFromParent();
-    lastDirectionHorizontal == Direction.right ? gameRef.add(Skeleton_Death_R(position: position)) : gameRef.add(Skeleton_Death_L(position: position)) ;
-    gameRef.add(Portal(position: position + Vector2(20, 20) ));
+    gameRef.add(witch_death(position: position)) ;
+    gameRef.add(Portal(position: position + Vector2(50, 50) ));
+    gameRef.add(Key_Gold(position: position + Vector2(50, 100) ));
     super.die();
   }
 
@@ -84,6 +85,7 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
     {
       isobserve = false ;
       seeAndMoveToPlayer(
+        radiusVision:100,
         closePlayer: (Player) {
           if (!Player.isDead)
           {
@@ -106,14 +108,13 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
         observed: () {
           isobserve = true ;
         },
-        radiusVision:150,
       );
 
 
       if (!isobserve)
       {
         seeAndMoveToAttackRange(
-          minDistanceFromPlayer: 128,
+          minDistanceFromPlayer: 150,
           positioned: (Player) {
             if (!Player.isDead)
             {
@@ -130,7 +131,7 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
                   size: size  );
             }
           } ,
-          radiusVision: 80*2,
+          radiusVision: 150,
           runOnlyVisibleInScreen: false,
           notObserved: () {
             runRandomMovement(dt,maxDistance: 70,minDistance: 30);

@@ -213,8 +213,6 @@ class BedRoom_Door extends GameDecoration with ObjectCollision
 
 }
 
-
-
 class Chest extends GameDecoration with Sensor<Kinght>
 {
   Chest({required Vector2 position}): super.withAnimation(size:  Vector2.all(25.0) ,animation: SpriteAnimation.load(
@@ -234,9 +232,6 @@ class Chest extends GameDecoration with Sensor<Kinght>
   }
 
 }
-
-
-
 
 class Chest_easter extends GameDecoration with Sensor<Kinght>
 {
@@ -372,10 +367,42 @@ class Key_silver extends GameDecoration with Sensor<Kinght>
     size: Vector2.all(10),
   ) {}
 
+
+
   @override
   void onContact(GameComponent component) {
     if (component is Kinght) {
       component.silverKey = true ;
+    }
+    // FlameAudio.play(Globals.fireSound);
+    removeFromParent();
+
+  }
+}
+
+class Key_Gold extends GameDecoration with Sensor<Kinght>
+{
+  Key_Gold({required Vector2 position})
+      : super.withAnimation(
+    animation: SpriteAnimation.load(
+      GoldrKey,
+      SpriteAnimationData.sequenced(
+        amount: 4,
+        stepTime: 0.2,
+        textureSize: Vector2(16, 16),
+      ),
+    ),
+    position: position,
+    size: Vector2.all(10),
+  ) {}
+
+
+
+  @override
+  void onContact(GameComponent component) {
+    if (component is Kinght) {
+      component.Taketorch = true ;
+      CashSaver.SaveData(key: 'gold', value: true);
     }
     // FlameAudio.play(Globals.fireSound);
     removeFromParent();

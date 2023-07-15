@@ -129,6 +129,16 @@ class Skeleton_Death_L extends GameDecoration {
   ), position: position, size: Vector2.all(sizeS));
 }
 
+class witch_death extends GameDecoration {
+  witch_death({required Vector2 position})
+      : super.withAnimation(animation: SpriteAnimation.load(
+
+      "Enemy/Skeleton/B_witch_death.png",
+      SpriteAnimationData.sequenced(amount: 6, stepTime: 0.1, textureSize: Vector2(32, 32),loop: false )
+
+  ), position: position, size: Vector2.all(sizeS));
+}
+
 
 class Skull_Die extends GameDecoration {
   Skull_Die({required Vector2 position})

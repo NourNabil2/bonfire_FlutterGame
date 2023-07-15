@@ -11,11 +11,13 @@ import 'Bar_Life.dart';
 class KnightInterface extends GameInterface {
   late Sprite torch;
   late Sprite silver_key;
+  late Sprite goldKey;
   late Sprite potion_Fast;
   @override
   Future<void> onLoad() async {
     torch = await Sprite.load('items/torch.png',srcSize: Vector2(10, 10));
     silver_key = await Sprite.load('items/keys_silver.png',srcSize: Vector2(16, 16));
+    goldKey = await Sprite.load('items/keys_gold.png',srcSize: Vector2(16, 16));
     potion_Fast = await Sprite.load('items/potion_Fast.png',srcSize: Vector2(16, 16));
     add(BarLife_Component());
     return super.onLoad();
@@ -26,6 +28,7 @@ class KnightInterface extends GameInterface {
     try {
       _drawtorch(canvas);
       _drawkey(canvas);
+      _drawGoldKey(canvas);
       // _drawSpeedUp(canvas);
     } catch (e) {}
     super.render(canvas);
@@ -42,6 +45,14 @@ class KnightInterface extends GameInterface {
       silver_key.renderRect(c ,const Rect.fromLTWH(148, 27, 35, 30));
     }
   }
+
+  void _drawGoldKey(Canvas c) {
+    if (gameRef.player != null && (gameRef.player as Kinght).goldKey) {
+      goldKey.renderRect(c ,const Rect.fromLTWH(128, 27, 35, 30));
+    }
+  }
+
+
 
   void _drawSpeedUp(Canvas c) {
     if (gameRef.player != null && (gameRef.player as Kinght).speed > 100) {
