@@ -1,14 +1,16 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/decorations/Gate_translate.dart';
+
+import '../decorations/die_Decoration.dart';
 Vector2 _size = Vector2(50, 50);
 class You extends SimpleEnemy with ObjectCollision {
   bool see = false;
   You(Vector2 position)
       : super(
     position: position,
-    size: Vector2(16,16),
+    size: Vector2(32,32),
     animation: PlayerSpriteSheet.simpleDirectionAnimation,
-    speed: 100,
+    speed: 50,
     life: 40,
     initDirection: Direction.right,
   ){
@@ -16,8 +18,8 @@ class You extends SimpleEnemy with ObjectCollision {
     setupCollision(
       CollisionConfig(collisions: [
         CollisionArea.rectangle(
-          size: Vector2(5, 5),
-          align: Vector2(9, 10),
+          size: Vector2(5, 10),
+          align: Vector2(10, 20),
         ),
       ]),
     );
@@ -26,16 +28,21 @@ class You extends SimpleEnemy with ObjectCollision {
   @override
   void die()
   {
+    gameRef.add(You(position + Vector2(80, 0)));
+    gameRef.add(YOUDEATH(position: position));
     removeFromParent();
-    animation?.playOnce(PlayerSpriteSheet.Die , runToTheEnd: true );
-    //gameRef.add(You(position + Vector2(50, 0)));
-    gameRef.add(Portal( position: position + Vector2(20, 20),));
+
+    //gameRef.add(Portal( position: position + Vector2(20, 20),));
 
     super.die();
   }
 
   @override
   void update(double dt)  {
+
+
+
+
 
     seeAndMoveToPlayer(
       closePlayer: (player) {},
@@ -89,14 +96,6 @@ class PlayerSpriteSheet {
   );
 
 
-  static Future<SpriteAnimation> get Die => SpriteAnimation.load(
-    "follower/summonDeath.png",
-    SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.1,
-      textureSize: _size,
-    ),
-  );
 
 
 

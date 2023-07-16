@@ -229,18 +229,6 @@
                  "width":16,
                  "x":128,
                  "y":31.6666666666667
-                }, 
-                {
-                 "height":0,
-                 "id":61,
-                 "name":"Bringer",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":209,
-                 "y":79
                 }],
          "opacity":1,
          "type":"objectgroup",

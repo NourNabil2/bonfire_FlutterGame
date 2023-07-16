@@ -1,8 +1,8 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../Enemy/Rat.dart';
@@ -140,6 +140,7 @@ else
 
 
   @override
+  // ignore: avoid_renaming_method_parameters
   void joystickAction (JoystickActionEvent press) {
     if (press.event == ActionEvent.DOWN) {
       if (press.id == AttackType.Swrd || press.id == LogicalKeyboardKey.keyC.keyId) {

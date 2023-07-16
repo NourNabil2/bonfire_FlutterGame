@@ -124,7 +124,7 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
                   animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
                   animationRight: PlayerSpriteSheet2.Wave_R(),
                   collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
-                    size: Vector2(8, 8),
+                    size: Vector2(30, 30),
                     //align: Vector2(width * 0.25, width * 0.25),
 
                   ),]),

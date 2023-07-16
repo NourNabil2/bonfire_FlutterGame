@@ -15,6 +15,7 @@ import 'Enemy/Bringer.dart';
 import 'Enemy/Dog_Black.dart';
 import 'Enemy/Rat.dart';
 import 'Enemy/Skeleton.dart';
+import 'Enemy/Skull.dart';
 import 'Enemy/Witch.dart';
 import 'constant/NameOfMaps.dart';
 import 'package:bonfire_flutter_game/NPC/Shadow.dart';
@@ -126,6 +127,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'Rat': (properties) => Rat(properties.position),
             'safe': (properties) => safe(position: properties.position),
             'You': (properties) => You(properties.position),
+            'Skull': (properties) => Skull(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 3: return MainMap(lightingMap:Colors.black54 ,tiledSize: tiledSize, map: WorldMapByTiled(

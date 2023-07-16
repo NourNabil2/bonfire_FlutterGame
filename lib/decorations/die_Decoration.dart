@@ -53,6 +53,20 @@ class Rat_death extends GameDecoration {
   ), position: position, size: Vector2.all(64.64));
 }
 
+class YOUDEATH extends GameDecoration {
+  YOUDEATH({required Vector2 position})
+      : super.withAnimation(animation: SpriteAnimation.load(
+    "follower/summonDeath.png",
+    SpriteAnimationData.sequenced(
+      amount: 6,
+      stepTime: 0.15,
+      textureSize: Vector2(50, 50),
+      loop: false
+
+    ),
+  ), position: position, size: Vector2.all(32));
+}
+
 class Player_death extends GameDecoration {
   Player_death({required Vector2 position})
       : super.withAnimation(animation: SpriteAnimation.load(
