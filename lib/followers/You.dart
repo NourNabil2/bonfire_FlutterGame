@@ -1,5 +1,7 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/MainGame.dart';
 import 'package:bonfire_flutter_game/decorations/Gate_translate.dart';
+import 'package:bonfire_flutter_game/decorations/Items.dart';
 
 import '../decorations/die_Decoration.dart';
 Vector2 _size = Vector2(50, 50);
@@ -29,10 +31,11 @@ class You extends SimpleEnemy with ObjectCollision {
   void die()
   {
     gameRef.add(You(position + Vector2(80, 0)));
+
     gameRef.add(YOUDEATH(position: position));
     removeFromParent();
 
-    //gameRef.add(Portal( position: position + Vector2(20, 20),));
+    currentMap == 2 ? gameRef.add(Key_Gold( position: position + Vector2(20, 20),)) : null ;
 
     super.die();
   }

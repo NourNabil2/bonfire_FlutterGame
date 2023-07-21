@@ -26,10 +26,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
       }
     else if (currentMap == 2)
       {
-        selectMap(1);
+        selectMap(4);
       }
-    //gameRef.pauseEngine();
-    // gameRef.overlayManager.add(LevelWonScreen.id);
   }
-
 }

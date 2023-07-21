@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
+import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
@@ -74,6 +75,7 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
     removeFromParent();
     gameRef.add(witch_death(position: position)) ;
     gameRef.add(Portal(position: position + Vector2(50, 50) ));
+    CashSaver.SaveData(key: 'Power', value: true);
     gameRef.add(Key_Gold(position: position + Vector2(50, 100) ));
     super.die();
   }

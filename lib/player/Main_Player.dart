@@ -3,6 +3,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../Enemy/Rat.dart';
@@ -18,6 +19,8 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
   bool Taketorch =  CashSaver.getData(key: 'torch') ?? false ;
   bool silverKey = false ;
   bool goldKey = CashSaver.getData(key: 'gold') ?? false ;
+  bool Key_red = CashSaver.getData(key: 'red') ?? false ;
+  bool Power = CashSaver.getData(key: 'Power') ?? false ;
 
   async.Timer? _timerStamina;
   Kinght(Vector2 position )
@@ -47,7 +50,13 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
 
     if(isDead)
   {
-    return;
+     async.Timer(const Duration(milliseconds: 500),() {
+       removeFromParent();
+       lastDirectionHorizontal == Direction.right ? gameRef.add(Player_death_R(position: position)) : gameRef.add(Player_death(position: position));
+     },);
+
+
+
   }
 else
   {
@@ -116,25 +125,18 @@ else
   @override
   Future<void> die() async {
     // FlameAudio.play(Globals.gameOverSound);
-   await animation?.playOnce(
+    await animation?.playOnce(
       SpriteAnimation.load(
           "Player/MainMovement/player-death.png",
-          SpriteAnimationData.sequenced(amount: 7, stepTime: 0.1, textureSize: Vector2(50, 37),loop: false )
-
+          SpriteAnimationData.sequenced(amount: 7, stepTime: 0.09, textureSize: Vector2(50, 37),loop: false )
       ),
       runToTheEnd: true ,
       flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
-      onFinish: () => lastDirectionHorizontal == Direction.right ? gameRef.add(Player_death_R(position: position)) : gameRef.add(Player_death(position: position)) ,
+
     );
-   gameRef.camera.shake(intensity: 4);
-  await Future.delayed(const Duration(milliseconds: 700));
-   removeFromParent();
+    gameRef.camera.shake(intensity: 4);
     die_rat = 0 ;
-    gameRef.pauseEngine();
     gameRef.overlayManager.add(GameOverScreen.id);
-
-
-
     super.die();
   }
 
@@ -241,22 +243,28 @@ else
 
         }
 
+
+
       if (press.id == AttackType.range || press.id == LogicalKeyboardKey.keyZ.keyId) {
+
+
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
 
-        if (stamina < 10) {
-          return;
-        }
-        else
+        if (Power)
           {
-            decrementStamina(15);
-            animation?.playOnce(
+            if (stamina < 10) {
+              return;
+            }
+            else
+            {
+              decrementStamina(15);
+              animation?.playOnce(
                 PlayerSpriteSheet2.AttackRange_R() ,
                 flipX:  lastDirectionHorizontal == Direction.right ?  false  : true,
                 runToTheEnd: true,
 
-            );
-            simpleAttackRange(
+              );
+              simpleAttackRange(
                 speed: 400,
                 lightingConfig: LightingConfig(radius: 10, color: Colors.blueAccent,blurBorder: 60),
                 damage: damagePlayer,
@@ -266,8 +274,14 @@ else
                 animationDown: PlayerSpriteSheet2.Wave_D(),
                 animationDestroy: PlayerSpriteSheet2.FX_Wave(),
                 size: Vector2(30,30),
-                );
+              );
+            }
           }
+        else
+          {
+            _showEmote(emote: wrong);
+          }
+
 
 
       }

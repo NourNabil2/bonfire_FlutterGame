@@ -5,6 +5,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../Enemy/Skeleton.dart';
+import '../Enemy/Skull.dart';
 import '../MainGame.dart';
 
 
@@ -79,10 +80,10 @@ class Player_death extends GameDecoration {
 
 class Player_death_R extends GameDecoration {
   Player_death_R({required Vector2 position})
-      : super.withAnimation(animation: SpriteAnimation.load(
+      : super.withSprite(sprite: Sprite.load(
 
     "Player/MainMovement/die.png",
-    SpriteAnimationData.sequenced(amount: 1, stepTime: 0.1, textureSize: Vector2(50, 37),loop: false ),
+    srcSize: Vector2(50, 37),
 
   ),position: position, size: Vector2.all(50.37));
 }
@@ -147,7 +148,7 @@ class witch_death extends GameDecoration {
   witch_death({required Vector2 position})
       : super.withAnimation(animation: SpriteAnimation.load(
 
-      "Enemy/Skeleton/B_witch_death.png",
+      "Enemy/Wizard/B_witch_death.png",
       SpriteAnimationData.sequenced(amount: 6, stepTime: 0.1, textureSize: Vector2(32, 32),loop: false )
 
   ), position: position, size: Vector2.all(sizeS));
@@ -159,17 +160,17 @@ class Skull_Die extends GameDecoration {
       : super.withAnimation(animation: SpriteAnimation.load(
 
       "Enemy/Skull/Skull_Death.png",
-      SpriteAnimationData.sequenced(amount: 10, stepTime: 0.1, textureSize: Vector2(64, 64),loop: false )
+      SpriteAnimationData.sequenced(amount: 10, stepTime: 0.1, textureSize: sizeSkull,loop: false )
 
-  ), position: position, size: Vector2.all(sizeS));
+  ), position: position, size: sizeSkull);
 }
 class Skull_Die_L extends GameDecoration {
   Skull_Die_L({required Vector2 position})
       : super.withAnimation(animation: SpriteAnimation.load(
 
-      "Enemy/Skull/SSkull_Death_L.png",
-      SpriteAnimationData.sequenced(amount: 10, stepTime: 0.1, textureSize: Vector2(64, 64),loop: false )
+      "Enemy/Skull/Skull_Death_L.png",
+      SpriteAnimationData.sequenced(amount: 10, stepTime: 0.1, textureSize: sizeSkull,loop: false )
 
-  ), position: position, size: Vector2.all(sizeS));
+  ), position: position, size: sizeSkull);
 }
 

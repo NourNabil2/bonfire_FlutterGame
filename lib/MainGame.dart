@@ -13,6 +13,7 @@ import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/material.dart';
 import 'Enemy/Bringer.dart';
 import 'Enemy/Dog_Black.dart';
+import 'Enemy/Dog_white.dart';
 import 'Enemy/Rat.dart';
 import 'Enemy/Skeleton.dart';
 import 'Enemy/Skull.dart';
@@ -75,12 +76,11 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
   Widget build(BuildContext context) {
     switch (currentMap) {
 
-      case 0: return MainMap(tiledSize: tiledSize, lightingMap: Colors.black38,map: WorldMapByTiled(
+      case 4: return MainMap(tiledSize: tiledSize, lightingMap: Colors.black38,map: WorldMapByTiled(
           nothingness,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
             'nothing': (properties) => Shadow(properties.position),
-            'Bringer': (properties) => Bringer(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 1: return  MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
@@ -128,6 +128,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'safe': (properties) => safe(position: properties.position),
             'You': (properties) => You(properties.position),
             'Skull': (properties) => Skull(properties.position),
+            'Bringer': (properties) => Bringer(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 3: return MainMap(lightingMap:Colors.black54 ,tiledSize: tiledSize, map: WorldMapByTiled(
@@ -147,6 +148,31 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'Skeleton': (properties) => Skeleton(properties.position),
             'torch': (properties) => torch(position: properties.position),
             'Spikes': (properties) => Spikes(properties.position),
+          }
+      ),Player: Kinght(Vector2(90,90))) ;
+      case 0: return MainMap(lightingMap:Colors.black54 ,tiledSize: tiledSize, map: WorldMapByTiled(
+          temple,
+          forceTileSize: Vector2(tiledSize, tiledSize),
+          objectsBuilder: {
+            'Wizard_oldMan': (properties) => WizerdMan(properties.position),
+            'Dark_Ninja': (properties) => DarkNinja(properties.position),
+            'Boss': (properties) => BossNinja(properties.position),
+            'demon': (properties) => Demon(properties.position),
+            'picktorch': (properties) => Picktorch(position: properties.position),
+            'radio': (properties) => Radio_House(position: properties.position),
+            'bed_door': (properties) => BedRoom_Door(position: properties.position),
+            'fox': (properties) => Fox(properties.position),
+            'Dog_Black': (properties) => Dog_Black(properties.position),
+            'Dog_White': (properties) => Dog_White(properties.position),
+            'Bat': (properties) => Bat_purble(properties.position),
+            'Witch': (properties) => Witch(properties.position),
+            'Skeleton': (properties) => Skeleton(properties.position),
+            'torch': (properties) => torch(position: properties.position),
+            'Spikes': (properties) => Spikes(properties.position),
+            'Tower_1': (properties) => Tower_1(position: properties.position),
+            'Tower_2': (properties) => Tower_2(position: properties.position),
+            'Tower_3': (properties) => Tower_3(position: properties.position),
+            'safe': (properties) => safe(position: properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       default:

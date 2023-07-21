@@ -1,8 +1,10 @@
+// ignore_for_file: camel_case_types
+
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/MainGame.dart';
-import 'dart:async' as async ;
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
+import 'package:bonfire_flutter_game/decorations/Gate_translate.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/services.dart';
@@ -82,7 +84,7 @@ class Radio_House extends GameDecoration with TapGesture
 
 
 }
-
+bool r =false ;
 class safe extends GameDecoration with TapGesture ,ObjectCollision
 {
   bool showDialog = false ;
@@ -99,7 +101,7 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
         collisions: [
           CollisionArea.rectangle(
             size: Vector2(1,1),
-            align: Vector2(1,-16),
+            align: Vector2(1,-12),
           ),
         ],
       ),
@@ -108,11 +110,11 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
 
   @override
   void update(dt) {
-
     seeComponent(
       gameRef.player!,
       radiusVision: 100,
       observed: (player) {
+
         if (!showDialog) {
           showDialog = true;
           if (currentMap == 1)
@@ -132,7 +134,27 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
 
               ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space],);
             }
+          else if (currentMap == 0)
+          {
+            r ?
+          {  TalkDialog.show(gameRef.context, [
+              speak(text: 'I guess I have to escape from here through the mind gate, I have to gather my strength, ${tower_ON}/3  Luminous stones ',
+                  isPlayer: true),
 
+            ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space],)
+                ,
+           removeFromParent()}:
+            {TalkDialog.show(gameRef.context, [
+              speak(text: 'Where am I, forest? \n Wonderful, dream inside a dream, as I think ',
+                  isPlayer: true),
+
+            ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space],)
+            ,
+              r = true,removeFromParent()
+
+            };
+
+        }
         }
 
       },
@@ -331,11 +353,7 @@ class Picktorch extends GameDecoration with Sensor<Kinght>
     ),
     position: position,
     size: Vector2.all(16),
-  ) {
-
-
-
-  }
+  );
   @override
   void onContact(GameComponent component) {
     if (component is Kinght) {
@@ -365,9 +383,7 @@ class Key_silver extends GameDecoration with Sensor<Kinght>
     ),
     position: position,
     size: Vector2.all(10),
-  ) {}
-
-
+  ){}
 
   @override
   void onContact(GameComponent component) {
@@ -401,11 +417,219 @@ class Key_Gold extends GameDecoration with Sensor<Kinght>
   @override
   void onContact(GameComponent component) {
     if (component is Kinght) {
-      component.Taketorch = true ;
+      component.goldKey = true ;
       CashSaver.SaveData(key: 'gold', value: true);
     }
     // FlameAudio.play(Globals.fireSound);
     removeFromParent();
 
   }
+}
+
+class Key_red extends GameDecoration with Sensor<Kinght>
+{
+  Key_red({required Vector2 position})
+      : super.withAnimation(
+    animation: SpriteAnimation.load(
+      redKey,
+      SpriteAnimationData.sequenced(
+        amount: 4,
+        stepTime: 0.2,
+        textureSize: Vector2(16, 16),
+      ),
+    ),
+    position: position,
+    size: Vector2.all(10),
+  ) {}
+
+
+
+  @override
+  void onContact(GameComponent component) {
+    if (component is Kinght) {
+      component.Key_red = true ;
+      CashSaver.SaveData(key: 'red', value: true);
+    }
+    // FlameAudio.play(Globals.fireSound);
+    removeFromParent();
+
+  }
+}
+
+Vector2 portal = Vector2(2285, 2252);
+class Tower_1 extends GameDecoration with TapGesture ,ObjectCollision
+{
+  Tower_1({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
+    "items/tower.png",
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(0, 0), srcSize: Vector2(48, 70), stepTime: 0.1),
+
+
+    ],loop: true ),
+
+  ), position: position, size: Vector2.all(48)){
+    setupCollision(
+      CollisionConfig(
+        collisions: [
+          CollisionArea.rectangle(
+            size: Vector2(30,20),
+            align: Vector2(1,10),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  @override
+  void onTap() {
+    if (tower_ON == 2 )
+      {
+        gameRef.add(Portal(position: portal));
+      }
+    tower_ON ++ ;
+    removeFromParent();
+    gameRef.add(Tower_1on(position: position));
+
+  }
+}
+
+class Tower_1on  extends GameDecoration {
+
+  Tower_1on({required Vector2 position})
+      : super.withAnimation(animation: SpriteAnimation.load(
+
+    "items/tower.png",
+
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(48, 0), srcSize: Vector2(48, 70), stepTime: 0.1),
+
+
+    ],loop: true ),
+
+  ),position: position, size: Vector2.all(48));
+
+}
+
+class Tower_2 extends GameDecoration with TapGesture ,ObjectCollision
+{
+  Tower_2({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
+
+    "items/tower.png",
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(0, 70), srcSize: Vector2(48, 90), stepTime: 0.1),
+
+
+    ],loop: false),
+
+  ), position: position, size: Vector2.all(48)){
+    setupCollision(
+      CollisionConfig(
+        collisions: [
+          CollisionArea.rectangle(
+            size: Vector2(30,20),
+            align: Vector2(1,10),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void onTap() {
+    if (tower_ON == 2 )
+    {
+      gameRef.add(Portal(position: portal));
+    }
+    else {
+      tower_ON ++ ;
+    }
+
+    removeFromParent();
+    gameRef.add(Tower_2on(position: position));
+
+  }
+
+
+
+
+
+}
+
+class Tower_2on  extends GameDecoration {
+
+  Tower_2on({required Vector2 position})
+      : super.withAnimation(animation: SpriteAnimation.load(
+
+    "items/tower.png",
+
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(48, 70), srcSize: Vector2(48, 90), stepTime: 0.1),
+
+
+    ],loop: true ),
+
+  ),position: position, size: Vector2.all(48));
+
+}
+
+class Tower_3 extends GameDecoration with TapGesture ,ObjectCollision
+{
+  Tower_3({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
+
+    "items/tower.png",
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(0, 155), srcSize: Vector2(48, 60), stepTime: 0.1),
+
+
+    ],loop: false),
+
+  ), position: position, size: Vector2.all(48)){
+    setupCollision(
+      CollisionConfig(
+        collisions: [
+          CollisionArea.rectangle(
+            size: Vector2(30,20),
+            align: Vector2(1,10),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void onTap() {
+    if (tower_ON == 2 )
+    {
+      gameRef.add(Portal(position: portal));
+    }
+    else {
+      tower_ON ++ ;
+    }
+    removeFromParent();
+    gameRef.add(Tower_3on(position: position));
+  }
+
+
+
+
+
+}
+
+class Tower_3on  extends GameDecoration
+{
+
+  Tower_3on({required Vector2 position})
+      : super.withAnimation(animation: SpriteAnimation.load(
+
+    "items/tower.png",
+
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(48, 155), srcSize: Vector2(48, 60), stepTime: 0.1),
+
+
+    ],loop: true ),
+
+  ),position: position, size: Vector2.all(48));
+
 }

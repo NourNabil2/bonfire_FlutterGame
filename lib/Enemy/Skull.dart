@@ -9,17 +9,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
 import '../decorations/die_Decoration.dart';
+import 'Bringer.dart';
 bool isobserve = false ;
-Vector2 size = Vector2(64, 64);
-double damage = 5 ;
+Vector2 sizeSkull = Vector2(64, 64);
+double damage = 10 ;
+int die_Skull = 0 ;
 class Skull extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
 
   Skull(Vector2 position )
       : super(
     position: position,
-    size: Vector2(tiledSize,tiledSize),
+    size: Vector2(64,64),
     animation:  PlayerSpriteSheet.simpleDirectionAnimation ,
-    life: 100,
+    life: 80,
     speed: 50,
     initDirection: Direction.down,
   )
@@ -44,7 +46,6 @@ class Skull extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
   }
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-    lastDirectionHorizontal == Direction.right ?  animation?.playOnce(PlayerSpriteSheet.Hit(),) : animation?.playOnce(PlayerSpriteSheet.Hit(),flipX: true);
     // FlameAudio.play(Globals.explosionSound);
     showDamage(
       damage,
@@ -55,6 +56,14 @@ class Skull extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
   }
   @override
   Future<void> die() async {
+    if (die_Skull == 8)
+    {
+      gameRef.add(Bringer(Vector2(1140,270)));
+    }
+    else
+    {
+      die_Skull++ ;
+    }
     removeFromParent();
     lastDirectionHorizontal == Direction.right ? gameRef.add(Skull_Die(position: position)) : gameRef.add(Skull_Die_L(position: position)) ;
     super.die();
@@ -99,7 +108,7 @@ class PlayerSpriteSheet {
     SpriteAnimationData.sequenced(
       amount:8,
       stepTime: 0.2,
-      textureSize:size,
+      textureSize:sizeSkull,
     ),
   );
   static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
@@ -107,7 +116,7 @@ class PlayerSpriteSheet {
     SpriteAnimationData.sequenced(
       amount:8,
       stepTime: 0.2,
-      textureSize: size,
+      textureSize: sizeSkull,
     ),
   );
 
@@ -116,7 +125,7 @@ class PlayerSpriteSheet {
     SpriteAnimationData.sequenced(
       amount: 4,
       stepTime: 0.2,
-      textureSize: size,
+      textureSize: sizeSkull,
     ),
   );
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
@@ -124,26 +133,15 @@ class PlayerSpriteSheet {
     SpriteAnimationData.sequenced(
       amount: 4,
       stepTime: 0.2,
-      textureSize: size,
+      textureSize: sizeSkull,
     ),
   );
-
-
-  static Future<SpriteAnimation>  Hit() => SpriteAnimation.load(
-    "Effects/Hit.png",
-    SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.2,
-      textureSize: size,
-    ),
-  );
-
 
   static Future<SpriteAnimation>  FXhit() => SpriteAnimation.load(
     "Effects/SP.png",
     SpriteAnimationData.sequenced(
       amount: 7,
-      stepTime: 0.2,
+      stepTime: 0.1,
       textureSize: Vector2(67, 32),
     ),
   );

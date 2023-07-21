@@ -69,6 +69,7 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
   }
   @override
   Future<void> die() async {
+    gameRef.camera.shake(intensity: 4);
     removeFromParent();
     lastDirectionHorizontal == Direction.right ?  animation?.playOnce(SpriteAnimation.load(
       "Enemy/Bringer/Death_R.png",
@@ -85,6 +86,7 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
         textureSize: sizeS,
       ),)) ;
 
+    gameRef.add(Portal(position: Vector2(600,120) ));
     super.die();
   }
 

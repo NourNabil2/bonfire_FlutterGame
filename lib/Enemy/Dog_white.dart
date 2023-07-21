@@ -11,16 +11,16 @@ import '../MainGame.dart';
 import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
 
-double damage = 5 ;
-class Dog_Black extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+double damage = 15 ;
+class Dog_White extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
 
-  Dog_Black(Vector2 position )
+  Dog_White(Vector2 position )
       : super(
     position: position,
     size: Vector2(tiledSize,tiledSize),
     animation:PlayerSpriteSheet.simpleDirectionAnimation ,
     life: 100,
-    speed: 50,
+    speed: 80,
     initDirection: Direction.down,
   )
   {
@@ -81,7 +81,7 @@ class Dog_Black extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
         observed: () {
           isobserve = true ;
         },
-        radiusVision:150,
+        radiusVision:250,
       );
 
     }

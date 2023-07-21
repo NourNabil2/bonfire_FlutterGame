@@ -55,15 +55,19 @@ class Rat extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,Us
     removeFromParent();
     gameRef.add(Rat_death(position: position));
     super.die();
-    if (die_rat == 11)
+    if (currentMap == 1 )
       {
-        selectMap(2);
+        if (die_rat == 11)
+        {
+          selectMap(2);
+        }
+        else
+        {
+          die_rat++ ;
+          print(die_rat);
+        }
       }
-    else
-      {
-        die_rat++ ;
-        print(die_rat);
-      }
+
 
   }
 
