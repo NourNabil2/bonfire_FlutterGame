@@ -22,6 +22,7 @@ import 'constant/NameOfMaps.dart';
 import 'package:bonfire_flutter_game/NPC/Shadow.dart';
 import 'constant/Sounds/background.dart';
 import 'constant/constant.dart';
+import 'decorations/Gate_translate.dart';
 import 'decorations/Items.dart';
 import 'decorations/Spike.dart';
 import 'followers/Fox.dart';
@@ -76,7 +77,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
   Widget build(BuildContext context) {
     switch (currentMap) {
 
-      case 4: return MainMap(tiledSize: tiledSize, lightingMap: Colors.black38,map: WorldMapByTiled(
+      case 0: return MainMap(tiledSize: tiledSize, lightingMap: Colors.black38,map: WorldMapByTiled(
           nothingness,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
@@ -150,7 +151,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'Spikes': (properties) => Spikes(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
-      case 0: return MainMap(lightingMap:Colors.black54 ,tiledSize: tiledSize, map: WorldMapByTiled(
+      case 4: return MainMap(lightingMap:Colors.black38 ,tiledSize: tiledSize, map: WorldMapByTiled(
           temple,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
@@ -172,6 +173,30 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'Tower_1': (properties) => Tower_1(position: properties.position),
             'Tower_2': (properties) => Tower_2(position: properties.position),
             'Tower_3': (properties) => Tower_3(position: properties.position),
+            'safe': (properties) => safe(position: properties.position),
+          }
+      ),Player: Kinght(Vector2(90,90))) ;
+      case 5: return MainMap(lightingMap:Colors.black.withOpacity(0.8) ,tiledSize: tiledSize, map: WorldMapByTiled(
+          jail,
+          forceTileSize: Vector2(tiledSize, tiledSize),
+          objectsBuilder: {
+            'picktorch': (properties) => Picktorch(position: properties.position),
+            'bed_door': (properties) => BedRoom_Door(position: properties.position),
+            'fox': (properties) => Fox(properties.position),
+            'Bat': (properties) => Bat_purble(properties.position),
+            'Witch': (properties) => Witch(properties.position),
+            'Skeleton': (properties) => Skeleton(properties.position),
+            'torch': (properties) => torch(position: properties.position),
+            'Spikes': (properties) => Spikes(properties.position),
+            'gate': (properties) => Portal(position: properties.position),
+            'Elec': (properties) => Elec(position: properties.position),
+          }
+      ),Player: Kinght(Vector2(90,90))) ;
+      case 6: return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
+          Mind,
+          forceTileSize: Vector2(tiledSize, tiledSize),
+          objectsBuilder: {
+            'You': (properties) => You(properties.position),
             'safe': (properties) => safe(position: properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;

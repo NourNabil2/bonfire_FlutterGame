@@ -7,6 +7,7 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../Enemy/Rat.dart';
+import '../MainGame.dart';
 import '../SharedPreferences/Cash_Save.dart';
 import '../decorations/Items.dart';
 import 'dart:async' as async;
@@ -21,12 +22,13 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
   bool goldKey = CashSaver.getData(key: 'gold') ?? false ;
   bool Key_red = CashSaver.getData(key: 'red') ?? false ;
   bool Power = CashSaver.getData(key: 'Power') ?? false ;
+  bool PowerE = CashSaver.getData(key: 'PowerE') ?? false ;
 
   async.Timer? _timerStamina;
   Kinght(Vector2 position )
       : super (
     position: position,
-    size: Vector2(50,37),
+    size: currentMap == 4 ? Vector2(80,57) :Vector2(50,37),
     animation: PlayerSpriteSheet2.simpleDirectionAnimation,
     life: 200,
     speed: 100,
@@ -47,6 +49,10 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
   @override
   Future<void> update(double dt) async {
 
+     if (currentMap == 6 && backgroundMusic == false)
+    {
+    selectMap(7);
+    }
 
     if(isDead)
   {
@@ -207,22 +213,24 @@ else
 
       if (press.id == AttackType.Elec || press.id == LogicalKeyboardKey.keyD.keyId) {
         if (gameRef.player != null && gameRef.player?.isDead == true) return;
-        if (stamina < 15) {
-          return;
-        }
-        else {
-          decrementStamina(35);
-          animation?.playOnce(
-            PlayerSpriteSheet2.AttackRange_R(),
-            runToTheEnd: true ,
-            flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
-          );
-          simpleAttackMelee(
+        if (PowerE) {
+          if (stamina < 15) {
+            return;
+          }
+          else {
+            decrementStamina(35);
+            animation?.playOnce(
+              PlayerSpriteSheet2.AttackRange_R(),
+              runToTheEnd: true,
+              flipX: lastDirectionHorizontal == Direction.right ? false : true,
+            );
+            simpleAttackMelee(
 
               damage: damagePlayer * 3,
               size: size,
-            animationRight: PlayerSpriteSheet2.AttackElec_FX(),
-          );
+              animationRight: PlayerSpriteSheet2.AttackElec_FX(),
+            );
+          }
         }
       }
 

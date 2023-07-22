@@ -28,5 +28,13 @@ class Portal extends GameDecoration with Sensor<Kinght>
       {
         selectMap(4);
       }
+    else if (currentMap == 4)
+      {
+        selectMap(6);
+      }
+    else if (currentMap == 5)
+    {
+      selectMap(4);
+    }
   }
 }

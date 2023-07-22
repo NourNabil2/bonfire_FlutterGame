@@ -62,6 +62,24 @@ bool speedup = false ;
 
 }
 
+
+class Elec extends GameDecoration with Sensor<Kinght>
+{
+  Elec({required Vector2 position}): super.withAnimation(animation:SpriteAnimation.load('items/elec_P.png', SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(16, 16))) , position: position, size: Vector2.all(15.0));
+
+
+  @override
+  void onContact(GameComponent component) {
+
+    SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+    CashSaver.SaveData(key: 'PowerE',value: true);
+    (gameRef.player as Kinght).PowerE = true;
+    gameRef.player!.addLife(lifePotion);
+    removeFromParent();
+  }
+
+}
+
 class Radio_House extends GameDecoration with TapGesture
 {
   Radio_House({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
@@ -134,7 +152,7 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
 
               ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space],);
             }
-          else if (currentMap == 0)
+          else if (currentMap == 4)
           {
             r ?
           {  TalkDialog.show(gameRef.context, [
@@ -143,7 +161,7 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
 
             ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space],)
                 ,
-           removeFromParent()}:
+          }:
             {TalkDialog.show(gameRef.context, [
               speak(text: 'Where am I, forest? \n Wonderful, dream inside a dream, as I think ',
                   isPlayer: true),
@@ -155,6 +173,15 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
             };
 
         }
+          else if (currentMap == 6)
+          {
+             TalkDialog.show(gameRef.context, [
+              speak(text: ' WHERE AM I AGAIN WHY DOSE THIS NIGHTMARE NEVER END \n Stop these voices from inside my mind, stop it, stop it, stop it, I can\'t stand it anymore',
+                  isPlayer: true),
+            ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space],);
+
+
+          }
         }
 
       },
@@ -215,15 +242,28 @@ class BedRoom_Door extends GameDecoration with ObjectCollision
             p.silverKey = false;
             removeFromParent();
           } else {
+
             if (!showDialog) {
+
               showDialog = true;
-              TalkDialog.show(gameRef.context, [
+              if (currentMap == 1 || currentMap == 2 ) {
+                TalkDialog.show(gameRef.context, [
                 speak(text: 'The door is locked, I have to find the key',
                     isPlayer: true),
 
               ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space]
 
               );
+              }
+              else if (currentMap == 5 )
+                {
+                  TalkDialog.show(gameRef.context, [
+                    speak(text: 'The door is locked, I forget the gold key in my house',
+                        isPlayer: true),
+                  ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space]
+
+                  );
+                }
             }
 
           }

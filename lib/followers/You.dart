@@ -30,7 +30,14 @@ class You extends SimpleEnemy with ObjectCollision {
   @override
   void die()
   {
-    gameRef.add(You(position + Vector2(80, 0)));
+    if (currentMap == 6 )
+      {
+        gameRef.add(You(Vector2(90, 90)));
+        gameRef.add(You(Vector2(90, 150)));
+      }
+    else {
+      gameRef.add(You(position + Vector2(80, 0)));
+    }
 
     gameRef.add(YOUDEATH(position: position));
     removeFromParent();

@@ -20,7 +20,7 @@ class Dog_White extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
     size: Vector2(tiledSize,tiledSize),
     animation:PlayerSpriteSheet.simpleDirectionAnimation ,
     life: 100,
-    speed: 80,
+    speed: 90,
     initDirection: Direction.down,
   )
   {
