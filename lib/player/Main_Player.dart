@@ -51,6 +51,7 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
 
      if (currentMap == 6 && backgroundMusic == false)
     {
+      CashSaver.SaveData(key: 'complete',value: 10);
     selectMap(7);
     }
 
@@ -131,6 +132,7 @@ else
   @override
   Future<void> die() async {
     // FlameAudio.play(Globals.gameOverSound);
+    gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.7), blendMode: BlendMode.colorBurn);
     await animation?.playOnce(
       SpriteAnimation.load(
           "Player/MainMovement/player-death.png",
@@ -140,9 +142,11 @@ else
       flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
 
     );
+
     gameRef.camera.shake(intensity: 4);
     die_rat = 0 ;
     gameRef.overlayManager.add(GameOverScreen.id);
+
     super.die();
   }
 
@@ -231,6 +235,10 @@ else
               animationRight: PlayerSpriteSheet2.AttackElec_FX(),
             );
           }
+        }
+        else
+        {
+          _showEmote(emote: wrong);
         }
       }
 

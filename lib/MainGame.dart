@@ -6,7 +6,6 @@ import 'package:bonfire_flutter_game/Enemy/Demon_enemy.dart';
 import 'package:bonfire_flutter_game/NPC/Wizerd_npc.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/DynamicMap.dart';
-import 'package:bonfire_flutter_game/constant/onBoarding.dart';
 import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:bonfire_flutter_game/followers/You.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
@@ -14,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'Enemy/Bringer.dart';
 import 'Enemy/Dog_Black.dart';
 import 'Enemy/Dog_white.dart';
+import 'Enemy/Night.dart';
 import 'Enemy/Rat.dart';
 import 'Enemy/Skeleton.dart';
 import 'Enemy/Skull.dart';
@@ -27,6 +27,7 @@ import 'decorations/Items.dart';
 import 'decorations/Spike.dart';
 import 'followers/Fox.dart';
 double tiledSize = 32 ;
+int complete = CashSaver.getData(key: 'complete') ?? 0 ;
 bool T = true ;
 int currentMap = CashSaver.getData(key: 'Map') ?? 0 ;
 late Function(int) selectMap;
@@ -42,12 +43,13 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
 
   @override
   void dispose() {
-    currentMap = 0 ;
+    currentMap = 0;
     super.dispose();
   }
 
   @override
   void initState() {
+    complete = CashSaver.getData(key: 'complete') ?? 0;
     currentMap = CashSaver.getData(key: 'Map') ?? 0 ;
     selectMap = (int id) {
       setState(() {
@@ -77,11 +79,21 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
   Widget build(BuildContext context) {
     switch (currentMap) {
 
-      case 0: return MainMap(tiledSize: tiledSize, lightingMap: Colors.black38,map: WorldMapByTiled(
-          nothingness,
+      case 0:  return MainMap(lightingMap:Colors.black38 ,tiledSize: tiledSize, map: WorldMapByTiled(
+          Last,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
-            'nothing': (properties) => Shadow(properties.position),
+            'fox': (properties) => Fox(properties.position),
+            'Nightmare': (properties) => Nightmare(properties.position),
+            'You': (properties) => You(properties.position),
+            'RED': (properties) => Key_red(properties.position),
+            'chest': (properties) => Chest_easter(position: properties.position),
+            'Skull': (properties) => Skull(properties.position),
+            'Dog_black': (properties) => Dog_Black(properties.position),
+            'dog_white': (properties) => Dog_White(properties.position),
+            'Rats': (properties) => Rat(properties.position),
+            'portal_X': (properties) => Portal_Mind( position: properties.position),
+
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 1: return  MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
@@ -112,10 +124,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
           Housereturn,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
-            'Wizard_oldMan': (properties) => WizerdMan(properties.position),
-            'Dark_Ninja': (properties) => DarkNinja(properties.position),
             'Boss': (properties) => BossNinja(properties.position),
-            'demon': (properties) => Demon(properties.position),
             'torch': (properties) => torch(position: properties.position),
             'picktorch': (properties) => Picktorch(position: properties.position),
             'nothing': (properties) => Shadow(properties.position),
@@ -149,18 +158,14 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'Skeleton': (properties) => Skeleton(properties.position),
             'torch': (properties) => torch(position: properties.position),
             'Spikes': (properties) => Spikes(properties.position),
+            'chest': (properties) => Chest_easter(position: properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 4: return MainMap(lightingMap:Colors.black38 ,tiledSize: tiledSize, map: WorldMapByTiled(
           temple,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
-            'Wizard_oldMan': (properties) => WizerdMan(properties.position),
-            'Dark_Ninja': (properties) => DarkNinja(properties.position),
-            'Boss': (properties) => BossNinja(properties.position),
-            'demon': (properties) => Demon(properties.position),
             'picktorch': (properties) => Picktorch(position: properties.position),
-            'radio': (properties) => Radio_House(position: properties.position),
             'bed_door': (properties) => BedRoom_Door(position: properties.position),
             'fox': (properties) => Fox(properties.position),
             'Dog_Black': (properties) => Dog_Black(properties.position),
@@ -174,6 +179,8 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'Tower_2': (properties) => Tower_2(position: properties.position),
             'Tower_3': (properties) => Tower_3(position: properties.position),
             'safe': (properties) => safe(position: properties.position),
+            'Rats': (properties) => Rat(properties.position),
+            'chest': (properties) => Chest_easter(position: properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 5: return MainMap(lightingMap:Colors.black.withOpacity(0.8) ,tiledSize: tiledSize, map: WorldMapByTiled(
@@ -181,6 +188,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
             'picktorch': (properties) => Picktorch(position: properties.position),
+            'Rats': (properties) => Rat(properties.position),
             'bed_door': (properties) => BedRoom_Door(position: properties.position),
             'fox': (properties) => Fox(properties.position),
             'Bat': (properties) => Bat_purble(properties.position),
@@ -190,6 +198,7 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'Spikes': (properties) => Spikes(properties.position),
             'gate': (properties) => Portal(position: properties.position),
             'Elec': (properties) => Elec(position: properties.position),
+            'chest': (properties) => Chest_easter(position: properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 6: return MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
@@ -205,16 +214,15 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
           Housereturn,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
-            'Wizard_oldMan': (properties) => WizerdMan(properties.position),
-            'torch': (properties) => torch(position: properties.position),
-            'Dark_Ninja': (properties) => DarkNinja(properties.position),
-            'Boss': (properties) => BossNinja(properties.position),
-            'demon': (properties) => Demon(properties.position),
-            'torch': (properties) => torch(position: properties.position),
-            'picktorch': (properties) => Picktorch(position: properties.position),
-            'radio': (properties) => Radio_House(position: properties.position),
-            'bed_door': (properties) => BedRoom_Door(position: properties.position),
             'fox': (properties) => Fox(properties.position),
+            'Nightmare': (properties) => Nightmare(properties.position),
+            'You': (properties) => You(properties.position),
+            'RED': (properties) => Key_red(properties.position),
+            'chest': (properties) => Chest_easter(position: properties.position),
+            'Skull': (properties) => Skull(properties.position),
+            'Dog_black': (properties) => Dog_Black(properties.position),
+            'dog_white': (properties) => Dog_White(properties.position),
+            'Rats': (properties) => Rat(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
 

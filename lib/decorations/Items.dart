@@ -310,6 +310,7 @@ class Chest_easter extends GameDecoration with Sensor<Kinght>
   @override
   void onContact(GameComponent component) {
     SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+    gameRef.add(PotionLife(position: position + Vector2(20, 20)));
     removeFromParent();
   }
 
@@ -468,7 +469,7 @@ class Key_Gold extends GameDecoration with Sensor<Kinght>
 
 class Key_red extends GameDecoration with Sensor<Kinght>
 {
-  Key_red({required Vector2 position})
+  Key_red(Vector2 position,)
       : super.withAnimation(
     animation: SpriteAnimation.load(
       redKey,
@@ -671,5 +672,66 @@ class Tower_3on  extends GameDecoration
     ],loop: true ),
 
   ),position: position, size: Vector2.all(48));
+
+}
+
+
+
+
+
+class Portal_Mind extends GameDecoration with TapGesture ,ObjectCollision
+{
+  Portal_Mind({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
+
+    "items/portal_X.png",
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(0, 0), srcSize: Vector2(100, 120), stepTime: 0.1),
+
+
+    ],loop: false),
+
+  ), position: position, size: Vector2.all(100)){
+    setupCollision(
+      CollisionConfig(
+        collisions: [
+          CollisionArea.rectangle(
+            size: Vector2(50,50),
+            align: Vector2(1,10),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void onTap() {
+    removeFromParent();
+    gameRef.add(Portal_Mind_ON(position: position));
+
+  }
+
+
+
+
+
+}
+
+
+
+class Portal_Mind_ON  extends GameDecoration
+{
+
+  Portal_Mind_ON({required Vector2 position})
+      : super.withAnimation(animation: SpriteAnimation.load(
+
+    "items/portal_X.png",
+
+    SpriteAnimationData([
+      SpriteAnimationFrameData(srcPosition: Vector2(100, 0), srcSize: Vector2(100, 120), stepTime: 0.1),
+
+
+    ],loop: true ),
+
+  ),position: position, size: Vector2.all(100));
 
 }

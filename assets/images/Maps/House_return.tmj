@@ -344,6 +344,30 @@
                  "width":0,
                  "x":504,
                  "y":134
+                }, 
+                {
+                 "height":0,
+                 "id":25,
+                 "name":"fox",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":51.3333333333333,
+                 "y":192.666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":26,
+                 "name":"RED",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":273.666666666667,
+                 "y":44.6666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -474,7 +498,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":25,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

@@ -110,6 +110,9 @@ class _Start_ScreenState extends State<Start_Screen> {
                         SystemNavigator.pop();
                       }),
                     ),
+                    const SizedBox(height: 5,),
+                    Text('Discover: $complete%'),
+
 
 
 

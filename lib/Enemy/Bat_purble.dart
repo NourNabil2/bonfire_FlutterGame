@@ -55,6 +55,11 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
   }
   @override
   Future<void> die() async {
+    bool dropPickup = Random().nextBool();
+    if (dropPickup) {
+       gameRef.add(add_stamina(position: position));
+     // gameRef.add(PotionLife(position: position));
+    }
      removeFromParent();
 
     gameRef.add(Bat_death(position: position));

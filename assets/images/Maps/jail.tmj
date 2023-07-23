@@ -419,7 +419,7 @@
                 {
                  "height":0,
                  "id":19,
-                 "name":"Bat",
+                 "name":"Rats",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -443,7 +443,7 @@
                 {
                  "height":0,
                  "id":21,
-                 "name":"Bat",
+                 "name":"Rats",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -451,30 +451,6 @@
                  "width":0,
                  "x":416,
                  "y":279.5
-                }, 
-                {
-                 "height":0,
-                 "id":23,
-                 "name":"Bat",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":606,
-                 "y":581
-                }, 
-                {
-                 "height":0,
-                 "id":24,
-                 "name":"Bat",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":619,
-                 "y":716
                 }, 
                 {
                  "height":0,
@@ -664,6 +640,87 @@
                  "width":0,
                  "x":696,
                  "y":85
+                }, 
+                {
+                 "height":0,
+                 "id":51,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":172,
+                 "y":188
+                }, 
+                {
+                 "height":0,
+                 "id":52,
+                 "name":"Rats",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":396,
+                 "y":92
+                }, 
+                {
+                 "height":0,
+                 "id":53,
+                 "name":"Rats",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":394.666666666667,
+                 "y":725.333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":54,
+                 "name":"Rats",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":676,
+                 "y":581.333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":55,
+                 "name":"chest",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":756.333333333333,
+                 "y":85.6666666666666
+                }, 
+                {
+                 "height":0,
+                 "id":57,
+                 "name":"chest",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":636.333333333333,
+                 "y":91.6666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":60,
+                 "name":"chest",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":538.666666666667,
+                 "y":708
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -672,7 +729,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":51,
+ "nextobjectid":61,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

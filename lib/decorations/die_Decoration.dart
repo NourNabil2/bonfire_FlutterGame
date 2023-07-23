@@ -153,6 +153,15 @@ class witch_death extends GameDecoration {
 
   ), position: position, size: Vector2.all(sizeS));
 }
+class Night_death extends GameDecoration {
+  Night_death({required Vector2 position})
+      : super.withAnimation(animation: SpriteAnimation.load(
+
+      "Enemy/Night/NightBorne_die.png",
+      SpriteAnimationData.sequenced(amount: 23, stepTime: 0.1, textureSize: Vector2(80, 80),loop: false )
+
+  ), position: position, size: Vector2.all(sizeS));
+}
 
 
 class Skull_Die extends GameDecoration {

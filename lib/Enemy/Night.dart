@@ -1,7 +1,9 @@
+
 import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
+import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,24 +12,24 @@ import '../MainGame.dart';
 import '../decorations/Gate_translate.dart';
 import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
-Vector2 sizeS = Vector2(93, 93) ;
-double damage = 45 ;
-class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+Vector2 sizeS = Vector2(80, 80) ;
+double damage = 25 ;
+class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
 
-  Bringer(Vector2 position )
+  Nightmare(Vector2 position )
       : super(
     position: position,
     size: sizeS,
     animation:PlayerSpriteSheet.simpleDirectionAnimation ,
-    life: 700,
-    speed: 60,
+    life: 20,
+    speed: 101,
     initDirection: Direction.down,
   )
   {
     setupBarLife(
       barLifePosition: BarLifePorition.top,
       showLifeText: false,
-      size: Vector2(40, 3),
+      size: Vector2(10, 1),
       borderWidth: 0,
 
 
@@ -35,8 +37,8 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
     setupCollision(
       CollisionConfig(collisions: [
         CollisionArea.rectangle(
-          size: Vector2(16, 32),
-          align: Vector2(16, 64),
+          size: Vector2(16, 16),
+          align: Vector2(16, 16),
         ),
       ]),
     );
@@ -46,20 +48,14 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
 
     // FlameAudio.play(Globals.explosionSound);
-    lastDirectionHorizontal == Direction.right ?  animation?.playOnce(SpriteAnimation.load(
-      "Enemy/Bringer/Hit_R.png",
+   animation?.playOnce(SpriteAnimation.load(
+      "Enemy/Night/NightBorne_give_hit.png",
       SpriteAnimationData.sequenced(
         amount: 3,
         stepTime: 0.1,
         textureSize: sizeS,
       ),
-    ) ) : animation?.playOnce(SpriteAnimation.load(
-      "Enemy/Bringer/Hit_L.png",
-      SpriteAnimationData.sequenced(
-        amount: 3,
-        stepTime: 0.1,
-        textureSize: sizeS,
-      ),)) ;
+    ) ,flipX: lastDirectionHorizontal == Direction.right ?  true : false) ;
     showDamage(
       damage,
       config: TextStyle(fontSize: width / 3, color: Colors.red),
@@ -69,24 +65,9 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
   }
   @override
   Future<void> die() async {
-    gameRef.camera.shake(intensity: 4);
     removeFromParent();
-    lastDirectionHorizontal == Direction.right ?  animation?.playOnce(SpriteAnimation.load(
-      "Enemy/Bringer/Death_R.png",
-      SpriteAnimationData.sequenced(
-        amount: 3,
-        stepTime: 0.1,
-        textureSize: sizeS,
-      ),
-    ) ) : animation?.playOnce(SpriteAnimation.load(
-      "Enemy/Bringer/Death_L.png",
-      SpriteAnimationData.sequenced(
-        amount: 3,
-        stepTime: 0.1,
-        textureSize: sizeS,
-      ),)) ;
-
-    gameRef.add(Portal(position: Vector2(600,120) ));
+    gameRef.add(Night_death(position: position)) ;
+    gameRef.add(Portal(position: Vector2(38*32, 27*32) ));
     super.die();
   }
 
@@ -97,7 +78,7 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
     {
       isobserve = false ;
       seeAndMoveToPlayer(
-        radiusVision:200,
+        radiusVision:100,
         closePlayer: (Player) {
           if (!Player.isDead)
           {
@@ -105,11 +86,12 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
               withPush: false,
               damage: damage ,
               size: size,
-              execute: () => lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS) : animation?.playOnce(PlayerSpriteSheet.attack_R(),size: sizeS,runToTheEnd: true,flipX: true) ,
+              execute: () => animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS , flipX:  lastDirectionHorizontal == Direction.right ? false : true),
             );
           }
         },
         observed: () {
+          gameRef.colorFilter?.animateTo(Colors.transparent);
           isobserve = true ;
         },
       );
@@ -126,46 +108,46 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
 class PlayerSpriteSheet {
 
   static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
-    "Enemy/Bringer/Bringer-Walk_R.png",
+    "Enemy/Night/NightBorne_run.png",
     SpriteAnimationData.sequenced(
-      amount: 8,
+      amount: 6,
       stepTime: 0.2,
-      textureSize: sizeS,
+      textureSize: Vector2(80, 80),
     ),
   );
   static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
-    "Enemy/Bringer/Bringer-Walk_L.png",
+    "Enemy/Night/NightBorne_run_Left.png",
     SpriteAnimationData.sequenced(
-      amount: 8,
+      amount: 6,
       stepTime: 0.2,
-      textureSize: sizeS,
+      textureSize: Vector2(80, 80),
     ),
   );
 
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-    "Enemy/Bringer/Bringer-Idle_R.png",
+    "Enemy/Night/NightBorne_Idle.png",
     SpriteAnimationData.sequenced(
-      amount: 8,
+      amount: 9,
       stepTime: 0.2,
-      textureSize: sizeS,
+      textureSize: Vector2(80, 80),
     ),
   );
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
-    "Enemy/Bringer/Bringer-Idle_L.png",
+    "Enemy/Night/NightBorne_Idle_L.png",
     SpriteAnimationData.sequenced(
-      amount: 8,
+      amount: 9,
       stepTime: 0.2,
-      textureSize: sizeS,
+      textureSize: Vector2(80, 80),
     ),
   );
 
 
   static Future<SpriteAnimation>  attack_R() => SpriteAnimation.load(
-    "Enemy/Bringer/Attack_R.png",
+    "Enemy/Night/NightBorne_hit.png",
     SpriteAnimationData.sequenced(
-      amount: 9,
-      stepTime: 0.09,
-      textureSize: Vector2(140, 93),
+      amount: 12,
+      stepTime: 0.08,
+      textureSize: Vector2(80, 80),
     ),
   );
 

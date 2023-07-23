@@ -1,4 +1,7 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/MainGame.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../constant/constant.dart';
 import '../player/Main_Player.dart';
 
@@ -29,6 +32,18 @@ bool see = false;
         seeAndMoveToPlayer(
           closePlayer: (player) {},
           observed: () async {
+            if (currentMap == 0 )
+            {
+              removeFromParent();
+              gameRef.camera.shake(intensity: 8);
+              gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.3), blendMode: BlendMode.colorBurn);
+              TalkDialog.show(gameRef.context, [
+                speak(text: 'NOOOOOOOO!', isPlayer: true),
+                speak(text: '...', isPlayer: true),
+              ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space]
+
+              );
+            }
             if (!see)
             {
               see = true ;

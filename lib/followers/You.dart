@@ -49,11 +49,6 @@ class You extends SimpleEnemy with ObjectCollision {
 
   @override
   void update(double dt)  {
-
-
-
-
-
     seeAndMoveToPlayer(
       closePlayer: (player) {},
       observed: () {

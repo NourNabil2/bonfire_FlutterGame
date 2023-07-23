@@ -64,7 +64,6 @@ class Rat extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,Us
         else
         {
           die_rat++ ;
-          print(die_rat);
         }
       }
 

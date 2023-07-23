@@ -640,6 +640,18 @@
                  "width":0,
                  "x":2219.5,
                  "y":215
+                }, 
+                {
+                 "height":0,
+                 "id":119,
+                 "name":"fox",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":89.5,
+                 "y":130.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -648,7 +660,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":118,
+ "nextobjectid":120,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
