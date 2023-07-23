@@ -80,20 +80,10 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
     switch (currentMap) {
 
       case 0:  return MainMap(lightingMap:Colors.black38 ,tiledSize: tiledSize, map: WorldMapByTiled(
-          Last,
+          nothingness,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
-            'fox': (properties) => Fox(properties.position),
-            'Nightmare': (properties) => Nightmare(properties.position),
-            'You': (properties) => You(properties.position),
-            'RED': (properties) => Key_red(properties.position),
-            'chest': (properties) => Chest_easter(position: properties.position),
-            'Skull': (properties) => Skull(properties.position),
-            'Dog_black': (properties) => Dog_Black(properties.position),
-            'dog_white': (properties) => Dog_White(properties.position),
-            'Rats': (properties) => Rat(properties.position),
-            'portal_X': (properties) => Portal_Mind( position: properties.position),
-
+            'nothing': (properties) => Shadow(properties.position),
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 1: return  MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
@@ -210,21 +200,23 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
           }
       ),Player: Kinght(Vector2(90,90))) ;
       default:
-      return MainMap(lightingMap:Colors.black38 ,tiledSize: tiledSize, map: WorldMapByTiled(
-          Housereturn,
-          forceTileSize: Vector2(tiledSize, tiledSize),
-          objectsBuilder: {
-            'fox': (properties) => Fox(properties.position),
-            'Nightmare': (properties) => Nightmare(properties.position),
-            'You': (properties) => You(properties.position),
-            'RED': (properties) => Key_red(properties.position),
-            'chest': (properties) => Chest_easter(position: properties.position),
-            'Skull': (properties) => Skull(properties.position),
-            'Dog_black': (properties) => Dog_Black(properties.position),
-            'dog_white': (properties) => Dog_White(properties.position),
-            'Rats': (properties) => Rat(properties.position),
-          }
-      ),Player: Kinght(Vector2(90,90))) ;
+        return MainMap(lightingMap:Colors.black38 ,tiledSize: tiledSize, map: WorldMapByTiled(
+            Last,
+            forceTileSize: Vector2(tiledSize, tiledSize),
+            objectsBuilder: {
+              'fox': (properties) => Fox(properties.position),
+              'Nightmare': (properties) => Nightmare(properties.position),
+              'You': (properties) => You(properties.position),
+              'RED': (properties) => Key_red(properties.position),
+              'chest': (properties) => Chest_easter(position: properties.position),
+              'Skull': (properties) => Skull(properties.position),
+              'Dog_black': (properties) => Dog_Black(properties.position),
+              'dog_white': (properties) => Dog_White(properties.position),
+              'Rats': (properties) => Rat(properties.position),
+              'portal_X': (properties) => Portal_Mind( position: properties.position),
+
+            }
+        ),Player: Kinght(Vector2(90,90))) ;
 
     }
   }
