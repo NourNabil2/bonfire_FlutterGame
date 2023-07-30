@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bonfire_flutter_game">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="bonfire_flutter_game"
         android:name="${applicationName}"
@@ -30,5 +31,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+       <meta-data
+           android:name="com.google.android.gms.ads.APPLICATION_ID"
+           android:value="ca-app-pub-9503585436307618~6191869918"
+           />
     </application>
 </manifest>

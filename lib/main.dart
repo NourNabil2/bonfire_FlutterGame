@@ -1,13 +1,15 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Screens/Start_Screen.dart';
-import 'package:flame_audio/flame_audio.dart';
+
 import 'package:flutter/material.dart';
-import 'MainGame.dart';
+
+
 import 'SharedPreferences/Cash_Save.dart';
-import 'constant/NameOfMaps.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
    await CashSaver.init();
    Flame.device.setLandscape();
    Flame.device.fullScreen();

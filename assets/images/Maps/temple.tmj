@@ -977,6 +977,18 @@
                  "width":0,
                  "x":702,
                  "y":323
+                }, 
+                {
+                 "height":0,
+                 "id":63,
+                 "name":"portal_Jail",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":809,
+                 "y":880
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1096,7 +1108,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":63,
+ "nextobjectid":64,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

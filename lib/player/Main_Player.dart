@@ -131,6 +131,7 @@ else
   }
   @override
   Future<void> die() async {
+    interstitial.show();
     // FlameAudio.play(Globals.gameOverSound);
     gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.7), blendMode: BlendMode.colorBurn);
     await animation?.playOnce(

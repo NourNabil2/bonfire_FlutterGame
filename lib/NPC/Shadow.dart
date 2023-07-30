@@ -83,7 +83,12 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
       ],logicalKeyboardKeysToNext:[LogicalKeyboardKey.space],
         //onChangeTalk: (value) => gameRef.camera.shake(intensity: 2 ) ,
         onClose: () {
-          gameRef.player!.isDead ? null : async.Timer(const Duration(seconds: 20),() => selectMap(1));
+          gameRef.player!.isDead ? null : async.Timer(const Duration(seconds: 20),()
+              {
+                selectMap(1);
+              }
+
+          );
           gameRef.camera.moveToPlayerAnimated(zoom: 1.5);
           close = true ;
           gameRef.add(Bat_purble(Vector2(150, 200) ));

@@ -1,16 +1,15 @@
 import 'dart:core';
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire/widgets/bonfire_widget.dart';
-import 'package:bonfire/widgets/mini_map/mini_map.dart';
 import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
 import 'package:bonfire_flutter_game/Screens/PauseScreen.dart';
 import 'package:bonfire_flutter_game/Screens/WinScreen.dart';
 import 'package:bonfire_flutter_game/constant/Interface/player_InterFace.dart';
 import 'package:bonfire_flutter_game/constant/Sounds/background.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:bonfire_flutter_game/constant/admob_manager.dart';
 
 
 Widget MainMap (
@@ -50,7 +49,8 @@ Widget MainMap (
         Sounds.pauseBackgroundSound();
         },
    ),
-    )
+    ),
+    'BannerAds' : (context, game) => AdmobBanner(adUnitId: adsManager.BannerAds_UnitID , adSize: AdmobBannerSize.SMART_BANNER(context)),
   },
 
   initialActiveOverlays: const <String>['mini_map','Pause'],

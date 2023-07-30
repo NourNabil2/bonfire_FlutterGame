@@ -1,3 +1,4 @@
+import 'dart:core';
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Bat_purble.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
@@ -6,6 +7,7 @@ import 'package:bonfire_flutter_game/Enemy/Demon_enemy.dart';
 import 'package:bonfire_flutter_game/NPC/Wizerd_npc.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/DynamicMap.dart';
+import 'package:bonfire_flutter_game/constant/admob_manager.dart';
 import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:bonfire_flutter_game/followers/You.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
@@ -26,29 +28,43 @@ import 'decorations/Gate_translate.dart';
 import 'decorations/Items.dart';
 import 'decorations/Spike.dart';
 import 'followers/Fox.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 double tiledSize = 32 ;
 int complete = CashSaver.getData(key: 'complete') ?? 0 ;
 bool T = true ;
 int currentMap = CashSaver.getData(key: 'Map') ?? 0 ;
+late AdmobInterstitial interstitial ;
+late AdmobBannerSize bannerSize ; ////////
 late Function(int) selectMap;
 
 class Just_Like_YouGame extends StatefulWidget {
   const Just_Like_YouGame({Key? key}) : super(key: key);
 
   @override
-  State<Just_Like_YouGame> createState() => _GreenNinjaGameState();
+  State<Just_Like_YouGame> createState() => _Just_Like_You_Game();
 }
+class _Just_Like_You_Game extends State<Just_Like_YouGame> {
 
-class _GreenNinjaGameState extends State<Just_Like_YouGame> {
+
+
+
+
 
   @override
   void dispose() {
+    interstitial.dispose();
     currentMap = 0;
     super.dispose();
   }
 
   @override
   void initState() {
+    interstitial = AdmobInterstitial(adUnitId: adsManager.InterstitialAds_UnitID ,
+        listener: (AdmobAdEvent event, Map ) {
+      if (event == AdmobAdEvent.closed) interstitial.load();
+        },
+    );
+    interstitial.load();
     complete = CashSaver.getData(key: 'complete') ?? 0;
     currentMap = CashSaver.getData(key: 'Map') ?? 0 ;
     selectMap = (int id) {
@@ -171,6 +187,8 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
             'safe': (properties) => safe(position: properties.position),
             'Rats': (properties) => Rat(properties.position),
             'chest': (properties) => Chest_easter(position: properties.position),
+            'portal_Jail': (properties) => portal_Jail(position: properties.position),
+
           }
       ),Player: Kinght(Vector2(90,90))) ;
       case 5: return MainMap(lightingMap:Colors.black.withOpacity(0.8) ,tiledSize: tiledSize, map: WorldMapByTiled(
@@ -220,4 +238,5 @@ class _GreenNinjaGameState extends State<Just_Like_YouGame> {
 
     }
   }
+  
 }
