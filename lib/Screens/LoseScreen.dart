@@ -1,6 +1,4 @@
 import 'package:bonfire_flutter_game/MainGame.dart';
-import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
-import 'package:bonfire_flutter_game/constant/NameOfMaps.dart';
 import 'package:flutter/material.dart';
 
 

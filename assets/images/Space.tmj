@@ -229,6 +229,30 @@
                  "width":16,
                  "x":128,
                  "y":31.6666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":63,
+                 "name":"chest",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":133.333333333333,
+                 "y":214.666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":64,
+                 "name":"RED",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":214.666666666667,
+                 "y":250.666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -260,7 +284,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":63,
+ "nextobjectid":66,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

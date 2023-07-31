@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'dart:async' as async;
 import '../Enemy/Bat_purble.dart';
 import '../MainGame.dart';
+import '../SharedPreferences/Cash_Save.dart';
 
 
 TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , fontSize: 10 ) );
@@ -85,6 +86,7 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
         onClose: () {
           gameRef.player!.isDead ? null : async.Timer(const Duration(seconds: 20),()
               {
+                CashSaver.SaveData(key: 'complete',value: 5);
                 selectMap(1);
               }
 

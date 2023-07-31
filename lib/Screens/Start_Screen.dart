@@ -2,6 +2,8 @@
 
 import 'dart:async';
 import 'dart:math';
+import 'package:bonfire_flutter_game/constant/admob_manager.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bonfire_flutter_game/MainGame.dart';
 import 'package:bonfire_flutter_game/Screens/settingScreen.dart';
 import 'package:bonfire_flutter_game/constant/Buttons.dart';
@@ -124,6 +126,13 @@ class _Start_ScreenState extends State<Start_Screen> {
               ),
 
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [ Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: AdmobBanner(adUnitId: adsManager.BannerAds_UnitID , adSize: AdmobBannerSize.FULL_BANNER),
+              ),],
+            )
           ]
         ),
     );

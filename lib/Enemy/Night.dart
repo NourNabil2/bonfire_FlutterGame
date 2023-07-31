@@ -21,7 +21,7 @@ class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
     position: position,
     size: sizeS,
     animation:PlayerSpriteSheet.simpleDirectionAnimation ,
-    life: 20,
+    life: 1000,
     speed: 101,
     initDirection: Direction.down,
   )
@@ -74,6 +74,12 @@ class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
 
   void update(double dt) {
 
+    if (life == 500 )
+      {
+        add(PotionLife(position: position + Vector2(50, 50)));
+        add(PotionLife(position: position + Vector2(35, 15)));
+        add(PotionLife(position: position + Vector2(45, 10)));
+      }
     if (!gameRef.sceneBuilderStatus.isRunning)
     {
       isobserve = false ;

@@ -18,29 +18,32 @@ class Portal extends GameDecoration with Sensor<Kinght>
   void onContact(GameComponent component) {
     if(currentMap == 1 )
       {
-        CashSaver.SaveData(key: 'complete',value: 20);
+        interstitial.show();
+        CashSaver.SaveData(key: 'complete',value: 15);
         selectMap(3);
       }
     else if (currentMap == 3)
       {
-        CashSaver.SaveData(key: 'complete',value: 20);
+        interstitial.show();
+        CashSaver.SaveData(key: 'complete',value: 10);
         selectMap(2);
       }
     else if (currentMap == 2)
       {
+        interstitial.show();
         gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.3), blendMode: BlendMode.colorBurn);
-        CashSaver.SaveData(key: 'complete',value: 20);
+        CashSaver.SaveData(key: 'complete',value: 15);
         selectMap(4);
       }
     else if (currentMap == 4)
       {
-
+        interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 20);
         selectMap(6);
       }
     else if (currentMap == 5)
     {
-
+      interstitial.show();
       CashSaver.SaveData(key: 'complete',value: 10);
       selectMap(4);
     }
@@ -59,6 +62,7 @@ class portal_Jail extends GameDecoration with Sensor<Kinght>
   @override
   void onContact(GameComponent component) {
 
+    interstitial.show();
       CashSaver.SaveData(key: 'complete',value: 20);
       selectMap(3);
 

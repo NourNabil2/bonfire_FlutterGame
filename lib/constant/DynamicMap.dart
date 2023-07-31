@@ -39,6 +39,12 @@ Widget MainMap (
             color: Colors.white.withOpacity(0.5),
           ),
         ),
+    'BannerAds' : (context, game) => Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        AdmobBanner(adUnitId: adsManager.BannerAds_UnitID, adSize: AdmobBannerSize.SMART_BANNER(context)),
+      ],
+    ),
     'Pause' : (context, game) => Padding(
       padding: const EdgeInsets.all(10.0),
       child: MaterialButton(
@@ -50,10 +56,10 @@ Widget MainMap (
         },
    ),
     ),
-    'BannerAds' : (context, game) => AdmobBanner(adUnitId: adsManager.BannerAds_UnitID , adSize: AdmobBannerSize.SMART_BANNER(context)),
+
   },
 
-  initialActiveOverlays: const <String>['mini_map','Pause'],
+  initialActiveOverlays: const <String>['mini_map','Pause','BannerAds'],
 
   lightingColorGame: lightingMap,
   cameraConfig: CameraConfig(zoom: 1.5),

@@ -9,8 +9,9 @@ import 'SharedPreferences/Cash_Save.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
    await CashSaver.init();
+   BonfireGame.INTERVAL_UPDATE_CACHE;
+   BonfireGame.INTERVAL_UPDATE_ORDER;
    Flame.device.setLandscape();
    Flame.device.fullScreen();
 

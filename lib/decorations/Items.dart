@@ -287,12 +287,31 @@ class Chest_easter extends GameDecoration with Sensor<Kinght>
 
   ), position: position, size: Vector2(30,30));
 
+bool showDialog = false ;
 
   @override
   void onContact(GameComponent component) {
-    SFX ==true ? FlameAudio.play('power_up.wav') : null ;
-    gameRef.add(PotionLife(position: position + Vector2(20, 20)));
-    removeFromParent();
+
+
+    if ((gameRef.player as Kinght).Key_red == false)
+    {
+      SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+      gameRef.add(PotionLife(position: position + Vector2(20, 20)));
+      removeFromParent();
+    }
+    else if (!showDialog) {
+        { showDialog = true;
+        TalkDialog.show(gameRef.context, [
+          speak(text: 'Is locked, I have to find the red key',
+              isPlayer: true),
+
+        ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space],
+
+        );}
+    }
+
+
+
   }
 
 }

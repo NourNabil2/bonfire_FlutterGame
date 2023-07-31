@@ -123,7 +123,6 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
               'safe': (properties) => safe(position: properties.position),
               'Dog_Black': (properties) => Dog_Black(properties.position),
               'Skeleton': (properties) => Skeleton(properties.position),
-
             }
         ),Player: Kinght(Vector2(90,90))) ;
       case 2: return  MainMap(tiledSize: tiledSize, map: WorldMapByTiled(
