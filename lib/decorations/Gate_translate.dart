@@ -1,7 +1,9 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
 import '../SharedPreferences/Cash_Save.dart';
+import '../constant/constant.dart';
 import '../player/Main_Player.dart';
 class Portal extends GameDecoration with Sensor<Kinght>
 {
@@ -18,18 +20,21 @@ class Portal extends GameDecoration with Sensor<Kinght>
   void onContact(GameComponent component) {
     if(currentMap == 1 )
       {
+        SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 15);
         selectMap(3);
       }
     else if (currentMap == 3)
       {
+        SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 10);
         selectMap(2);
       }
     else if (currentMap == 2)
       {
+        SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.3), blendMode: BlendMode.colorBurn);
         CashSaver.SaveData(key: 'complete',value: 15);
@@ -37,12 +42,14 @@ class Portal extends GameDecoration with Sensor<Kinght>
       }
     else if (currentMap == 4)
       {
+        SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 20);
         selectMap(6);
       }
     else if (currentMap == 5)
     {
+      SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
       interstitial.show();
       CashSaver.SaveData(key: 'complete',value: 10);
       selectMap(4);

@@ -239,6 +239,7 @@ class BedRoom_Door extends GameDecoration with ObjectCollision
         observed: (player) {
           Kinght p = player as Kinght;
           if (p.silverKey == true) {
+            SFX ? FlameAudio.play('Door_open_sound_effect.mp3') : null ;
             p.silverKey = false;
             removeFromParent();
           } else {
@@ -401,12 +402,8 @@ class Picktorch extends GameDecoration with Sensor<Kinght>
       component.Taketorch = true ;
       CashSaver.SaveData(key: 'torch', value: true);
     }
-
     removeFromParent();
-    // component = component as GreenNinjaPlayer;
-    // FlameAudio.play(Globals.fireSound);
-    // component.showDamage(_damage);
-    // component.removeLife(_damage);
+    SFX ? FlameAudio.play('pick_Key.mp3') : null ;
   }
 }
 
@@ -429,9 +426,10 @@ class Key_silver extends GameDecoration with Sensor<Kinght>
   @override
   void onContact(GameComponent component) {
     if (component is Kinght) {
+
       component.silverKey = true ;
     }
-    // FlameAudio.play(Globals.fireSound);
+    SFX ? FlameAudio.play('pick_Key.mp3') : null ;
     removeFromParent();
 
   }
@@ -461,7 +459,7 @@ class Key_Gold extends GameDecoration with Sensor<Kinght>
       component.goldKey = true ;
       CashSaver.SaveData(key: 'gold', value: true);
     }
-    // FlameAudio.play(Globals.fireSound);
+    SFX ? FlameAudio.play('pick_Key.mp3') : null ;
     removeFromParent();
 
   }
@@ -491,7 +489,7 @@ class Key_red extends GameDecoration with Sensor<Kinght>
       component.Key_red = true ;
       CashSaver.SaveData(key: 'red', value: true);
     }
-    // FlameAudio.play(Globals.fireSound);
+    SFX ? FlameAudio.play('pick_Key.mp3') : null ;
     removeFromParent();
 
   }
@@ -529,6 +527,7 @@ class Tower_1 extends GameDecoration with TapGesture ,ObjectCollision
         gameRef.add(Portal(position: portal));
       }
     tower_ON ++ ;
+    SFX ? FlameAudio.play('PowerUP.wav') : null ;
     removeFromParent();
     gameRef.add(Tower_1on(position: position));
 
@@ -585,7 +584,7 @@ class Tower_2 extends GameDecoration with TapGesture ,ObjectCollision
     else {
       tower_ON ++ ;
     }
-
+    SFX ? FlameAudio.play('PowerUP.wav') : null ;
     removeFromParent();
     gameRef.add(Tower_2on(position: position));
 
@@ -647,6 +646,7 @@ class Tower_3 extends GameDecoration with TapGesture ,ObjectCollision
     else {
       tower_ON ++ ;
     }
+    SFX ? FlameAudio.play('PowerUP.wav') : null ;
     removeFromParent();
     gameRef.add(Tower_3on(position: position));
   }

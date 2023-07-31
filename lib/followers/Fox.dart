@@ -1,5 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/MainGame.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../constant/constant.dart';
@@ -111,7 +112,7 @@ bool see = false;
 
   @override
   void onTap() {
-
+    SFX ? FlameAudio.play('dog_barking.mp3') : null ;
     gameRef.add(
       AnimatedFollowerObject(
         animation: SpriteAnimation.load(

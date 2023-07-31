@@ -5,9 +5,11 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/constant.dart';
 import '../decorations/die_Decoration.dart';
 import 'Bringer.dart';
 bool isobserve = false ;
@@ -46,7 +48,7 @@ class Skull extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
   }
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-    // FlameAudio.play(Globals.explosionSound);
+    SFX ? FlameAudio.play('Punch_enemy.wav') : null ;
     showDamage(
       damage,
       config: TextStyle(fontSize: width / 3, color: Colors.red,fontWeight: FontWeight.bold),
@@ -64,6 +66,7 @@ class Skull extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
     {
       die_Skull++ ;
     }
+    SFX ? FlameAudio.play('Skull_dead.mp3') : null ;
     removeFromParent();
     lastDirectionHorizontal == Direction.right ? gameRef.add(Skull_Die(position: position)) : gameRef.add(Skull_Die_L(position: position)) ;
     super.die();

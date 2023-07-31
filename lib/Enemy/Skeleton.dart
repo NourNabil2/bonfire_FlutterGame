@@ -5,9 +5,11 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/constant.dart';
 import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
 double sizeS = 30 ;
@@ -45,7 +47,7 @@ class Skeleton extends SimpleEnemy with ObjectCollision , AutomaticRandomMovemen
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
     lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.Hit(),runToTheEnd: true,size: Vector2.all(sizeS)) :animation?.playOnce(PlayerSpriteSheet.Hit(),runToTheEnd: true,flipX: true,size: Vector2.all(sizeS)) ;
-    // FlameAudio.play(Globals.explosionSound);
+    SFX ? FlameAudio.play('Punch_enemy.wav') : null ;
     showDamage(
       damage,
       config: TextStyle(fontSize: width / 3, color: Colors.red),
@@ -56,6 +58,7 @@ class Skeleton extends SimpleEnemy with ObjectCollision , AutomaticRandomMovemen
   }
   @override
   Future<void> die() async {
+    SFX ? FlameAudio.play('skeleton-dying.mp3') : null ;
     removeFromParent();
     lastDirectionHorizontal == Direction.right ? gameRef.add(Skeleton_Death_R(position: position)) : gameRef.add(Skeleton_Death_L(position: position)) ;
     super.die();
@@ -71,6 +74,8 @@ class Skeleton extends SimpleEnemy with ObjectCollision , AutomaticRandomMovemen
         closePlayer: (Player) {
           if (!Player.isDead)
           {
+            SFX ? FlameAudio.play('slash.mp3') : null ;
+
             simpleAttackMelee(
               withPush: false,
               damage: damage ,

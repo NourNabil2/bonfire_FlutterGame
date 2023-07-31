@@ -5,9 +5,11 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/constant.dart';
 import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
 
@@ -45,7 +47,7 @@ class Dog_Black extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
 
-    // FlameAudio.play(Globals.explosionSound);
+    SFX ? FlameAudio.play('Punch_enemy.wav') : null ;
     showDamage(
       damage,
       config: TextStyle(fontSize: width / 3, color: Colors.red),
@@ -55,6 +57,7 @@ class Dog_Black extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   }
   @override
   Future<void> die() async {
+    SFX ? FlameAudio.play('wolf_dying.mp3') : null ;
     removeFromParent();
     lastDirectionHorizontal == Direction.right ? gameRef.add(Dog_death(position: position)) : gameRef.add(Dog_death_L(position: position)) ;
     super.die();
@@ -70,6 +73,8 @@ class Dog_Black extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
         closePlayer: (Player) {
           if (!Player.isDead)
           {
+
+            SFX ? FlameAudio.play('wolf_attack.mp3') : null ;
             simpleAttackMelee(
               withPush: false,
               damage: damage ,

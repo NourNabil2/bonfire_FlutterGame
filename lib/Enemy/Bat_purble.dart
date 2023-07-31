@@ -5,9 +5,11 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/constant.dart';
 import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
 
@@ -76,6 +78,8 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
         closePlayer: (Player) {
           if (!Player.isDead)
           {
+
+            SFX ? FlameAudio.play('Punch_enemy.wav') : null ;
             simpleAttackMelee(
 
                 withPush: false,

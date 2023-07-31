@@ -6,9 +6,11 @@ import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/constant.dart';
 import '../decorations/Gate_translate.dart';
 import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
@@ -47,7 +49,7 @@ class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
 
-    // FlameAudio.play(Globals.explosionSound);
+    SFX ? FlameAudio.play('Punch_enemy.wav') : null ;
    animation?.playOnce(SpriteAnimation.load(
       "Enemy/Night/NightBorne_give_hit.png",
       SpriteAnimationData.sequenced(
@@ -65,6 +67,7 @@ class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   }
   @override
   Future<void> die() async {
+    SFX ? FlameAudio.play('Night_die.wav') : null ;
     removeFromParent();
     gameRef.add(Night_death(position: position)) ;
     gameRef.add(Portal(position: Vector2(38*32, 27*32) ));

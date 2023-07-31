@@ -1,16 +1,14 @@
-
-import 'dart:math';
-
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import '../MainGame.dart';
+import '../constant/constant.dart';
 import '../decorations/Gate_translate.dart';
 import '../decorations/die_Decoration.dart';
+
 bool isobserve = false ;
 Vector2 sizeS = Vector2(32, 48) ;
 double damage = 20 ;
@@ -46,8 +44,7 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
   }
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-
-    // FlameAudio.play(Globals.explosionSound);
+    SFX ? FlameAudio.play('ough.mp3') : null ;
     lastDirectionHorizontal == Direction.right ?  animation?.playOnce(SpriteAnimation.load(
         "Enemy/Wizard/B_witch_take_damage.png",
         SpriteAnimationData.sequenced(
@@ -72,6 +69,7 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
   }
   @override
   Future<void> die() async {
+    SFX ? FlameAudio.play('Explosion.wav') : null ;
     removeFromParent();
     gameRef.add(witch_death(position: position)) ;
     gameRef.add(Portal(position: position + Vector2(50, 50) ));
@@ -91,6 +89,7 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
         closePlayer: (Player) {
           if (!Player.isDead)
           {
+            SFX ? FlameAudio.play('range2.wav') : null ;
             simpleAttackMelee(
               withPush: false,
               damage: damage ,
@@ -115,6 +114,7 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
 
       if (!isobserve)
       {
+        SFX ? FlameAudio.play('range.mp3') : null ;
         seeAndMoveToAttackRange(
           minDistanceFromPlayer: 150,
           positioned: (Player) {

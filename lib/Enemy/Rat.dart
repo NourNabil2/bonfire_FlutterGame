@@ -1,7 +1,9 @@
 // ignore_for_file: avoid_types_as_parameter_names, non_constant_identifier_names
 import 'package:bonfire/bonfire.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/constant.dart';
 import '../decorations/die_Decoration.dart';
 import '../player/Main_Player.dart';
 
@@ -51,6 +53,7 @@ class Rat extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,Us
   }
   @override
   Future<void> die() async {
+    SFX ? FlameAudio.play('rat.wav') : null ;
     damagePlayer+= 0.5;
     removeFromParent();
     gameRef.add(Rat_death(position: position));

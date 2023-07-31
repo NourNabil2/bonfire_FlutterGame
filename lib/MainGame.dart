@@ -3,7 +3,6 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Bat_purble.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/Enemy/Dark_Ninja_Enemy.dart';
-import 'package:bonfire_flutter_game/Enemy/Demon_enemy.dart';
 import 'package:bonfire_flutter_game/NPC/Wizerd_npc.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/DynamicMap.dart';
@@ -39,17 +38,10 @@ late Function(int) selectMap;
 
 class Just_Like_YouGame extends StatefulWidget {
   const Just_Like_YouGame({Key? key}) : super(key: key);
-
   @override
   State<Just_Like_YouGame> createState() => _Just_Like_You_Game();
 }
 class _Just_Like_You_Game extends State<Just_Like_YouGame> {
-
-
-
-
-
-
   @override
   void dispose() {
     interstitial.dispose();
@@ -109,7 +101,6 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
               'Wizard_oldMan': (properties) => WizerdMan(properties.position),
               'Dark_Ninja': (properties) => DarkNinja(properties.position),
               'Boss': (properties) => BossNinja(properties.position),
-              'demon': (properties) => Demon(properties.position),
               'torch': (properties) => torch(position: properties.position),
               'picktorch': (properties) => Picktorch(position: properties.position),
               'nothing': (properties) => Shadow(properties.position),
@@ -153,7 +144,6 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
             'Wizard_oldMan': (properties) => WizerdMan(properties.position),
             'Dark_Ninja': (properties) => DarkNinja(properties.position),
             'Boss': (properties) => BossNinja(properties.position),
-            'demon': (properties) => Demon(properties.position),
             'picktorch': (properties) => Picktorch(position: properties.position),
             'radio': (properties) => Radio_House(position: properties.position),
             'bed_door': (properties) => BedRoom_Door(position: properties.position),

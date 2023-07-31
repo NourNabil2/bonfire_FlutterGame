@@ -121,7 +121,7 @@ else
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, identify) {
     if (attacker == AttackFromEnum.ENEMY) {
-      // FlameAudio.play(Globals.explosionSound);
+      SFX ? FlameAudio.play('ough.mp3') : null ;
       showDamage(
         damage,
         config: TextStyle(fontSize: width / 3, color: Colors.red),
@@ -132,7 +132,7 @@ else
   @override
   Future<void> die() async {
     interstitial.show();
-    // FlameAudio.play(Globals.gameOverSound);
+    SFX ? FlameAudio.play('body_fall.mp3') : null ;
     gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.7), blendMode: BlendMode.colorBurn);
     await animation?.playOnce(
       SpriteAnimation.load(
@@ -162,6 +162,7 @@ else
           return;
         }
         else {
+          SFX ? FlameAudio.play('sword_hit.mp3') : null ;
           decrementStamina(15);
           animation?.playOnce(
             PlayerSpriteSheet2.AttackSwrd_R(),
@@ -181,6 +182,7 @@ else
           return;
         }
         else {
+          SFX ? FlameAudio.play('Sword_P.wav') : null ;
           decrementStamina(20);
           animation?.playOnce(
             PlayerSpriteSheet2.AttackSwrd_R(),
@@ -201,6 +203,7 @@ else
           return;
         }
         else {
+          SFX ? FlameAudio.play('punch.mp3') : null ;
           decrementStamina(5);
           animation?.playOnce(
             PlayerSpriteSheet2.AttackPunch_R(),
@@ -223,6 +226,7 @@ else
             return;
           }
           else {
+            SFX ? FlameAudio.play('electric_shoot.wav') : null ;
             decrementStamina(35);
             animation?.playOnce(
               PlayerSpriteSheet2.AttackRange_R(),
@@ -230,7 +234,6 @@ else
               flipX: lastDirectionHorizontal == Direction.right ? false : true,
             );
             simpleAttackMelee(
-
               damage: damagePlayer * 3,
               size: size,
               animationRight: PlayerSpriteSheet2.AttackElec_FX(),
@@ -239,6 +242,7 @@ else
         }
         else
         {
+          SFX ? FlameAudio.play('Wrong.wav') : null ;
           _showEmote(emote: wrong);
         }
       }
@@ -249,17 +253,17 @@ else
         if (CashSaver.getData(key: 'torch')?? false)
           {
             islight == false ? islight = true : islight =false ;
-
+            SFX ? FlameAudio.play('LighteSroundFX.mp3') : null ;
           }
         else
           {
+            SFX ? FlameAudio.play('Wrong.wav') : null ;
             _showEmote(emote: wrong);
           }
 
 
 
         }
-
 
 
       if (press.id == AttackType.range || press.id == LogicalKeyboardKey.keyZ.keyId) {
@@ -274,6 +278,7 @@ else
             }
             else
             {
+              SFX ? FlameAudio.play('range_shoot.mp3') : null ;
               decrementStamina(15);
               animation?.playOnce(
                 PlayerSpriteSheet2.AttackRange_R() ,
@@ -296,6 +301,7 @@ else
           }
         else
           {
+            SFX ? FlameAudio.play('Wrong.wav') : null ;
             _showEmote(emote: wrong);
           }
 
