@@ -71,10 +71,25 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
             backgroundMusic == true ? Sounds.playBackground_SpaceSound() : Sounds.stop_Space();
             break;
           case 1:
-          // TODO: Handle this case.
+            backgroundMusic == true ? Sounds.playBackground_background_home() : Sounds.stop_background_home();
             break;
           case 2:
-          // TODO: Handle this case.
+          backgroundMusic == true ? Sounds.playBackground_background_home() : Sounds.stop_background_home();
+            break;
+            case 3:
+          backgroundMusic == true ? Sounds.playBackground_bg_Witch() : Sounds.stop_bg_Witch();
+            break;
+            case 4:
+          backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
+            break;
+            case 5:
+          backgroundMusic == true ? Sounds.playBackground_jail_bg() : Sounds.stop_jail_bg();
+            break;
+            case 6:
+          backgroundMusic == true ? Sounds.playBackground_Mind() : Sounds.stop_Mind();
+            break;
+          default:
+          backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
             break;
         }
 

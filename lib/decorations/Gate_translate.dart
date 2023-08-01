@@ -3,6 +3,7 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
 import '../SharedPreferences/Cash_Save.dart';
+import '../constant/Sounds/background.dart';
 import '../constant/constant.dart';
 import '../player/Main_Player.dart';
 class Portal extends GameDecoration with Sensor<Kinght>
@@ -20,6 +21,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
   void onContact(GameComponent component) {
     if(currentMap == 1 )
       {
+        backgroundMusic == true ? Sounds.playBackground_bg_Witch() : Sounds.stop_bg_Witch();
         SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 15);
@@ -27,6 +29,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
       }
     else if (currentMap == 3)
       {
+        backgroundMusic == true ? Sounds.playBackground_background_home() : Sounds.stop_background_home();
         SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 10);
@@ -34,6 +37,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
       }
     else if (currentMap == 2)
       {
+        backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
         SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.3), blendMode: BlendMode.colorBurn);
@@ -42,6 +46,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
       }
     else if (currentMap == 4)
       {
+        backgroundMusic == true ? Sounds.playBackground_Mind() : Sounds.stop_Mind();
         SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 20);
@@ -68,10 +73,10 @@ class portal_Jail extends GameDecoration with Sensor<Kinght>
 
   @override
   void onContact(GameComponent component) {
-
+    backgroundMusic == true ? Sounds.playBackground_jail_bg() : Sounds.stop_jail_bg();
     interstitial.show();
       CashSaver.SaveData(key: 'complete',value: 20);
-      selectMap(3);
+      selectMap(5);
 
   }
 }

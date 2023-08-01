@@ -66,6 +66,7 @@ class _Start_ScreenState extends State<Start_Screen> {
                     Expanded(
                       child: Button(width: 70,height: 150,isboxShadow: true,border: true,radius: 50, ColorOfButton: Colors.red, text: currentMap == 0 ? 'New Game' : 'Start', Function: () async{
                         FlameAudio.bgm.stop();
+                        SFX ? FlameAudio.play('game-start.mp3') : null ;
                         setState(() {
                           isPressed=!isPressed;
                         });

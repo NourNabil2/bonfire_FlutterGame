@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:admob_flutter/admob_flutter.dart';
-bool test = true ;
+bool test = false ;
 class adsManager
 {
 

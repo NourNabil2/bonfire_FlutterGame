@@ -58,6 +58,7 @@ class Dog_White extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
   @override
   Future<void> die() async {
     SFX ? FlameAudio.play('wolf_dying.mp3') : null ;
+
     removeFromParent();
     lastDirectionHorizontal == Direction.right ? gameRef.add(Dog_death2(position: position)) : gameRef.add(Dog_death_L2(position: position)) ;
     super.die();

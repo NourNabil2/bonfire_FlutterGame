@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import '../Enemy/Rat.dart';
 import '../MainGame.dart';
 import '../SharedPreferences/Cash_Save.dart';
+import '../constant/Sounds/background.dart';
 import '../decorations/Items.dart';
 import 'dart:async' as async;
 import '../decorations/die_Decoration.dart';
@@ -51,8 +52,9 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
 
      if (currentMap == 6 && backgroundMusic == false)
     {
+      backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
       CashSaver.SaveData(key: 'complete',value: 5);
-    selectMap(7);
+      selectMap(7);
     }
 
     if(isDead)

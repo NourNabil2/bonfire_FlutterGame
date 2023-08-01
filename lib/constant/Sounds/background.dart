@@ -39,13 +39,26 @@ class Sounds {
     return FlameAudio.bgm.play('jail_bg.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
   }
 
+  static stop_bg_Witch() {
+    return FlameAudio.bgm.play('bg_Witch.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
+  }
+
   static stop_Mind() {
     return FlameAudio.bgm.play('talks.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
+  }
+
+  static stop_b2() {
+    return FlameAudio.bgm.play('b2.mp3',volume: 0.2).then((value) => FlameAudio.bgm.pause());
   }
 
   static void playBackground_Rain_Noise() async {
     await stopBackgroundSound();
     FlameAudio.bgm.play('Rain_Noise.wav');
+  }
+
+  static void playBackground_b2() async {
+    await stopBackgroundSound();
+    FlameAudio.bgm.play('b2.mp3');
   }
 
   static void playBackground_background_home() async {
@@ -56,6 +69,11 @@ class Sounds {
   static void playBackground_SpaceSound() async {
    await stopBackgroundSound();
     FlameAudio.bgm.play('SpaceSound.wav',volume: 0.5);
+  }
+
+  static void playBackground_bg_Witch() async {
+   await stopBackgroundSound();
+    FlameAudio.bgm.play('bg_Witch.mp3',volume: 0.5);
   }
 
   static void playBackground_forest2() async {
