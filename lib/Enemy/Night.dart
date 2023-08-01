@@ -70,7 +70,7 @@ class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
     SFX ? FlameAudio.play('Night_die.wav') : null ;
     removeFromParent();
     gameRef.add(Night_death(position: position)) ;
-    gameRef.add(Portal(position: Vector2(38*32, 27*32) ));
+    gameRef.add(Portal(position: Vector2(41*32, 35*32) ));
     super.die();
   }
 

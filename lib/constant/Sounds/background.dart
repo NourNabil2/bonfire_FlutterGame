@@ -7,6 +7,11 @@ class Sounds {
       'Rain_Noise.wav',
       'SpaceSound.wav',
       'background_home.mp3',
+      'background_home2.mp3',
+      'forest2.mp3',
+      'jail_bg.mp3',
+      'bg_Witch.mp3',
+      'talks.mp3',
     ]);
   }
 
@@ -27,12 +32,12 @@ class Sounds {
     return FlameAudio.bgm.play('background_home.wav',volume: 0.5).then((value) => FlameAudio.bgm.pause());
   }
 
-  static stop_forest2() {
-    return FlameAudio.bgm.play('forest2.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
+  static stop_background_home2() {
+    return FlameAudio.bgm.play('background_home2.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
   }
 
-  static stop_forest() {
-    return FlameAudio.bgm.play('forest.wav',volume: 0.5).then((value) => FlameAudio.bgm.pause());
+  static stop_forest2() {
+    return FlameAudio.bgm.play('forest2.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
   }
 
   static stop_jail_bg() {
@@ -47,9 +52,6 @@ class Sounds {
     return FlameAudio.bgm.play('talks.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
   }
 
-  static stop_b2() {
-    return FlameAudio.bgm.play('b2.mp3',volume: 0.2).then((value) => FlameAudio.bgm.pause());
-  }
 
   static void playBackground_Rain_Noise() async {
     await stopBackgroundSound();
@@ -66,6 +68,11 @@ class Sounds {
     FlameAudio.bgm.play( 'background_home.mp3',volume: 0.5);
   }
 
+  static void playBackground_background_home2() async {
+    await stopBackgroundSound();
+    FlameAudio.bgm.play( 'background_home2.mp3',volume: 0.5);
+  }
+
   static void playBackground_SpaceSound() async {
    await stopBackgroundSound();
     FlameAudio.bgm.play('SpaceSound.wav',volume: 0.5);
@@ -79,11 +86,6 @@ class Sounds {
   static void playBackground_forest2() async {
    await stopBackgroundSound();
     FlameAudio.bgm.play('forest2.mp3',volume: 0.5);
-  }
-
-  static void playBackground_forest() async {
-   await stopBackgroundSound();
-    FlameAudio.bgm.play('forest.wav',volume: 0.5);
   }
 
   static void playBackground_jail_bg() async {

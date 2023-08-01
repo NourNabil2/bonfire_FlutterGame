@@ -17,54 +17,64 @@ class GameOverScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const SizedBox(height: 50,),
           if (dead < 2)
-          const Text(
-            'You Dead',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 80,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          if (dead == 2)
-            const Text(
-              'You Dead again XD',
+          const Expanded(
+            child: Text(
+              'You Dead',
               style: TextStyle(
                 color: Colors.red,
                 fontSize: 80,
                 fontWeight: FontWeight.bold,
               ),
             ),
+          ),
+          if (dead == 2)
+            const Expanded(
+              child: Text(
+                'You Dead again XD',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 80,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           if (dead == 3)
-          const Text(
-            'really? It\'s not that difficult',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
+          const Expanded(
+            child: Text(
+              'really? It\'s not that difficult',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 50,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           if (dead == 4)
-          const Text(
-            'Hmmm...',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 80,
-              fontWeight: FontWeight.bold,
+          const Expanded(
+            child: Text(
+              'Hmmm...',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 80,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          if (dead == 4)
-          const Text(
-            'Loser,want to try again?',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
+          if (dead > 4)
+          const Expanded(
+            child: Text(
+              'Loser,want to try again?',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 50,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          const SizedBox(height: 100),
-        Expanded(child: ElevatedButton(onPressed: () => selectMap(currentMap),
-            child: Image.asset('assets/images/image_Interface/replay.png',width:100))),
+        Expanded(child: MaterialButton(onPressed: () => selectMap(currentMap),
+            child: Image.asset('assets/images/image_Interface/replay.png',width:200))),
         ],
       ),
     ),

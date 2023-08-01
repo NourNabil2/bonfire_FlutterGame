@@ -19,6 +19,7 @@ import '../NPC/Shadow.dart';
 import '../SharedPreferences/Cash_Save.dart';
 import '../constant/NameOfMaps.dart';
 import '../constant/Sounds/background.dart';
+import 'About_Screen.dart';
 
 class Start_Screen extends StatefulWidget {
   const Start_Screen({Key? key}) : super(key: key);
@@ -103,8 +104,13 @@ class _Start_ScreenState extends State<Start_Screen> {
                     ),
                     const SizedBox(height: 15,),
                     Expanded(
-                      child: Button(width: Width_Button+30,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => OnBoarding(Story: boarding),)) ;
+                      child: Button(width: Width_Button+30,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: ()async{
+                        await  Navigator.of(context).push(
+                            HeroDialogRoute(builder: (context) {
+                              return About_screen();
+                            }
+                            )
+                        );
                       }),
                     ),
                     const SizedBox(height: 15,),

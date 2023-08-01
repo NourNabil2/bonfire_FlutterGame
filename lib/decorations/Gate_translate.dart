@@ -18,21 +18,23 @@ class Portal extends GameDecoration with Sensor<Kinght>
   ) ,position: position );
 
   @override
-  void onContact(GameComponent component) {
+  Future<void> onContact(GameComponent component) async {
     if(currentMap == 1 )
       {
-        backgroundMusic == true ? Sounds.playBackground_bg_Witch() : Sounds.stop_bg_Witch();
         SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
+        backgroundMusic == true ? Sounds.playBackground_bg_Witch() : Sounds.stop_bg_Witch();
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 15);
+        const Duration(milliseconds: 500);
         selectMap(3);
       }
     else if (currentMap == 3)
       {
-        backgroundMusic == true ? Sounds.playBackground_background_home() : Sounds.stop_background_home();
         SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
+        backgroundMusic == true ? Sounds.playBackground_background_home() : Sounds.stop_background_home();
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 10);
+        const Duration(milliseconds: 500);
         selectMap(2);
       }
     else if (currentMap == 2)
@@ -42,6 +44,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
         interstitial.show();
         gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.3), blendMode: BlendMode.colorBurn);
         CashSaver.SaveData(key: 'complete',value: 15);
+        const Duration(milliseconds: 500);
         selectMap(4);
       }
     else if (currentMap == 4)
@@ -50,6 +53,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
         SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 20);
+        const Duration(milliseconds: 500);
         selectMap(6);
       }
     else if (currentMap == 5)
@@ -57,6 +61,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
       SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
       interstitial.show();
       CashSaver.SaveData(key: 'complete',value: 10);
+      const Duration(milliseconds: 500);
       selectMap(4);
     }
   }

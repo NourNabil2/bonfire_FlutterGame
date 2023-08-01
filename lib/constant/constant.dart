@@ -53,6 +53,7 @@ ThemeData dark = ThemeData.dark().copyWith(
 
 //style
 TextStyle style =const TextStyle(color: Colors.black ,decoration: TextDecoration.none,overflow: TextOverflow.fade,fontSize: 18);
+TextStyle style1 = TextStyle(color: Colors.grey[900] ,decoration: TextDecoration.none,overflow: TextOverflow.fade,fontSize: 16);
 
 
 Text TextMenu({required String title}) => Text(
@@ -116,11 +117,11 @@ class boardingModel {
     required this.image,
     required this.title,
     required this.body,
-
   });
 
 }
 List<boardingModel> boarding = [
+
   boardingModel(image: 'assets/images/6.jpg', title: 'on board 1 shop app', body: 'body shop app'),
   boardingModel(image: 'assets/images/6.jpg', title: 'on board 2 shop app', body: 'body shop app'),
   boardingModel(image: 'assets/images/6.jpg', title: 'on board 3 shop app', body: 'body shop app'),

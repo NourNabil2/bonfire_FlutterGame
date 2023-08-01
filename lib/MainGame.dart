@@ -44,6 +44,7 @@ class Just_Like_YouGame extends StatefulWidget {
 class _Just_Like_You_Game extends State<Just_Like_YouGame> {
   @override
   void dispose() {
+    Sounds.dispose();
     interstitial.dispose();
     currentMap = 0;
     super.dispose();
@@ -74,7 +75,7 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
             backgroundMusic == true ? Sounds.playBackground_background_home() : Sounds.stop_background_home();
             break;
           case 2:
-          backgroundMusic == true ? Sounds.playBackground_background_home() : Sounds.stop_background_home();
+          backgroundMusic == true ? Sounds.playBackground_background_home2() : Sounds.stop_background_home2();
             break;
             case 3:
           backgroundMusic == true ? Sounds.playBackground_bg_Witch() : Sounds.stop_bg_Witch();
