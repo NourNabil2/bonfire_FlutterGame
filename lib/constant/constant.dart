@@ -13,6 +13,7 @@ double lifePotion = 20 ;
 double Width_Button = 200 ;
 double Height_Button = 50 ;
 int tower_ON = 0 ;
+int dead = 0;
 //talk
 
 Say speak({required String text , required bool isPlayer , spritesheet })=> Say(

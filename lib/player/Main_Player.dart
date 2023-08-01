@@ -133,6 +133,7 @@ else
   }
   @override
   Future<void> die() async {
+    dead++;
     interstitial.show();
     SFX ? FlameAudio.play('body_fall.mp3') : null ;
     gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.7), blendMode: BlendMode.colorBurn);
@@ -580,6 +581,4 @@ class PlayerSpriteSheet2 {
       textureSize: Vector2(50, 37),
     ),
   );
-
-
 }
