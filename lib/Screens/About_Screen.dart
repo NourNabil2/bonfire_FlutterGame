@@ -1,9 +1,8 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../constant/constant.dart';
-
 
 
 class About_screen extends StatefulWidget {
@@ -14,8 +13,9 @@ class About_screen extends StatefulWidget {
 }
 
 class _About_screen extends State<About_screen> {
-  Future<void> _launchURL(String url) async {
-    final Uri uri = Uri(scheme: "https", host: url);
+
+  Future<void> _launchURL(String scheme,String url,String path,String q) async {
+    final Uri uri = Uri(scheme: scheme, host: url,path: path ,query:  q );
     if(!await launchUrl(
       uri,
       mode: LaunchMode.externalApplication,
@@ -43,6 +43,7 @@ class _About_screen extends State<About_screen> {
           child:  Padding(
             padding: EdgeInsets.all(20.0),
             child: ListView(
+              physics: const BouncingScrollPhysics(),
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -57,13 +58,13 @@ class _About_screen extends State<About_screen> {
                     const SizedBox(height: 30,),
                     Row(
                       children: [
-                        Expanded(child: MaterialButton(onPressed: () =>  _launchURL("https://www.linkedin.com/in/nour-nabil-615330217/"),
+                        Expanded(child: MaterialButton(onPressed: () => _launchURL('https','www.linkedin.com','in/nour-nabil-615330217/','') ,
                             child: Image.asset('assets/images/image_Interface/linkedin_pixel.png',width:50))),
-                        Expanded(child: MaterialButton(onPressed: () => _launchURL("https://github.com/NourNabil2"),
+                        Expanded(child: MaterialButton(onPressed: () => _launchURL('https',"www.github.com",'NourNabil2',''),
                             child: Image.asset('assets/images/image_Interface/GitHub_pixel.png',width:50))),
-                        Expanded(child: MaterialButton(onPressed: () => _launchURL("mailto:nour60g@gmail.com?"
-                            "subject=Game"
-                            "body=Hello Nour,"),
+                        Expanded(child: MaterialButton(onPressed: () => _launchURL('mailto',""
+                            ,'nour60g@gmail.com', 'subject=Game &'
+                                'body=Hello Nour,'),
                             child: Image.asset('assets/images/image_Interface/Gmail.png',width:50))),
 
                       ],

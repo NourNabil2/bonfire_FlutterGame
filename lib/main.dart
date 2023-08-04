@@ -1,8 +1,8 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Screens/Start_Screen.dart';
+import 'package:easy_splash_screen/easy_splash_screen.dart';
 
 import 'package:flutter/material.dart';
-
 
 import 'SharedPreferences/Cash_Save.dart';
 
@@ -41,7 +41,13 @@ class MyApp extends StatelessWidget {
           highlightColor: Colors.transparent,
       ),
 
-      home:Start_Screen(),
+      home: EasySplashScreen(
+
+        backgroundImage: const AssetImage('assets/images/image_Interface/splash.gif'),
+        backgroundColor: Colors.black,
+        durationInSeconds: 4,
+        navigator: const Start_Screen(), logo: Image.asset('assets/images/image_Interface/blank.png'),
+      ),
 
     );
   }

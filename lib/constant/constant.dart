@@ -1,6 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/util/talk/say.dart';
 import 'package:flutter/material.dart';
+import '../MainGame.dart';
 import '../SharedPreferences/Cash_Save.dart';
 import '../player/Main_Player.dart';
 
@@ -109,21 +110,22 @@ class Tringle extends CustomClipper<Path>
 // story board
 class boardingModel {
 
-  late final String image;
+  late final String title1;
   late final String title;
   late final String body;
 
   boardingModel({
-    required this.image,
+    required this.title1,
     required this.title,
     required this.body,
   });
 
 }
+
 List<boardingModel> boarding = [
 
-  boardingModel(image: 'assets/images/6.jpg', title: 'on board 1 shop app', body: 'body shop app'),
-  boardingModel(image: 'assets/images/6.jpg', title: 'on board 2 shop app', body: 'body shop app'),
-  boardingModel(image: 'assets/images/6.jpg', title: 'on board 3 shop app', body: 'body shop app'),
+  boardingModel(title1: 'Thanks For Playing', title: '', body: 'The End'),
+  boardingModel(title1: '', title: 'In the end, sadness will push you to commit a lot of frivolous joy', body: ''),
+  boardingModel(title1: 'You completed $complete%', title: 'Want to try again?', body: ''),
 
 ];

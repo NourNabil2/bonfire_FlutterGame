@@ -114,12 +114,12 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
 
       if (!isobserve)
       {
-        SFX ? FlameAudio.play('range.mp3') : null ;
         seeAndMoveToAttackRange(
           minDistanceFromPlayer: 150,
           positioned: (Player) {
             if (!Player.isDead)
             {
+              SFX ? FlameAudio.play('range.mp3') : null ;
               simpleAttackRange(
                   speed: 500,
                   damage: damage/2,

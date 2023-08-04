@@ -21,48 +21,60 @@ class Portal extends GameDecoration with Sensor<Kinght>
   Future<void> onContact(GameComponent component) async {
     if(currentMap == 1 )
       {
-        SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
-        backgroundMusic == true ? Sounds.playBackground_bg_Witch() : Sounds.stop_bg_Witch();
+        SFX ? await FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 15);
         const Duration(milliseconds: 500);
         selectMap(3);
+        removeFromParent();
       }
     else if (currentMap == 3)
       {
-        SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
-        backgroundMusic == true ? Sounds.playBackground_background_home() : Sounds.stop_background_home();
+        SFX ? await FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 10);
         const Duration(milliseconds: 500);
         selectMap(2);
+        removeFromParent();
       }
     else if (currentMap == 2)
       {
-        backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
-        SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
+
+        SFX ?await FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.3), blendMode: BlendMode.colorBurn);
         CashSaver.SaveData(key: 'complete',value: 15);
         const Duration(milliseconds: 500);
         selectMap(4);
+        removeFromParent();
       }
     else if (currentMap == 4)
       {
-        backgroundMusic == true ? Sounds.playBackground_Mind() : Sounds.stop_Mind();
-        SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
+
+        SFX ?await FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         CashSaver.SaveData(key: 'complete',value: 20);
         const Duration(milliseconds: 500);
         selectMap(6);
+        removeFromParent();
       }
     else if (currentMap == 5)
     {
-      SFX ? FlameAudio.play('swoosh_Gate.mp3') : null ;
+      SFX ? await FlameAudio.play('swoosh_Gate.mp3') : null ;
       interstitial.show();
-      CashSaver.SaveData(key: 'complete',value: 10);
+      CashSaver.SaveData(key: 'complete',value: 3);
       const Duration(milliseconds: 500);
       selectMap(4);
+      removeFromParent();
+    }
+
+    else if (currentMap == 7)
+    {
+      SFX ? await FlameAudio.play('swoosh_Gate.mp3') : null ;
+      interstitial.show();
+      CashSaver.SaveData(key: 'complete',value: 7);
+      
+      removeFromParent();
     }
   }
 }
@@ -78,9 +90,9 @@ class portal_Jail extends GameDecoration with Sensor<Kinght>
 
   @override
   void onContact(GameComponent component) {
-    backgroundMusic == true ? Sounds.playBackground_jail_bg() : Sounds.stop_jail_bg();
     interstitial.show();
       CashSaver.SaveData(key: 'complete',value: 20);
+      removeFromParent();
       selectMap(5);
 
   }

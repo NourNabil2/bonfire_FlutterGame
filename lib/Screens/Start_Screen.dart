@@ -95,7 +95,7 @@ class _Start_ScreenState extends State<Start_Screen> {
 
                             await  Navigator.of(context).push(
                                 HeroDialogRoute(builder: (context) {
-                                  return SettingPopupCard();
+                                  return const SettingPopupCard();
                                 }
                                 )
                             );
@@ -107,10 +107,11 @@ class _Start_ScreenState extends State<Start_Screen> {
                       child: Button(width: Width_Button+30,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: ()async{
                         await  Navigator.of(context).push(
                             HeroDialogRoute(builder: (context) {
-                              return About_screen();
+                              return OnBoarding(Story: boarding,);
                             }
                             )
                         );
+
                       }),
                     ),
                     const SizedBox(height: 15,),

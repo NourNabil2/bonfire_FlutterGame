@@ -1,3 +1,4 @@
+import 'package:bonfire_flutter_game/Screens/Start_Screen.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ class _OnBoardingState extends State<OnBoarding> {
 
 
     return Scaffold(
+      backgroundColor: Colors.black38,
       body:  Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -71,17 +73,19 @@ class _OnBoardingState extends State<OnBoarding> {
             Row(
               children: [
                 Spacer(),
-                FloatingActionButton(onPressed: () {
+                FloatingActionButton(
+                  backgroundColor: Colors.transparent,
+                  onPressed: () {
                   if ( last )
                   {
-                    Navigator.pop(context);
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Start_Screen(),), (route) => false);
                   }
                   else
                   {
-                    boarderController.nextPage(duration: Duration(milliseconds: 750), curve: Curves.linearToEaseOut);
+                    boarderController.nextPage(duration: const Duration(milliseconds: 750), curve: Curves.linearToEaseOut);
                   }
 
-                }, splashColor: Colors.purple[900],child: Icon(Icons.arrow_forward_ios , color: Colors.white), ),
+                },child: Image.asset('assets/images/image_Interface/button.png'), ),
 
 
               ],)
@@ -93,12 +97,24 @@ class _OnBoardingState extends State<OnBoarding> {
 
   }
 }
-Widget onBoarding(boardingModel model) => Column(
-  children: [
-    Expanded(child: Image(image: AssetImage('${model.image}'))),
-    SizedBox(height: 15,),
-    Text('${model.title}' , style: TextStyle(fontSize: 24, color: CupertinoColors.black , ),),
-    SizedBox(height: 5,),
-    Text('${model.body}' , style: TextStyle(fontSize: 14, color: CupertinoColors.black , ),),
-  ],
+Widget onBoarding(boardingModel model) => Padding(
+  padding: const EdgeInsets.all(10.0),
+  child:   Column(
+crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+
+      Expanded(child: Text('${model.title1}', style: const TextStyle(fontSize: 70, color: CupertinoColors.white , ),)),
+
+      const SizedBox(height: 15),
+
+      Expanded(child: Text('${model.title}', style: const TextStyle(fontSize: 22, color: CupertinoColors.white , ),)),
+
+      const SizedBox(height: 5),
+
+      Expanded(child: Text('${model.body}', style: const TextStyle(fontSize: 14, color: CupertinoColors.white , ),)),
+
+    ],
+
+  ),
 ) ;

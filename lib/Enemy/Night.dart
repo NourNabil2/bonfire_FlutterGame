@@ -91,6 +91,7 @@ class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
         closePlayer: (Player) {
           if (!Player.isDead)
           {
+            SFX ? FlameAudio.play('Sword_Night.wav') : null ;
             simpleAttackMelee(
               withPush: false,
               damage: damage ,

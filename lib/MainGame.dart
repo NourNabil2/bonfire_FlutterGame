@@ -11,6 +11,7 @@ import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:bonfire_flutter_game/followers/You.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'Enemy/Bringer.dart';
 import 'Enemy/Dog_Black.dart';
 import 'Enemy/Dog_white.dart';
@@ -66,41 +67,37 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
         CashSaver.SaveData(key: 'Map', value: id);
       });
     };
-
-        switch (currentMap) {
-          case 0:
-            backgroundMusic == true ? Sounds.playBackground_SpaceSound() : Sounds.stop_Space();
-            break;
-          case 1:
-            backgroundMusic == true ? Sounds.playBackground_background_home() : Sounds.stop_background_home();
-            break;
-          case 2:
-          backgroundMusic == true ? Sounds.playBackground_background_home2() : Sounds.stop_background_home2();
-            break;
-            case 3:
-          backgroundMusic == true ? Sounds.playBackground_bg_Witch() : Sounds.stop_bg_Witch();
-            break;
-            case 4:
-          backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
-            break;
-            case 5:
-          backgroundMusic == true ? Sounds.playBackground_jail_bg() : Sounds.stop_jail_bg();
-            break;
-            case 6:
-          backgroundMusic == true ? Sounds.playBackground_Mind() : Sounds.stop_Mind();
-            break;
-          default:
-          backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
-            break;
-        }
-
-
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    switch (currentMap) {
+      case 0:
+        backgroundMusic == true ? Sounds.playBackground_SpaceSound() : Sounds.stop_Space();
+        break;
+      case 1:
+        backgroundMusic == true ? Sounds.playBackground_background_home() : Sounds.stop_background_home();
+        break;
+      case 2:
+        backgroundMusic == true ? Sounds.playBackground_background_home2() : Sounds.stop_background_home2();
+        break;
+      case 3:
+        backgroundMusic == true ? Sounds.playBackground_bg_Witch() : Sounds.stop_bg_Witch();
+        break;
+      case 4:
+        backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
+        break;
+      case 5:
+        backgroundMusic == true ? Sounds.playBackground_jail_bg() : Sounds.stop_jail_bg();
+        break;
+      case 6:
+        backgroundMusic == true ? Sounds.playBackground_Mind() : Sounds.stop_Mind();
+        break;
+      default:
+        backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
+        break;
+    }
     switch (currentMap) {
 
       case 0:  return MainMap(lightingMap:Colors.black38 ,tiledSize: tiledSize, map: WorldMapByTiled(

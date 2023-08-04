@@ -50,6 +50,8 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
   @override
   Future<void> update(double dt) async {
 
+
+
      if (currentMap == 6 && backgroundMusic == false)
     {
       backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();

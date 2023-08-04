@@ -65,32 +65,32 @@ class Sounds {
 
   static void playBackground_background_home() async {
     await stopBackgroundSound();
-    FlameAudio.bgm.play( 'background_home.mp3',volume: 0.5);
+    FlameAudio.bgm.play( 'background_home.mp3',volume: 0.3);
   }
 
   static void playBackground_background_home2() async {
     await stopBackgroundSound();
-    FlameAudio.bgm.play( 'background_home2.mp3',volume: 0.5);
+    FlameAudio.bgm.play( 'background_home2.mp3',volume: 0.3);
   }
 
   static void playBackground_SpaceSound() async {
    await stopBackgroundSound();
-    FlameAudio.bgm.play('SpaceSound.wav',volume: 0.5);
+    FlameAudio.bgm.play('SpaceSound.wav',volume: 0.3);
   }
 
   static void playBackground_bg_Witch() async {
    await stopBackgroundSound();
-    FlameAudio.bgm.play('bg_Witch.mp3',volume: 0.5);
+    FlameAudio.bgm.play('bg_Witch.mp3',volume: 0.3);
   }
 
   static void playBackground_forest2() async {
    await stopBackgroundSound();
-    FlameAudio.bgm.play('forest2.mp3',volume: 0.5);
+    FlameAudio.bgm.play('forest2.mp3',volume: 0.3);
   }
 
   static void playBackground_jail_bg() async {
    await stopBackgroundSound();
-    FlameAudio.bgm.play('jail_bg.mp3',volume: 0.5);
+    FlameAudio.bgm.play('jail_bg.mp3',volume: 0.35);
   }
 
   static void playBackground_Mind() async {
