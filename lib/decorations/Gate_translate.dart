@@ -5,6 +5,7 @@ import '../MainGame.dart';
 import '../SharedPreferences/Cash_Save.dart';
 import '../constant/Sounds/background.dart';
 import '../constant/constant.dart';
+import '../constant/onBoarding.dart';
 import '../player/Main_Player.dart';
 class Portal extends GameDecoration with Sensor<Kinght>
 {
@@ -73,7 +74,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
       SFX ? await FlameAudio.play('swoosh_Gate.mp3') : null ;
       interstitial.show();
       CashSaver.SaveData(key: 'complete',value: 7);
-      
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => OnBoarding(Story: boarding,),), (route) => false);
       removeFromParent();
     }
   }

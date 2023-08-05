@@ -21,7 +21,7 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
     position: position,
     size: sizeS,
     animation:PlayerSpriteSheet.simpleDirectionAnimation ,
-    life: 700,
+    life: 500,
     speed: 60,
     initDirection: Direction.down,
   )

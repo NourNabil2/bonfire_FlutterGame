@@ -107,7 +107,7 @@ class _Start_ScreenState extends State<Start_Screen> {
                       child: Button(width: Width_Button+30,height: Height_Button,isboxShadow: false,border: false,radius: 10, ColorOfButton: Colors.blueGrey, text: 'About Us', Function: ()async{
                         await  Navigator.of(context).push(
                             HeroDialogRoute(builder: (context) {
-                              return OnBoarding(Story: boarding,);
+                              return const About_screen();
                             }
                             )
                         );
