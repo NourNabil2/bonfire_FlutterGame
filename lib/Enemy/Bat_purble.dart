@@ -78,10 +78,7 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
         closePlayer: (Player) {
           if (!Player.isDead)
           {
-
-            SFX ? FlameAudio.play('Punch_enemy.wav') : null ;
             simpleAttackMelee(
-
                 withPush: false,
                 damage: damage ,
                 size: size,

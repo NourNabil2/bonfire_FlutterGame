@@ -7,6 +7,7 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../Enemy/Rat.dart';
+import '../Enemy/Skull.dart';
 import '../MainGame.dart';
 import '../SharedPreferences/Cash_Save.dart';
 import '../constant/Sounds/background.dart';
@@ -151,6 +152,7 @@ else
 
     gameRef.camera.shake(intensity: 4);
     die_rat = 0 ;
+    die_Skull = 0;
     gameRef.overlayManager.add(GameOverScreen.id);
 
     super.die();

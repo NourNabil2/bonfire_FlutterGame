@@ -13,7 +13,7 @@ import '../decorations/Gate_translate.dart';
 import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
 Vector2 sizeS = Vector2(93, 93) ;
-double damage = 45 ;
+double damage = 35 ;
 class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
 
   Bringer(Vector2 position )
