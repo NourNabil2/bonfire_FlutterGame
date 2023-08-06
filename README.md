@@ -1,16 +1,39 @@
-# bonfire_flutter_game
+# 🎮🎮 BonfierGame - Just Like You
 
-A new Flutter project.
+A Flutter Game .
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+<a href="https://drive.google.com/file/d/1nL3srKQ5wAv_8JYOZ_Zg95e-d3BuZ9V1/view?usp=sharing"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="200"></img></a>
 
-A few resources to get you started if this is your first Flutter project:
+Don't forget to star⭐ the repo if you like what you see😉.
+# 🎥 Demo
+<img src="REVIEW (not complete)/app review .gif" width="400" height="600">
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# 📸 Screenshots
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| 1 | 2|
+|------|-------|
+|<img src="Review/1.png" width="300">|<img src="Review/2.png" width="300">|
+
+| 3 | 4|
+|------|-------|
+|<img src="Review/3.png" width="300">|<img src="Review/4.png" width="300">|
+
+
+| 5 | 
+|------|
+|<img src="Review/5.png" width="300">|
+
+
+
+   ## Project Status
+   _Not Complete_
+   
+   ## Room for Improvement
+   To do:
+   * Cart Screen
+   * Dark mood
+   * add some Information Screens
+   
+   ## Contact
+Created by [@Nour Nabil](https://github.com/NourNabil2) - feel free to contact me!
