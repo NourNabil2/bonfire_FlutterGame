@@ -10,16 +10,18 @@ import 'package:bonfire_flutter_game/constant/Buttons.dart';
 import 'package:bonfire_flutter_game/constant/Hero_Dialog.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:bonfire_flutter_game/constant/onBoarding.dart';
+import 'package:flame/text.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:flutter/services.dart';
-
+import 'package:rflutter_alert/rflutter_alert.dart';
 import '../NPC/Shadow.dart';
 import '../SharedPreferences/Cash_Save.dart';
-import '../constant/NameOfMaps.dart';
 import '../constant/Sounds/background.dart';
 import 'About_Screen.dart';
+import 'Purchese.dart';
+
 
 class Start_Screen extends StatefulWidget {
   const Start_Screen({Key? key}) : super(key: key);
@@ -82,9 +84,34 @@ class _Start_ScreenState extends State<Start_Screen> {
                     if (currentMap != 0)  Expanded(
                       child: Button(width: Width_Button-30,height: Height_Button,isboxShadow: false,border: false ,radius: 10, ColorOfButton: Colors.blueGrey, text: 'New Game',
                           Function: () {
-                        close = false ;
-                        CashSaver.Clearall();
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Just_Like_YouGame(),), (route) => false);
+                            Alert(
+                              context: context,
+                              type: AlertType.warning,
+                              title: "You will lose all your progress!!",
+                              desc: "Are you sure you want to restart the game?",
+                              buttons: [
+                                DialogButton(
+                                  onPressed: () {
+                                    close = false ;
+                                    CashSaver.Clearall();
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Just_Like_YouGame(),), (route) => false);
+                                  },
+                                  color: Colors.red[500],
+                                  child: const Text(
+                                    "Yes",
+                                    style: TextStyle(decoration: TextDecoration.none ,color: Colors.black,fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                DialogButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  color: Colors.blueGrey,
+                                  child: const Text(
+                                    "Cancel",
+                                    style: TextStyle(decoration: TextDecoration.none ,color: Colors.black,fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ).show();
                           }
                       ),
                     ),
@@ -135,8 +162,26 @@ class _Start_ScreenState extends State<Start_Screen> {
 
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [ Padding(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [ MaterialButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder:(context) => const purchases())),
+                      child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Image.asset('assets/images/image_Interface/purchases.png',width: 80),
+                      )),],
+                )
+
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+
+                Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: AdmobBanner(adUnitId: adsManager.BannerAds_UnitID , adSize: AdmobBannerSize.FULL_BANNER),
               ),],
@@ -146,5 +191,30 @@ class _Start_ScreenState extends State<Start_Screen> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

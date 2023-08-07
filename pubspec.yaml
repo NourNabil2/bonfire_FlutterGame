@@ -43,6 +43,7 @@ dependencies:
   onboarding:
   flutter_switch:
   admob_flutter: ^3.0.0
+  rflutter_alert:
   url_launcher:
   easy_splash_screen: ^1.0.4
 

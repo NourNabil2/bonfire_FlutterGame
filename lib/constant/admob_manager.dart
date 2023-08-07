@@ -35,4 +35,19 @@ else {
   return '';
 }
   }
+
+  static String get RewardedAds_UnitID {
+    if (test == true)
+    {
+      return AdmobInterstitial.testAdUnitId;
+    }
+    else
+if (Platform.isAndroid)
+  {
+    return 'ca-app-pub-9503585436307618/2920323839' ;
+  }
+else {
+  return '';
+}
+  }
 }

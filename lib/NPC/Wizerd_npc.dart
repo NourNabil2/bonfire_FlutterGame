@@ -6,9 +6,11 @@ import 'package:flutter/services.dart';
 import '../MainGame.dart';
 TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , fontSize: 10 ) );
 bool isobserve = false ;
-class WizerdMan extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,TapGesture{
+bool finish = true ;
 
-  WizerdMan(Vector2 position)
+class Stranger extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,TapGesture{
+
+  Stranger(Vector2 position)
       : super(
     position: position,
     size: Vector2(tiledSize,tiledSize),
@@ -56,15 +58,40 @@ void render(Canvas canvas)
   }
   @override
   void onTap() {
-    ShowDialogTalk();
+    if (finish) {
+      ShowDialogTalk();
+      finish = false ;
+    }
+    else
+      {
+        ShowDialogTalk2();
+      }
   }
   ShowDialogTalk()
   {
     gameRef.camera.moveToTargetAnimated(this,zoom: 2 , finish: () {
       TalkDialog.show(gameRef.context, [
-        speak(text: 'Hello warrior, What Are you doing here in this place ', isPlayer: false),
-        speak(text: 'really i don\'t know', isPlayer: true),
-        speak(text: 'go and find your goals', isPlayer: false),
+        speak(text: 'Hello, who are you', isPlayer: true),
+        speak(text: 'who am I ? Don\'t you remember me?', isPlayer: false),
+        speak(text: 'The truth is, I don\'t know why you made me so important to you to be here. You made me to be here', isPlayer: false),
+        speak(text: 'I think I remind you a little', isPlayer: true ),
+        speak(text: 'I\'m lost now, do you know how to get out of here?', isPlayer: true ),
+        speak(text: 'I think I can guide you, there are three pillars that must be operated to open the mind portal.', isPlayer: false ),
+        speak(text: 'You can find it in the woods, it\'s scattered over there in the farthest place, and there\'s one near here. Good luck with it.', isPlayer: false ),
+      ],logicalKeyboardKeysToNext:[LogicalKeyboardKey.space],
+      //onChangeTalk: (value) => gameRef.camera.shake(intensity: 2 ) ,
+          onClose: () => gameRef.camera.moveToPlayerAnimated(zoom: 1.8),
+      );
+    },);
+  }
+
+  ShowDialogTalk2()
+  {
+    gameRef.camera.moveToTargetAnimated(this,zoom: 2 , finish: () {
+      TalkDialog.show(gameRef.context, [
+
+        speak(text: 'hey again,did you find them?', isPlayer: false),
+
       ],logicalKeyboardKeysToNext:[LogicalKeyboardKey.space],
       //onChangeTalk: (value) => gameRef.camera.shake(intensity: 2 ) ,
           onClose: () => gameRef.camera.moveToPlayerAnimated(zoom: 1.8),
@@ -86,21 +113,23 @@ void render(Canvas canvas)
 class PlayerSpriteSheet {
 
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-    "NPC/wizard_idle.png",
+    "NPC/stranger.png",
     SpriteAnimationData.sequenced(
-      amount: 2,
+      amount: 4,
       stepTime: 0.2,
-      textureSize: Vector2(16, 20),
+      textureSize: Vector2(94, 91),
     ),
   );
+
   static Future<SpriteAnimation> get RunRight => SpriteAnimation.load(
-    "NPC/wizard_idle.png",
+    "NPC/stranger.png",
     SpriteAnimationData.sequenced(
-      amount: 2,
+      amount: 4,
       stepTime: 0.2,
-      textureSize: Vector2(16, 20),
+      textureSize: Vector2(94, 91),
     ),
   );
+
 
   static SimpleDirectionAnimation get simpleDirectionAnimation =>
       SimpleDirectionAnimation(

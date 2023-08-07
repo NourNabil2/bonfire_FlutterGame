@@ -42,6 +42,16 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
     );
   }
   @override
+  void render(Canvas canvas)
+  {
+    super.render(canvas);
+    if (isobserve)
+    {
+      textPaint.render(canvas, '!', position);
+    }
+  }
+
+  @override
     Future<void> update(double dt) async {
     if(close)
       {

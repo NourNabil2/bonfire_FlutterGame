@@ -11,7 +11,6 @@ import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:bonfire_flutter_game/followers/You.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'Enemy/Bringer.dart';
 import 'Enemy/Dog_Black.dart';
 import 'Enemy/Dog_white.dart';
@@ -34,6 +33,7 @@ int complete = CashSaver.getData(key: 'complete') ?? 0 ;
 bool T = true ;
 int currentMap = CashSaver.getData(key: 'Map') ?? 0 ;
 late AdmobInterstitial interstitial ;
+late AdmobReward rewardAd;
 late AdmobBannerSize bannerSize ; ////////
 late Function(int) selectMap;
 
@@ -47,6 +47,7 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
   void dispose() {
     Sounds.dispose();
     interstitial.dispose();
+    rewardAd.dispose();
     currentMap = 0;
     super.dispose();
   }
@@ -58,6 +59,14 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
       if (event == AdmobAdEvent.closed) interstitial.load();
         },
     );
+    rewardAd = AdmobReward(
+      adUnitId: adsManager.RewardedAds_UnitID,
+      listener: (AdmobAdEvent event, Map) {
+        if (event == AdmobAdEvent.closed) rewardAd.load();
+
+      },
+    );
+    rewardAd.load();
     interstitial.load();
     complete = CashSaver.getData(key: 'complete') ?? 0;
     currentMap = CashSaver.getData(key: 'Map') ?? 0 ;
@@ -111,7 +120,6 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
           House,
             forceTileSize: Vector2(tiledSize, tiledSize),
             objectsBuilder: {
-              'Wizard_oldMan': (properties) => WizerdMan(properties.position),
               'Dark_Ninja': (properties) => DarkNinja(properties.position),
               'Boss': (properties) => BossNinja(properties.position),
               'torch': (properties) => torch(position: properties.position),
@@ -154,7 +162,6 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
           RoadMap,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
-            'Wizard_oldMan': (properties) => WizerdMan(properties.position),
             'Dark_Ninja': (properties) => DarkNinja(properties.position),
             'Boss': (properties) => BossNinja(properties.position),
             'picktorch': (properties) => Picktorch(position: properties.position),
@@ -173,6 +180,7 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
           temple,
           forceTileSize: Vector2(tiledSize, tiledSize),
           objectsBuilder: {
+            'Stranger': (properties) => Stranger(properties.position),
             'picktorch': (properties) => Picktorch(position: properties.position),
             'bed_door': (properties) => BedRoom_Door(position: properties.position),
             'fox': (properties) => Fox(properties.position),
