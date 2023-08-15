@@ -1,16 +1,32 @@
-# bonfire_flutter_game
+# 🎮🎮 BonfierGame - Just Like You
 
-A new Flutter project.
+A Flutter Game .
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+<a href=""><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="200"></img></a>
 
-A few resources to get you started if this is your first Flutter project:
+Don't forget to star⭐ the repo if you like what you see😉.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# 📸 Screenshots
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Start Screen | Setting|
+|------|-------|
+|<img src="Review/1.jpg" width="600">|<img src="Review/2.jpg" width="600">|
+
+| Dialog | Pause Screen|
+|------|-------|
+|<img src="Review/3.jpg" width="600">|<img src="Review/4.jpg" width="600">|
+
+
+| review | 
+|------|
+|<img src="Review/5.jpg" width="600">|
+
+
+
+   ## Project Status
+   _Complete_
+   
+   
+   ## Contact
+Created by [@Nour Nabil](https://www.linkedin.com/in/nour-nabil-615330217/) - feel free to contact me!
