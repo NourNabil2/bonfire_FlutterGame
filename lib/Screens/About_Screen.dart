@@ -15,7 +15,7 @@ class About_screen extends StatefulWidget {
 class _About_screen extends State<About_screen> {
 
   Future<void> _launchURL(String scheme,String url,String path,String q) async {
-    final Uri uri = Uri(scheme: scheme, host: url,path: path ,query:  q );
+    final Uri uri = Uri(scheme: scheme, host: url,path: path ,query:  q);
     if(!await launchUrl(
       uri,
       mode: LaunchMode.externalApplication,
@@ -62,14 +62,12 @@ class _About_screen extends State<About_screen> {
                             child: Image.asset('assets/images/image_Interface/linkedin_pixel.png',width:50))),
                         Expanded(child: MaterialButton(onPressed: () => _launchURL('https',"www.github.com",'NourNabil2',''),
                             child: Image.asset('assets/images/image_Interface/GitHub_pixel.png',width:50))),
-                        Expanded(child: MaterialButton(onPressed: () => _launchURL('mailto',""
-                            ,'nour60g@gmail.com', 'subject=Game &'
+                        Expanded(child: MaterialButton(onPressed: () => _launchURL("mailto","","Nour60g@gmail.com", 'subject=Game &'
                                 'body=Hello Nour,'),
                             child: Image.asset('assets/images/image_Interface/Gmail.png',width:50))),
 
                       ],
                     ),
-
                   ],
                 ),
               ]

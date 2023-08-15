@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import '../MainGame.dart';
+import '../constant/constant.dart';
 TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , fontSize: 10 ) );
 bool isobserve = false ;
 bool finish = true ;
@@ -13,7 +14,7 @@ class Stranger extends SimpleNpc with ObjectCollision , AutomaticRandomMovement 
   Stranger(Vector2 position)
       : super(
     position: position,
-    size: Vector2(tiledSize,tiledSize),
+    size: Vector2(64,64),
     animation: PlayerSpriteSheet.simpleDirectionAnimation,
     speed: 100,
     initDirection: Direction.down,
@@ -34,7 +35,21 @@ void render(Canvas canvas)
   super.render(canvas);
   if (isobserve)
     {
-      textPaint.render(canvas, 'Tap me!', position);
+      gameRef.add(
+        AnimatedFollowerObject(
+          animation: SpriteAnimation.load(
+            dots,
+            SpriteAnimationData.sequenced(
+              amount: 8,
+              stepTime: 0.1,
+              textureSize: Vector2(32, 32),
+            ),
+          ),
+          target: Stranger(position),
+          size: Vector2(16, 16),
+          positionFromTarget: Vector2(10, -15),
+        ),
+      );
     }
 }
   @override
@@ -42,10 +57,10 @@ void render(Canvas canvas)
     super.update(dt);
     seePlayer(
         observed: (p0) {
-      if(!isobserve)
-        {
-          isobserve = true ;
-        }
+          if(!isobserve)
+          {
+            isobserve = true ;
+          }
     },
         notObserved: () {
           {

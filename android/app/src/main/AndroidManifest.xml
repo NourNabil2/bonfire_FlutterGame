@@ -2,7 +2,7 @@
     package="com.example.bonfire_flutter_game">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="bonfire_flutter_game"
+        android:label="Just Like You"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

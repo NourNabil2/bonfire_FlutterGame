@@ -7,6 +7,7 @@ import 'dart:async' as async;
 import '../Enemy/Bat_purble.dart';
 import '../MainGame.dart';
 import '../SharedPreferences/Cash_Save.dart';
+import '../constant/constant.dart';
 
 
 TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , fontSize: 10 ) );
@@ -44,10 +45,25 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
   @override
   void render(Canvas canvas)
   {
+
     super.render(canvas);
     if (isobserve)
     {
-      textPaint.render(canvas, '!', position);
+      gameRef.add(
+        AnimatedFollowerObject(
+          animation: SpriteAnimation.load(
+            dots,
+            SpriteAnimationData.sequenced(
+              amount: 8,
+              stepTime: 0.1,
+              textureSize: Vector2(32, 32),
+            ),
+          ),
+          target: Shadow(position),
+          size: Vector2(16, 16),
+          positionFromTarget: Vector2(10, -15),
+        ),
+      );
     }
   }
 
@@ -62,11 +78,15 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
 
     seePlayer(
         observed: (p0) {
+          if(!isobserve)
+          {
+            isobserve = true ;
+          }
             close ? removeFromParent() : null ;
         },
         notObserved: () {
           {
-
+            isobserve = false ;
           }
         },
 

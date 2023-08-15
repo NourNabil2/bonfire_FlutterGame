@@ -242,7 +242,13 @@ class BedRoom_Door extends GameDecoration with ObjectCollision
             SFX ? FlameAudio.play('Door_open_sound_effect.mp3') : null ;
             p.silverKey = false;
             removeFromParent();
-          } else {
+          } else if (p.goldKey == true)
+            {
+              SFX ? FlameAudio.play('Door_open_sound_effect.mp3') : null ;
+              p.silverKey = false;
+              removeFromParent();
+            }
+          else {
 
             if (!showDialog) {
 

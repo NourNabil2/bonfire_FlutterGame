@@ -239,7 +239,7 @@
          "height":50,
          "id":6,
          "name":"Blocks",
-         "opacity":0.94,
+         "opacity":0,
          "type":"tilelayer",
          "visible":true,
          "width":50,

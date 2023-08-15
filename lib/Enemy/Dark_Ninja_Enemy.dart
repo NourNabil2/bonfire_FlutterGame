@@ -78,13 +78,11 @@ if (!gameRef.sceneBuilderStatus.isRunning)
       closePlayer: (Player) {
         if (!Player.isDead)
         {
-          SFX ? FlameAudio.play('slash.mp3') : null ;
-
           simpleAttackMelee(
               withPush: false,
               damage: damage *2 ,
               size: size,
-              animationRight: PlayerSpriteSheet2.CutSword()
+              animationRight: PlayerSpriteSheet2.CutSword(),
           );
         }
       },

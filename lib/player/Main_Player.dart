@@ -14,7 +14,7 @@ import '../constant/Sounds/background.dart';
 import '../decorations/Items.dart';
 import 'dart:async' as async;
 import '../decorations/die_Decoration.dart';
-double damagePlayer = 6 ;
+double damagePlayer = 8 ;
 bool showObserveEnemy = false;
 
 class Kinght extends SimplePlayer with ObjectCollision,Lighting {
