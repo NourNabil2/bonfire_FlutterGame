@@ -91,12 +91,15 @@ class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
         closePlayer: (Player) {
           if (!Player.isDead)
           {
-            SFX ? FlameAudio.play('Sword_Night.wav') : null ;
+
             simpleAttackMelee(
               withPush: false,
               damage: damage ,
               size: size,
-              execute: () => animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS , flipX:  lastDirectionHorizontal == Direction.right ? false : true),
+              execute: () {
+                SFX ? FlameAudio.play('Sword_Night.wav') : null ;
+                animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS , flipX:  lastDirectionHorizontal == Direction.right ? false : true);
+              }
             );
           }
         },
@@ -156,7 +159,7 @@ class PlayerSpriteSheet {
     "Enemy/Night/NightBorne_hit.png",
     SpriteAnimationData.sequenced(
       amount: 12,
-      stepTime: 0.08,
+      stepTime: 0.1,
       textureSize: Vector2(80, 80),
     ),
   );

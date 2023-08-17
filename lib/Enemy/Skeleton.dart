@@ -74,13 +74,14 @@ class Skeleton extends SimpleEnemy with ObjectCollision , AutomaticRandomMovemen
         closePlayer: (Player) {
           if (!Player.isDead)
           {
-            SFX ? FlameAudio.play('slash.mp3') : null ;
-
             simpleAttackMelee(
               withPush: false,
               damage: damage ,
               size: size,
-              execute: () => lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: Vector2.all(sizeS)) : animation?.playOnce(PlayerSpriteSheet.attack_R(),size: Vector2.all(sizeS),runToTheEnd: true,flipX: true) ,
+              execute: () {
+                SFX ? FlameAudio.play('slash.mp3') : null ;
+                lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: Vector2.all(sizeS)) : animation?.playOnce(PlayerSpriteSheet.attack_R(),size: Vector2.all(sizeS),runToTheEnd: true,flipX: true) ;
+              }
             );
           }
         },

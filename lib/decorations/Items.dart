@@ -691,7 +691,7 @@ class Portal_Mind extends GameDecoration with TapGesture ,ObjectCollision
 
     "items/portal_X.png",
     SpriteAnimationData([
-      SpriteAnimationFrameData(srcPosition: Vector2(0, 0), srcSize: Vector2(100, 120), stepTime: 0.1),
+      SpriteAnimationFrameData(srcPosition: Vector2(0, 0), srcSize: Vector2(100, 150), stepTime: 0.1),
 
 
     ],loop: false),
@@ -733,7 +733,7 @@ class Portal_Mind_ON  extends GameDecoration
     "items/portal_X.png",
 
     SpriteAnimationData([
-      SpriteAnimationFrameData(srcPosition: Vector2(100, 0), srcSize: Vector2(100, 120), stepTime: 0.1),
+      SpriteAnimationFrameData(srcPosition: Vector2(100, 0), srcSize: Vector2(100, 150), stepTime: 0.1),
 
 
     ],loop: true ),

@@ -74,13 +74,16 @@ class Dog_White extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
         closePlayer: (Player) {
           if (!Player.isDead)
           {
-            SFX ? FlameAudio.play('wolf_attack.mp3') : null ;
+
 
             simpleAttackMelee(
               withPush: false,
               damage: damage ,
               size: size,
-              execute: () => lastDirectionHorizontal == Direction.right ?animation?.playOnce(PlayerSpriteSheet.Dog_attack(),runToTheEnd: true,flipX: true): animation?.playOnce(PlayerSpriteSheet.Dog_attack(),runToTheEnd: true),
+              execute: () {
+                SFX ? FlameAudio.play('wolf_attack.mp3') : null ;
+                lastDirectionHorizontal == Direction.right ?animation?.playOnce(PlayerSpriteSheet.Dog_attack(),runToTheEnd: true,flipX: true): animation?.playOnce(PlayerSpriteSheet.Dog_attack(),runToTheEnd: true);
+              }
             );
           }
         },

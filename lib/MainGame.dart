@@ -31,7 +31,7 @@ import 'package:admob_flutter/admob_flutter.dart';
 double tiledSize = 32 ;
 int complete = CashSaver.getData(key: 'complete') ?? 0 ;
 bool T = true ;
-int currentMap = CashSaver.getData(key: 'Map') ?? 0 ;
+int currentMap = CashSaver.getData(key: 'Map') ?? 6 ;
 late AdmobInterstitial interstitial ;
 late AdmobReward rewardAd;
 late AdmobBannerSize bannerSize ; ////////
@@ -48,7 +48,7 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
     Sounds.dispose();
     interstitial.dispose();
     rewardAd.dispose();
-    currentMap = 0;
+    currentMap = 6;
     super.dispose();
   }
 
@@ -69,7 +69,7 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
     rewardAd.load();
     interstitial.load();
     complete = CashSaver.getData(key: 'complete') ?? 0;
-    currentMap = CashSaver.getData(key: 'Map') ?? 0 ;
+    currentMap = CashSaver.getData(key: 'Map') ?? 6 ;
     selectMap = (int id) {
       setState(() {
         currentMap = id ;
@@ -245,7 +245,6 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
 
             }
         ),Player: Kinght(Vector2(90,90))) ;
-
     }
   }
   

@@ -89,7 +89,6 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
         closePlayer: (Player) {
           if (!Player.isDead)
           {
-            SFX ? FlameAudio.play('range2.wav') : null ;
             simpleAttackMelee(
               withPush: false,
               damage: damage ,
@@ -102,7 +101,10 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
                   textureSize: Vector2(71, 46),
                 ),
               ),
-              execute: () => lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS) : animation?.playOnce(PlayerSpriteSheet.attack_R(),size: sizeS,runToTheEnd: true,flipX: true) ,
+              execute: () {
+                SFX ? FlameAudio.play('range2.wav') : null;
+                lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS) : animation?.playOnce(PlayerSpriteSheet.attack_R(),size: sizeS,runToTheEnd: true,flipX: true) ;
+              }
             );
           }
         },
@@ -119,9 +121,12 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
           positioned: (Player) {
             if (!Player.isDead)
             {
-              SFX ? FlameAudio.play('range.mp3') : null ;
+
               simpleAttackRange(
                   speed: 500,
+                  execute: () {
+                    SFX ? FlameAudio.play('range.mp3') : null ;
+                  },
                   damage: damage/2,
                   animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
                   animationRight: PlayerSpriteSheet2.Wave_R(),

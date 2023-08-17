@@ -108,7 +108,10 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
               withPush: false,
               damage: damage ,
               size: size,
-              execute: () => lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS) : animation?.playOnce(PlayerSpriteSheet.attack_R(),size: sizeS,runToTheEnd: true,flipX: true) ,
+              execute: () {
+                SFX ? FlameAudio.play('slash.mp3') : null ;
+                lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS) : animation?.playOnce(PlayerSpriteSheet.attack_R(),size: sizeS,runToTheEnd: true,flipX: true) ;
+              }
             );
           }
         },

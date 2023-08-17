@@ -33,7 +33,7 @@ bool see = false;
         seeAndMoveToPlayer(
           closePlayer: (player) {},
           observed: () async {
-            if (currentMap == 0 )
+            if (currentMap == 7 )
             {
               removeFromParent();
               gameRef.camera.shake(intensity: 8);
@@ -41,6 +41,7 @@ bool see = false;
               TalkDialog.show(gameRef.context, [
                 speak(text: 'NOOOOOOOO!', isPlayer: true),
                 speak(text: '...', isPlayer: true),
+                speak(text: 'My dog dead!...', isPlayer: true),
               ], logicalKeyboardKeysToNext: [LogicalKeyboardKey.space]
 
               );

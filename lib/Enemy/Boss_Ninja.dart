@@ -2,9 +2,11 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/constant.dart';
 import '../decorations/Gate_translate.dart';
 bool isobserve = false ;
 
@@ -70,7 +72,7 @@ class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
           if (!Player.isDead)
           {
             simpleAttackMelee(
-
+                execute: () =>  SFX ? FlameAudio.play('slash.mp3') : null ,
                 withPush: false,
                 damage: damage *2.8 ,
                 size: size,
