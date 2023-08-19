@@ -65,7 +65,7 @@ bool speedup = false ;
 
 class Elec extends GameDecoration with Sensor<Kinght>
 {
-  Elec({required Vector2 position}): super.withAnimation(animation:SpriteAnimation.load('items/elec_P.png', SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(16, 16))) , position: position, size: Vector2.all(15.0));
+  Elec({required Vector2 position}): super.withAnimation(animation:SpriteAnimation.load('items/elec_P.png', SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(350, 350))) , position: position, size: Vector2.all(15.0));
 
 
   @override
@@ -73,6 +73,7 @@ class Elec extends GameDecoration with Sensor<Kinght>
 
     SFX ==true ? FlameAudio.play('power_up.wav') : null ;
     CashSaver.SaveData(key: 'PowerE',value: true);
+    CashSaver.SaveData(key: 'complete',value:complete+ 2);
     (gameRef.player as Kinght).PowerE = true;
     gameRef.player!.addLife(lifePotion);
     removeFromParent();
@@ -300,7 +301,7 @@ bool showDialog = false ;
   void onContact(GameComponent component) {
 
 
-    if ((gameRef.player as Kinght).Key_red == false)
+    if ((gameRef.player as Kinght).Key_red == true)
     {
       SFX ==true ? FlameAudio.play('power_up.wav') : null ;
       gameRef.add(PotionLife(position: position + Vector2(20, 20)));

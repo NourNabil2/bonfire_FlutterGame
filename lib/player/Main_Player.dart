@@ -56,7 +56,7 @@ class Kinght extends SimplePlayer with ObjectCollision,Lighting {
      if (currentMap == 6 && backgroundMusic == false)
     {
       backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
-      CashSaver.SaveData(key: 'complete',value: 5);
+      CashSaver.SaveData(key: 'complete',value: complete+3);
       selectMap(7);
     }
 

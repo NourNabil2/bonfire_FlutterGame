@@ -46,6 +46,7 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
   @override
   void dispose() {
     Sounds.dispose();
+    //Sounds.pauseBackgroundSound();
     interstitial.dispose();
     rewardAd.dispose();
     currentMap = 0;

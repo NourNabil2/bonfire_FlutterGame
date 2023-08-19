@@ -24,7 +24,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
       {
         SFX ? await FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
-        CashSaver.SaveData(key: 'complete',value: 15);
+        CashSaver.SaveData(key: 'complete',value:complete+ 15);
         const Duration(milliseconds: 500);
         selectMap(3);
         removeFromParent();
@@ -33,7 +33,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
       {
         SFX ? await FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
-        CashSaver.SaveData(key: 'complete',value: 10);
+        CashSaver.SaveData(key: 'complete',value:complete+ 10);
         const Duration(milliseconds: 500);
         selectMap(2);
         removeFromParent();
@@ -44,7 +44,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
         SFX ?await FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
         gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.3), blendMode: BlendMode.colorBurn);
-        CashSaver.SaveData(key: 'complete',value: 15);
+        CashSaver.SaveData(key: 'complete',value:complete+ 15);
         const Duration(milliseconds: 500);
         selectMap(4);
         removeFromParent();
@@ -54,7 +54,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
 
         SFX ?await FlameAudio.play('swoosh_Gate.mp3') : null ;
         interstitial.show();
-        CashSaver.SaveData(key: 'complete',value: 20);
+        CashSaver.SaveData(key: 'complete',value:complete+ 20);
         const Duration(milliseconds: 500);
         selectMap(6);
         removeFromParent();
@@ -63,7 +63,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
     {
       SFX ? await FlameAudio.play('swoosh_Gate.mp3') : null ;
       interstitial.show();
-      CashSaver.SaveData(key: 'complete',value: 3);
+      CashSaver.SaveData(key: 'complete',value:complete+ 3);
       const Duration(milliseconds: 500);
       selectMap(4);
       removeFromParent();
@@ -73,7 +73,7 @@ class Portal extends GameDecoration with Sensor<Kinght>
     {
       SFX ? await FlameAudio.play('swoosh_Gate.mp3') : null ;
       interstitial.show();
-      CashSaver.SaveData(key: 'complete',value: 7);
+      CashSaver.SaveData(key: 'complete',value:complete+ 7);
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => OnBoarding(Story: boarding,),), (route) => false);
       removeFromParent();
     }
@@ -83,16 +83,14 @@ class Portal extends GameDecoration with Sensor<Kinght>
 class portal_Jail extends GameDecoration with Sensor<Kinght>
 {
   portal_Jail({required Vector2 position}): super.withAnimation(size:  Vector2.all(50.0) ,animation: SpriteAnimation.load(
-    "0x72_DungeonTilesetII_v1.3.png",
-    SpriteAnimationData([
-      SpriteAnimationFrameData(srcPosition: Vector2(96, 48), srcSize: Vector2(16, 16), stepTime: 0.1),
-    ]),
+    "Effects/gate.png",
+    SpriteAnimationData.sequenced(amount: 1, stepTime: 0.1, textureSize: Vector2.all(16)),
   ) ,position: position );
 
   @override
   void onContact(GameComponent component) {
     interstitial.show();
-      CashSaver.SaveData(key: 'complete',value: 20);
+      CashSaver.SaveData(key: 'complete',value:complete+ 20);
       removeFromParent();
       selectMap(5);
 

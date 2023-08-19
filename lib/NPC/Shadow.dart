@@ -116,7 +116,7 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
         onClose: () {
           gameRef.player!.isDead ? null : async.Timer(const Duration(seconds: 20),()
               {
-                CashSaver.SaveData(key: 'complete',value: 5);
+                CashSaver.SaveData(key: 'complete',value:complete + 5);
                 selectMap(1);
               }
 

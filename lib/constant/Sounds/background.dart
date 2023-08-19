@@ -114,5 +114,6 @@ class Sounds {
 
   static void dispose() {
     FlameAudio.bgm.dispose();
+    FlameAudio.bgm.stop();
   }
 }
