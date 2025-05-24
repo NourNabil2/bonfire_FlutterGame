@@ -9,7 +9,7 @@ TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , 
 bool isobserve = false ;
 bool finish = true ;
 
-class Stranger extends SimpleNpc with ObjectCollision , AutomaticRandomMovement ,TapGesture{
+class Stranger extends SimpleNpc with RandomMovement ,TapGesture{
 
   Stranger(Vector2 position)
       : super(
@@ -19,14 +19,20 @@ class Stranger extends SimpleNpc with ObjectCollision , AutomaticRandomMovement 
     speed: 100,
     initDirection: Direction.down,
   ){
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(18, 20),
-          align: Vector2(18, 20),
-        ),
-      ]),
+    add(
+      RectangleHitbox(
+        size: Vector2(18, 20),
+        position: Vector2(18, 20),
+      ),
     );
+    // setupCollision(
+    //   CollisionConfig(collisions: [
+    //     CollisionArea.rectangle(
+    //       size: Vector2(18, 20),
+    //       align: Vector2(18, 20),
+    //     ),
+    //   ]),
+    // );
   }
 @override
 void render(Canvas canvas)
@@ -36,7 +42,7 @@ void render(Canvas canvas)
   if (isobserve)
     {
       gameRef.add(
-        AnimatedFollowerObject(
+        AnimatedFollowerGameObject(
           animation: SpriteAnimation.load(
             dots,
             SpriteAnimationData.sequenced(
@@ -47,7 +53,7 @@ void render(Canvas canvas)
           ),
           target: Stranger(position),
           size: Vector2(16, 16),
-          positionFromTarget: Vector2(10, -15),
+          offset: Vector2(10, -15),
         ),
       );
     }
@@ -84,7 +90,10 @@ void render(Canvas canvas)
   }
   ShowDialogTalk()
   {
-    gameRef.camera.moveToTargetAnimated(this,zoom: 2 , finish: () {
+    gameRef.camera.moveToTargetAnimated(
+     target: this,
+      zoom: 2,
+      onComplete: () {
       TalkDialog.show(gameRef.context, [
         speak(text: 'Hello, who are you', isPlayer: true),
         speak(text: 'who am I ? Don\'t you remember me?', isPlayer: false),
@@ -102,7 +111,10 @@ void render(Canvas canvas)
 
   ShowDialogTalk2()
   {
-    gameRef.camera.moveToTargetAnimated(this,zoom: 2 , finish: () {
+    gameRef.camera.moveToTargetAnimated(
+      target: this,
+      zoom: 2,
+      onComplete: () {
       TalkDialog.show(gameRef.context, [
 
         speak(text: 'hey again,did you find them?', isPlayer: false),
@@ -116,7 +128,7 @@ void render(Canvas canvas)
 
   Say speak({required String text , required bool isPlayer ,})=> Say(
       text: [TextSpan(text: text),],
-    person: SizedBox(height: 100,width: 100,child: isPlayer ? PlayerSpriteSheet2.idleRight.asWidget() : PlayerSpriteSheet.idleRight.asWidget() ,),
+    person: SizedBox(height: 100,width: 100,child: isPlayer ? PlayerSpriteSheet.idleRight.asWidget() : PlayerSpriteSheet.idleRight.asWidget() ,),
     personSayDirection: isPlayer ? PersonSayDirection.LEFT :PersonSayDirection.RIGHT ,
   );
 

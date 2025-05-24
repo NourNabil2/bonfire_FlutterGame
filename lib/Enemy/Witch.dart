@@ -3,8 +3,9 @@ import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flame_audio/flame_audio.dart';
+import 'package:bonfire_flutter_game/player/PlayerSpriteSheetPlayer.dart';
 import 'package:flutter/material.dart';
+import '../constant/Sounds/background.dart';
 import '../constant/constant.dart';
 import '../decorations/Gate_translate.dart';
 import '../decorations/die_Decoration.dart';
@@ -12,7 +13,7 @@ import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
 Vector2 sizeS = Vector2(32, 48) ;
 double damage = 20 ;
-class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+class Witch extends SimpleEnemy with RandomMovement ,UseLifeBar{
 
   Witch(Vector2 position )
       : super(
@@ -24,27 +25,25 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
     initDirection: Direction.down,
   )
   {
-    setupBarLife(
-      barLifePosition: BarLifePorition.top,
+    setupLifeBar(
+      barLifeDrawPosition: BarLifeDrawPosition.top,
       showLifeText: false,
       size: Vector2(10, 1),
       borderWidth: 0,
 
 
     );
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 16),
-          align: Vector2(16, 16),
-        ),
-      ]),
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(16, 16),
+      ),
     );
 
   }
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-    SFX ? FlameAudio.play('ough.mp3') : null ;
+  void receiveDamage(AttackOriginEnum attacker, double damage, identify) {
+    SFX ? Sounds.playSFX('ough.mp3') : null ;
     lastDirectionHorizontal == Direction.right ?  animation?.playOnce(SpriteAnimation.load(
         "Enemy/Wizard/B_witch_take_damage.png",
         SpriteAnimationData.sequenced(
@@ -65,17 +64,17 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
       config: TextStyle(fontSize: width / 3, color: Colors.red),
     );
 
-    super.receiveDamage(attacker, damage, identify);
+  //  super.receiveDamage(attacker, damage, identify);
   }
   @override
   Future<void> die() async {
-    SFX ? FlameAudio.play('Explosion.wav') : null ;
+    SFX ? Sounds.playSFX('Explosion.wav') : null ;
     removeFromParent();
     gameRef.add(witch_death(position: position)) ;
     gameRef.add(Portal(position: position + Vector2(50, 50) ));
     CashSaver.SaveData(key: 'Power', value: true);
     gameRef.add(Key_Gold(position: position + Vector2(50, 100) ));
-    super.die();
+   // super.die();
   }
 
 
@@ -102,7 +101,7 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
                 ),
               ),
               execute: () {
-                SFX ? FlameAudio.play('range2.wav') : null;
+                SFX ? Sounds.playSFX('range2.wav') : null;
                 lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS) : animation?.playOnce(PlayerSpriteSheet.attack_R(),size: sizeS,runToTheEnd: true,flipX: true) ;
               }
             );
@@ -125,23 +124,30 @@ class Witch extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
               simpleAttackRange(
                   speed: 500,
                   execute: () {
-                    SFX ? FlameAudio.play('range.mp3') : null ;
+                    SFX ? Sounds.playSFX('range.mp3') : null ;
                   },
                   damage: damage/2,
                   animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
-                  animationRight: PlayerSpriteSheet2.Wave_R(),
-                  collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
-                    size: Vector2(30, 30),
-                    //align: Vector2(width * 0.25, width * 0.25),
+                  animation: PlayerSpriteSheetPlayer.Wave_R(),
+                  // collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
+                  //   size: Vector2(30, 30),
+                  //   //align: Vector2(width * 0.25, width * 0.25),
+                  //
+                  // ),]),
 
-                  ),]),
+                  collision: RectangleHitbox(
+                    size: Vector2(30, 30),
+                    // position: Vector2(width * 0.25, width * 0.25),
+                  ),
+
                   size: size  );
             }
           } ,
           radiusVision: 150,
-          runOnlyVisibleInScreen: false,
+          //runOnlyVisibleInScreen: false,
           notObserved: () {
             runRandomMovement(dt,maxDistance: 70,minDistance: 30);
+            return true;
           },
         );
       }

@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_types_as_parameter_names, non_constant_identifier_names
 import 'package:bonfire/bonfire.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/Sounds/background.dart';
 import '../constant/constant.dart';
 import '../decorations/die_Decoration.dart';
 import '../player/Main_Player.dart';
@@ -10,54 +10,52 @@ import '../player/Main_Player.dart';
 bool isobserve = false ;
 int die_rat =0 ;
 double damage = 5 ;
-class Rat extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+class Rat extends SimpleEnemy with RandomMovement ,UseLifeBar{
 
   Rat(Vector2 position )
       : super(
     position: position,
     size: Vector2(40,40),
-    animation:PlayerSpriteSheet.simpleDirectionAnimation ,
+    animation: PlayerSpriteSheet.simpleDirectionAnimation ,
     life: 50,
     speed: 80,
     initDirection: Direction.down,
   )
   {
-    setupBarLife(
-      barLifePosition: BarLifePorition.top,
+    setupLifeBar(
+      barLifeDrawPosition: BarLifeDrawPosition.top,
       showLifeText: false,
       size: Vector2(10, 1),
       borderWidth: 0,
 
 
     );
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 16),
-          align: Vector2(16, 16),
-        ),
-      ]),
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(16, 16),
+      ),
     );
 
   }
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
+  void receiveDamage(AttackOriginEnum attacker, double damage, identify) {
 
-    // FlameAudio.play(Globals.explosionSound);
+    // Sounds.playSFX(Globals.explosionSound);
     showDamage(
       damage,
       config: TextStyle(fontSize: width / 3, color: Colors.red),
     );
 
-    super.receiveDamage(attacker, damage, identify);
+   // super.receiveDamage(attacker, damage, identify);
   }
   @override
   Future<void> die() async {
-    SFX ? FlameAudio.play('rat.wav') : null ;
+    SFX ? Sounds.playSFX('rat.wav') : null ;
     damagePlayer+= 0.5;
     removeFromParent();
     gameRef.add(Rat_death(position: position));
-    super.die();
+   // super.die();
     if (currentMap == 1 )
       {
         if (die_rat == 11)

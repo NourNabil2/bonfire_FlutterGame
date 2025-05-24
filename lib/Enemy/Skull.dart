@@ -5,10 +5,10 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/Sounds/background.dart';
 import '../constant/constant.dart';
 import '../decorations/die_Decoration.dart';
 import 'Bringer.dart';
@@ -16,7 +16,7 @@ bool isobserve = false ;
 Vector2 sizeSkull = Vector2(64, 64);
 double damage = 10 ;
 int die_Skull = 0 ;
-class Skull extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+class Skull extends SimpleEnemy with RandomMovement ,UseLifeBar{
 
   Skull(Vector2 position )
       : super(
@@ -28,33 +28,31 @@ class Skull extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
     initDirection: Direction.down,
   )
   {
-    setupBarLife(
-      barLifePosition: BarLifePorition.top,
+    setupLifeBar(
+      barLifeDrawPosition: BarLifeDrawPosition.top,
       showLifeText: false,
       size: Vector2(10, 1),
       borderWidth: 0,
 
 
     );
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 16),
-          align: Vector2(16, 16),
-        ),
-      ]),
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(16, 16),
+      ),
     );
 
   }
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-    SFX ? FlameAudio.play('Punch_enemy.wav') : null ;
+  void receiveDamage(AttackOriginEnum attacker, double damage, identify) {
+    SFX ? Sounds.playSFX('Punch_enemy.wav') : null ;
     showDamage(
       damage,
       config: TextStyle(fontSize: width / 3, color: Colors.red,fontWeight: FontWeight.bold),
     );
 
-    super.receiveDamage(attacker, damage, identify);
+    //super.receiveDamage(attacker, damage, identify);
   }
   @override
   Future<void> die() async {
@@ -66,10 +64,10 @@ class Skull extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,
     {
       die_Skull++ ;
     }
-    SFX ? FlameAudio.play('Skull_dead.mp3') : null ;
+    SFX ? Sounds.playSFX('Skull_dead.mp3') : null ;
     removeFromParent();
     lastDirectionHorizontal == Direction.right ? gameRef.add(Skull_Die(position: position)) : gameRef.add(Skull_Die_L(position: position)) ;
-    super.die();
+  //  super.die();
   }
 
 

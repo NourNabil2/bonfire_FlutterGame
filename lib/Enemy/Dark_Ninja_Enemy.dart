@@ -5,7 +5,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flame_audio/flame_audio.dart';
+import 'package:bonfire_flutter_game/player/PlayerSpriteSheetPlayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
@@ -13,7 +13,7 @@ import '../constant/constant.dart';
 bool isobserve = false ;
 
 double damage = 10 ;
-class DarkNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+class DarkNinja extends SimpleEnemy with RandomMovement ,UseLifeBar{
 
   DarkNinja(Vector2 position )
       : super(
@@ -25,33 +25,38 @@ class DarkNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
     initDirection: Direction.down,
   )
   {
-    setupBarLife(
-        barLifePosition: BarLifePorition.top,
+    setupLifeBar(
+      barLifeDrawPosition: BarLifeDrawPosition.top,
         showLifeText: false,
         borderRadius: BorderRadius.circular(2),
         borderWidth: 2,
 
     );
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 16),
-          align: Vector2(16, 16),
-        ),
-      ]),
+    // setupCollision(
+    //   CollisionConfig(collisions: [
+    //     CollisionArea.rectangle(
+    //       size: Vector2(16, 16),
+    //       align: Vector2(16, 16),
+    //     ),
+    //   ]),
+    // );
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(16, 16),
+      ),
     );
-
   }
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
+  void receiveDamage(AttackOriginEnum attacker, double damage, identify) {
 
-     // FlameAudio.play(Globals.explosionSound);
+     // Sounds.playSFX(Globals.explosionSound);
       showDamage(
         damage,
         config: TextStyle(fontSize: width / 3, color: Colors.red),
       );
 
-    super.receiveDamage(attacker, damage, identify);
+    //super.receiveDamage(attacker, damage, identify);
   }
   @override
   void die() {
@@ -64,7 +69,7 @@ class DarkNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
        gameRef.add(PotionLife(position: position));
     }
 
-    super.die();
+   // super.die();
   }
 
 
@@ -82,7 +87,7 @@ if (!gameRef.sceneBuilderStatus.isRunning)
               withPush: false,
               damage: damage *2 ,
               size: size,
-              animationRight: PlayerSpriteSheet2.CutSword(),
+              animationRight: PlayerSpriteSheetPlayer.CutSword(),
           );
         }
       },
@@ -104,19 +109,26 @@ if (!gameRef.sceneBuilderStatus.isRunning)
              speed: 200,
              damage: damage/2,
              animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
-             animationRight: PlayerSpriteSheet2.Shuriken(),
-             collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
-               size: Vector2(8, 8),
-               //align: Vector2(width * 0.25, width * 0.25),
+             animation: PlayerSpriteSheetPlayer.Shuriken(),
+             // collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
+             //   size: Vector2(8, 8),
+             //   //align: Vector2(width * 0.25, width * 0.25),
+             //
+             // ),]),
 
-             ),]),
+             collision: RectangleHitbox(
+               size: Vector2(8, 8),
+              // position: Vector2(width * 0.25, width * 0.25),
+             ),
+
              size: size  );
        }
      } ,
             radiusVision: 80*2,
-            runOnlyVisibleInScreen: false,
+            //runOnlyVisibleInScreen: false,
             notObserved: () {
               runRandomMovement(dt,maxDistance: 70,minDistance: 30);
+              return true;
             },
      );
    }

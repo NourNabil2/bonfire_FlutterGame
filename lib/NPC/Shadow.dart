@@ -13,8 +13,8 @@ import '../constant/constant.dart';
 TextPaint textPaint = TextPaint(style: TextStyle(color: CupertinoColors.white , fontSize: 10 ) );
 bool isobserve = false ;
 bool close = false ;
-final GameController _controller = GameController();
-class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMovement ,TapGesture{
+
+class Shadow extends SimpleNpc with Lighting,BlockMovementCollision , RandomMovement ,TapGesture{
 
   Shadow(Vector2 position)
       : super(
@@ -32,14 +32,21 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
         color: Colors.white.withOpacity(0.1),
       ),
     );
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(18, 20),
-          align: Vector2(55, 40)
+    // setupCollision(
+    //   CollisionConfig(collisions: [
+    //     CollisionArea.rectangle(
+    //       size: Vector2(18, 20),
+    //       align: Vector2(55, 40)
+    //
+    //     ),
+    //   ]),
+    // );
 
-        ),
-      ]),
+    add(
+      RectangleHitbox(
+        size: Vector2(18, 20),
+        position: Vector2(55, 40),
+      ),
     );
   }
   @override
@@ -50,7 +57,7 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
     if (isobserve)
     {
       gameRef.add(
-        AnimatedFollowerObject(
+        AnimatedFollowerGameObject(
           animation: SpriteAnimation.load(
             dots,
             SpriteAnimationData.sequenced(
@@ -61,7 +68,7 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
           ),
           target: Shadow(position),
           size: Vector2(16, 16),
-          positionFromTarget: Vector2(10, -15),
+          offset: Vector2(10, -15),
         ),
       );
     }
@@ -71,8 +78,16 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
     Future<void> update(double dt) async {
     if(close)
       {
-        super.animation?.runRight = await PlayerSpriteSheet.DeathRight;
-        moveRight(2);
+      //  super.animation?.runRight = await PlayerSpriteSheet.DeathRight;
+        await replaceAnimation(
+          SimpleDirectionAnimation(
+            idleRight: PlayerSpriteSheet.DeathRight,
+            runRight: PlayerSpriteSheet.DeathRight,
+
+          ),
+        );
+
+        moveRight(speed: 2);
 
       }
 
@@ -101,7 +116,10 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
   }
   ShowDialogTalk()
     {
-    gameRef.camera.moveToTargetAnimated(this,zoom: 2 , finish: () {
+    gameRef.camera.moveToTargetAnimated(
+      target: this,
+      zoom: 2 ,
+      onComplete: () {
       TalkDialog.show(gameRef.context, [
         speak(text: 'Who are you, and where am I, why don\'t I suffocate, am I dead?! Are you death?!! ', isPlayer: true),
         speak(text: 'Don\'t ask where you are or who I am, this didn\'t and won\'t matter in your situation right now.', isPlayer: false),
@@ -134,14 +152,15 @@ class Shadow extends SimpleNpc with Lighting,ObjectCollision , AutomaticRandomMo
         },
       //  onFinish: () => selectMap(MapId.two),
       );
-    },);
+    },
+    );
 
 
     }
 
   Say speak({required String text , required bool isPlayer ,})=> Say(
     text: [TextSpan(text: text),],
-    person: SizedBox(height: 100,width: 100,child: isPlayer ? PlayerSpriteSheet2.idleRight.asWidget() : PlayerSpriteSheet.idleRight.asWidget() ,),
+    person: SizedBox(height: 100,width: 100,child: isPlayer ? PlayerSpriteSheet.idleRight.asWidget() : PlayerSpriteSheet.idleRight.asWidget() ,),
     personSayDirection: isPlayer ? PersonSayDirection.LEFT :PersonSayDirection.RIGHT ,
   );
 

@@ -1,12 +1,13 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/MainGame.dart';
-import 'package:flame_audio/flame_audio.dart';
+import 'package:bonfire_flutter_game/constant/Sounds/background.dart';
+import 'package:bonfire_flutter_game/player/PlayerSpriteSheetPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../constant/constant.dart';
 import '../player/Main_Player.dart';
 
-class Fox extends SimpleAlly with ObjectCollision ,TapGesture{
+class Fox extends SimpleAlly with TapGesture{
 bool see = false;
   Fox(Vector2 position)
       : super(
@@ -17,14 +18,14 @@ bool see = false;
     initDirection: Direction.right,
   ){
 
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(5, 5),
-          align: Vector2(9, 10),
-        ),
-      ]),
-    );
+    // setupCollision(
+    //   CollisionConfig(collisions: [
+    //     CollisionArea.rectangle(
+    //       size: Vector2(5, 5),
+    //       align: Vector2(9, 10),
+    //     ),
+    //   ]),
+    // );
   }
 
   @override
@@ -49,7 +50,18 @@ bool see = false;
             if (!see)
             {
               see = true ;
-              super.animation?.idleRight = await PlayerSpriteSheet.idleRight ;
+              SimpleDirectionAnimation(
+                idleRight:  PlayerSpriteSheet.idleRight,
+                runRight: PlayerSpriteSheet.idleRight,
+              );
+              // await replaceAnimation(
+              //   SimpleDirectionAnimation(
+              //     idleRight:  PlayerSpriteSheet.idleRight,
+              //       runRight: PlayerSpriteSheet.idleRight,
+              //   ),
+              // );
+
+            //  super.animation?.idleRight = await PlayerSpriteSheet.idleRight ;
             }
             seeAndMoveToEnemy(
               radiusVision: 50,
@@ -58,7 +70,7 @@ bool see = false;
                     withPush: false,
                     damage: 5,
                     size: size,
-                    animationRight: PlayerSpriteSheet2.CutSword()
+                    animationRight: PlayerSpriteSheetPlayer.CutSword()
                 );
               },
               observed: () {
@@ -69,7 +81,7 @@ bool see = false;
                         withPush: false,
                         damage: 10,
                         size: size,
-                        animationRight: PlayerSpriteSheet2.CutSword()
+                        animationRight: PlayerSpriteSheetPlayer.CutSword()
                     );
                   },
                 );
@@ -85,7 +97,7 @@ bool see = false;
                     withPush: false,
                     damage: 5,
                     size: size,
-                    animationRight: PlayerSpriteSheet2.CutSword()
+                    animationRight: PlayerSpriteSheetPlayer.CutSword()
                 );
               },
               observed: () {
@@ -96,12 +108,13 @@ bool see = false;
                         withPush: false,
                         damage: 10,
                         size: size,
-                        animationRight: PlayerSpriteSheet2.CutSword()
+                        animationRight: PlayerSpriteSheetPlayer.CutSword()
                     );
                   },
                 );
               },
             );
+            return true;
           },
         );
 
@@ -113,9 +126,9 @@ bool see = false;
 
   @override
   void onTap() {
-    SFX ? FlameAudio.play('dog_barking.mp3') : null ;
+    SFX ? Sounds.playSFX('dog_barking.mp3') : null ;
     gameRef.add(
-      AnimatedFollowerObject(
+      AnimatedFollowerGameObject(
         animation: SpriteAnimation.load(
           love,
           SpriteAnimationData.sequenced(
@@ -126,18 +139,18 @@ bool see = false;
         ),
         target: Fox(position),
         size: Vector2(16, 16),
-        positionFromTarget: Vector2(10, -15),
+        offset: Vector2(10, -15),
       ),
     );
   }
 
-  @override
-  bool onCollision(GameComponent component, bool active) {
-    if (component is FlyingAttackObject ) {
-      return false;
-    }
-    return super.onCollision(component, active);
-  }
+  // @override
+  // bool onCollision(GameComponent component, bool active) {
+  //   if (component is FlyingAttackObject ) {
+  //     return false;
+  //   }
+  //   return super.onCollision(component, active);
+  // }
 
 }
 

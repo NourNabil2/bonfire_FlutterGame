@@ -1,4 +1,6 @@
 
+import 'package:audioplayers/audioplayers.dart';
+import 'package:bonfire_flutter_game/constant/Sounds/background.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';

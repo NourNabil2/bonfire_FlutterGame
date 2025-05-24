@@ -5,7 +5,7 @@ import 'package:bonfire_flutter_game/decorations/Items.dart';
 
 import '../decorations/die_Decoration.dart';
 Vector2 _size = Vector2(50, 50);
-class You extends SimpleEnemy with ObjectCollision {
+class You extends SimpleEnemy with BlockMovementCollision {
   bool see = false;
   You(Vector2 position)
       : super(
@@ -17,14 +17,14 @@ class You extends SimpleEnemy with ObjectCollision {
     initDirection: Direction.right,
   ){
 
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(5, 10),
-          align: Vector2(10, 20),
-        ),
-      ]),
-    );
+    // setupCollision(
+    //   CollisionConfig(collisions: [
+    //     CollisionArea.rectangle(
+    //       size: Vector2(5, 10),
+    //       align: Vector2(10, 20),
+    //     ),
+    //   ]),
+    // );
   }
 
   @override
@@ -44,7 +44,7 @@ class You extends SimpleEnemy with ObjectCollision {
 
     currentMap == 2 ? gameRef.add(Key_Gold( position: position + Vector2(20, 20),)) : null ;
 
-    super.die();
+  //  super.die();
   }
 
   @override
@@ -69,13 +69,13 @@ class You extends SimpleEnemy with ObjectCollision {
   }
 
 
-  @override
-  bool onCollision(GameComponent component, bool active) {
-    if (component is FlyingAttackObject ) {
-      return false;
-    }
-    return super.onCollision(component, active);
-  }
+  // @override
+  // bool onCollision(GameComponent component, bool active) {
+  //   if (component is FlyingAttackObject ) {
+  //     return false;
+  //   }
+  //   return super.onCollision(component, active);
+  // }
 
 }
 

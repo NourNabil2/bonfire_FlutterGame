@@ -6,17 +6,17 @@ import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
+import '../constant/Sounds/background.dart';
 import '../constant/constant.dart';
 import '../decorations/Gate_translate.dart';
 import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
 Vector2 sizeS = Vector2(80, 80) ;
 double damage = 25 ;
-class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+class Nightmare extends SimpleEnemy with RandomMovement ,UseLifeBar{
 
   Nightmare(Vector2 position )
       : super(
@@ -28,28 +28,26 @@ class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
     initDirection: Direction.down,
   )
   {
-    setupBarLife(
-      barLifePosition: BarLifePorition.top,
+    setupLifeBar(
+      barLifeDrawPosition: BarLifeDrawPosition.top,
       showLifeText: false,
       size: Vector2(10, 1),
       borderWidth: 0,
 
 
     );
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 16),
-          align: Vector2(16, 16),
-        ),
-      ]),
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(16, 16),
+      ),
     );
 
   }
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
+  void receiveDamage(AttackOriginEnum attacker, double damage, identify) {
 
-    SFX ? FlameAudio.play('Punch_enemy.wav') : null ;
+    SFX ? Sounds.playSFX('Punch_enemy.wav') : null ;
    animation?.playOnce(SpriteAnimation.load(
       "Enemy/Night/NightBorne_give_hit.png",
       SpriteAnimationData.sequenced(
@@ -63,15 +61,15 @@ class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
       config: TextStyle(fontSize: width / 3, color: Colors.red),
     );
 
-    super.receiveDamage(attacker, damage, identify);
+   // super.receiveDamage(attacker, damage, identify);
   }
   @override
   Future<void> die() async {
-    SFX ? FlameAudio.play('Night_die.wav') : null ;
+    SFX ? Sounds.playSFX('Night_die.wav') : null ;
     removeFromParent();
     gameRef.add(Night_death(position: position)) ;
     gameRef.add(Portal(position: Vector2(41*32, 35*32) ));
-    super.die();
+  //  super.die();
   }
 
 
@@ -97,7 +95,7 @@ class Nightmare extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
               damage: damage ,
               size: size,
               execute: () {
-                SFX ? FlameAudio.play('Sword_Night.wav') : null ;
+                SFX ? Sounds.playSFX('Sword_Night.wav') : null ;
                 animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS , flipX:  lastDirectionHorizontal == Direction.right ? false : true);
               }
             );

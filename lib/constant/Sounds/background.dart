@@ -1,119 +1,203 @@
+// import 'package:audioplayers/audioplayers.dart';
+//
+// class Sounds {
+//   static final AudioPlayer backgroundPlayer = AudioPlayer();
+//   static final AudioPlayer sfxPlayer = AudioPlayer();
+//
+//   static Future<void> initialize() async {
+//     await backgroundPlayer.setReleaseMode(ReleaseMode.loop);
+//     await sfxPlayer.setReleaseMode(ReleaseMode.release);
+//   }
+//
+//   /// Toggle background music
+//   void toggleBackgroundMusic(bool backgroundMusic) {
+//     if (backgroundMusic) {
+//       backgroundPlayer.pause();
+//     } else {
+//       backgroundPlayer.resume();
+//     }
+//   }
+//
+//   /// Stop any background sound
+//   static Future<void> stopBackgroundSound() async {
+//     await backgroundPlayer.stop();
+//   }
+//
+//   /// Background music
+//   static Future<void> playBackgroundMusic(String fileName, {double volume = 0.4}) async {
+//     await stopBackgroundSound();
+//     await backgroundPlayer.setVolume(volume);
+//     await backgroundPlayer.setReleaseMode(ReleaseMode.loop);
+//     await backgroundPlayer.play(AssetSource('audio/$fileName'));
+//   }
+//
+//   static Future<void> playBackgroundRainNoise() async =>
+//       playBackgroundMusic('Rain_Noise.wav');
+//
+//   static Future<void> playBackgroundB2() async =>
+//       playBackgroundMusic('b2.mp3');
+//
+//   static Future<void> playBackgroundHome() async =>
+//       playBackgroundMusic('background_home.mp3');
+//
+//   static Future<void> playBackgroundHome2() async =>
+//       playBackgroundMusic('background_home2.mp3');
+//
+//   static Future<void> playBackgroundSpaceSound() async =>
+//       playBackgroundMusic('SpaceSound.wav');
+//
+//   static Future<void> playBackgroundWitch() async =>
+//       playBackgroundMusic('bg_Witch.mp3');
+//
+//   static Future<void> playBackgroundForest() async =>
+//       playBackgroundMusic('forest2.mp3');
+//
+//   static Future<void> playBackgroundJail() async =>
+//       playBackgroundMusic('jail_bg.mp3');
+//
+//   static Future<void> playBackgroundMind() async =>
+//       playBackgroundMusic('talks.mp3', volume: 0.5);
+//
+//   /// Pause/Resume background
+//   static void pauseBackgroundSound() {
+//     backgroundPlayer.pause();
+//   }
+//
+//   static void resumeBackgroundSound() {
+//     backgroundPlayer.resume();
+//   }
+//
+//   static void dispose() {
+//     backgroundPlayer.dispose();
+//     sfxPlayer.dispose();
+//   }
+//
+//   /// Short SFX sounds (if needed)
+//   static Future<void> playSFX(String fileName, {double volume = 1.0}) async {
+//     final player = AudioPlayer();
+//     await player.setVolume(volume);
+//     await player.play(AssetSource('audio/$fileName'));
+//     player.dispose();
+//   }
+//
+//   /// Example of stopping a sound right after playing (if needed)
+//   static Future<void> stopSoundQuickly(String fileName, {double volume = 0.5}) async {
+//     final player = AudioPlayer();
+//     await player.setVolume(volume);
+//     await player.play(AssetSource('audio/$fileName'));
+//     await Future.delayed(Duration(milliseconds: 100));
+//     await player.stop();
+//     player.dispose();
+//   }
+// }
+
+
+import 'package:bonfire_flutter_game/MainGame.dart';
+import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:flame_audio/flame_audio.dart';
 
 class Sounds {
-  static Future initialize() async {
+  static bool _isBackgroundPlaying = false;
+
+  static Future<void> initialize() async {
     FlameAudio.bgm.initialize();
-    await FlameAudio.audioCache.loadAll([
-      'Rain_Noise.wav',
-      'SpaceSound.wav',
-      'background_home.mp3',
-      'background_home2.mp3',
-      'forest2.mp3',
-      'jail_bg.mp3',
-      'bg_Witch.mp3',
-      'talks.mp3',
-    ]);
   }
 
-  static stopBackgroundSound() {
-    return FlameAudio.bgm.stop();
+  /// Toggle background music
+  static void toggleBackgroundMusic(bool backgroundMusic) {
+    if (backgroundMusic) {
+      FlameAudio.bgm.pause();
+    } else {
+      FlameAudio.bgm.resume();
+    }
   }
 
-
-  static stop_Space() {
-    return FlameAudio.bgm.play('SpaceSound.wav',volume: 0.5).then((value) => FlameAudio.bgm.pause());
+  /// Stop any background sound
+  static Future<void> stopBackgroundSound() async {
+    await FlameAudio.bgm.stop();
+    _isBackgroundPlaying = false;
   }
 
-  static stop_Rain_Noise() {
-    return FlameAudio.bgm.play('Rain_Noise.wav',volume: 0.5).then((value) => FlameAudio.bgm.pause());
+  /// Play background music
+  static Future<void> playBackgroundMusic(String fileName, {double volume = 0.4}) async {
+    if (_isBackgroundPlaying) {
+      await stopBackgroundSound();
+    }
+    await FlameAudio.bgm.play(fileName, volume: volume);
+    _isBackgroundPlaying = true;
   }
 
-  static stop_background_home() {
-    return FlameAudio.bgm.play('background_home.wav',volume: 0.5).then((value) => FlameAudio.bgm.pause());
-  }
+  static Future<void> playBackgroundRainNoise() async =>
+      playBackgroundMusic('Rain_Noise.wav');
 
-  static stop_background_home2() {
-    return FlameAudio.bgm.play('background_home2.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
-  }
+  static Future<void> playBackgroundB2() async =>
+      playBackgroundMusic('b2.mp3');
 
-  static stop_forest2() {
-    return FlameAudio.bgm.play('forest2.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
-  }
+  static Future<void> playBackgroundHome() async =>
+      playBackgroundMusic('background_home.mp3');
 
-  static stop_jail_bg() {
-    return FlameAudio.bgm.play('jail_bg.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
-  }
+  static Future<void> playBackgroundHome2() async =>
+      playBackgroundMusic('background_home2.mp3');
 
-  static stop_bg_Witch() {
-    return FlameAudio.bgm.play('bg_Witch.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
-  }
+  static Future<void> playBackgroundSpaceSound() async =>
+      playBackgroundMusic('SpaceSound.wav');
 
-  static stop_Mind() {
-    return FlameAudio.bgm.play('talks.mp3',volume: 0.5).then((value) => FlameAudio.bgm.pause());
-  }
+  static Future<void> playBackgroundWitch() async =>
+      playBackgroundMusic('bg_Witch.mp3');
 
+  static Future<void> playBackgroundForest() async =>
+      playBackgroundMusic('forest2.mp3');
 
-  static void playBackground_Rain_Noise() async {
-    await stopBackgroundSound();
-    FlameAudio.bgm.play('Rain_Noise.wav');
-  }
+  static Future<void> playBackgroundJail() async =>
+      playBackgroundMusic('jail_bg.mp3');
 
-  static void playBackground_b2() async {
-    await stopBackgroundSound();
-    FlameAudio.bgm.play('b2.mp3');
-  }
+  static Future<void> playBackgroundMind() async =>
+      playBackgroundMusic('talks.mp3', volume: 0.5);
 
-  static void playBackground_background_home() async {
-    await stopBackgroundSound();
-    FlameAudio.bgm.play( 'background_home.mp3',volume: 0.3);
-  }
+  /// Pause/Resume background music
+  static void pauseBackgroundSound() => FlameAudio.bgm.pause();
 
-  static void playBackground_background_home2() async {
-    await stopBackgroundSound();
-    FlameAudio.bgm.play( 'background_home2.mp3',volume: 0.3);
-  }
+  static void resumeBackgroundSound() => FlameAudio.bgm.resume();
 
-  static void playBackground_SpaceSound() async {
-   await stopBackgroundSound();
-    FlameAudio.bgm.play('SpaceSound.wav',volume: 0.3);
-  }
-
-  static void playBackground_bg_Witch() async {
-   await stopBackgroundSound();
-    FlameAudio.bgm.play('bg_Witch.mp3',volume: 0.3);
-  }
-
-  static void playBackground_forest2() async {
-   await stopBackgroundSound();
-    FlameAudio.bgm.play('forest2.mp3',volume: 0.3);
-  }
-
-  static void playBackground_jail_bg() async {
-   await stopBackgroundSound();
-    FlameAudio.bgm.play('jail_bg.mp3',volume: 0.35);
-  }
-
-  static void playBackground_Mind() async {
-   await stopBackgroundSound();
-    FlameAudio.bgm.play('talks.mp3',volume: 0.5);
+  /// Play short SFX sounds
+  static Future<void> playSFX(String fileName, {double volume = 1.0}) async {
+    await FlameAudio.play('$fileName', volume: volume);
   }
 
 
-
-
-
-
-
-  static void pauseBackgroundSound() {
-    FlameAudio.bgm.pause();
+  static void handleBackgroundMusic() {
+    switch (currentMap) {
+      case 0:
+        backgroundMusic == true ? Sounds.playBackgroundSpaceSound() : Sounds.stopBackgroundSound();
+        break;
+      case 1:
+        backgroundMusic == true ? Sounds.playBackgroundHome() : Sounds.stopBackgroundSound();
+        break;
+      case 2:
+        backgroundMusic == true ? Sounds.playBackgroundHome2() : Sounds.stopBackgroundSound();
+        break;
+      case 3:
+        backgroundMusic == true ? Sounds.playBackgroundWitch() : Sounds.stopBackgroundSound();
+        break;
+      case 4:
+        backgroundMusic == true ? Sounds.playBackgroundForest() : Sounds.stopBackgroundSound();
+        break;
+      case 5:
+        backgroundMusic == true ? Sounds.playBackgroundJail() : Sounds.stopBackgroundSound();
+        break;
+      case 6:
+        backgroundMusic == true ? Sounds.playBackgroundMind() : Sounds.stopBackgroundSound();
+        break;
+      default:
+        backgroundMusic == true ? Sounds.playBackgroundForest() : Sounds.stopBackgroundSound();
+        break;
+    }
   }
 
-  static void resumeBackgroundSound() {
-    FlameAudio.bgm.resume();
-  }
-
-  static void dispose() {
-    FlameAudio.bgm.dispose();
-    FlameAudio.bgm.stop();
+  /// Example of stopping a sound quickly
+  static Future<void> stopSoundQuickly(String fileName, {double volume = 0.5}) async {
+    final player = await FlameAudio.play('$fileName', volume: volume);
+    await Future.delayed(Duration(milliseconds: 100));
+    player.stop();
   }
 }

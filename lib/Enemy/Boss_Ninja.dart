@@ -1,124 +1,127 @@
 
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire_flutter_game/decorations/Items.dart';
+import 'package:bonfire_flutter_game/constant/Sounds/background.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flame_audio/flame_audio.dart';
+import 'package:bonfire_flutter_game/player/PlayerSpriteSheetPlayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
 import '../constant/constant.dart';
 import '../decorations/Gate_translate.dart';
-bool isobserve = false ;
 
-double damage = 10 ;
-class BossNinja extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+class BossNinja extends SimpleEnemy with RandomMovement, UseLifeBar ,CollisionPassthrough {
+  bool isObserve = false;
+  double damage = 10; // Example damage value; adjust as needed
 
-  BossNinja(Vector2 position )
+  BossNinja(Vector2 position)
       : super(
     position: position,
-    size: Vector2(tiledSize,tiledSize),
-    animation:PlayerSpriteSheet3.simpleDirectionAnimation ,
+    size: Vector2(tiledSize, tiledSize),
+    animation: PlayerSpriteSheet3.simpleDirectionAnimation,
     life: 100,
     speed: 50,
     initDirection: Direction.down,
-  )
-  {
-    setupBarLife(
-      barLifePosition: BarLifePorition.top,
+  ) {
+    setupLifeBar(
+      barLifeDrawPosition: BarLifeDrawPosition.top,
       showLifeText: false,
       borderRadius: BorderRadius.circular(2),
       borderWidth: 2,
-
-    );
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 16),
-          align: Vector2(16, 16),
-        ),
-      ]),
     );
 
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(16, 16),
+      ),
+    );
   }
-  @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
 
-    // FlameAudio.play(Globals.explosionSound);
+  @override
+  void receiveDamage(AttackOriginEnum attacker, double damage, identify) {
     showDamage(
       damage,
       config: TextStyle(fontSize: width / 3, color: Colors.red),
     );
 
-    super.receiveDamage(attacker, damage, identify);
+  //  super.receiveDamage(attacker, damage, identify);
   }
+
   @override
   void die() {
     gameRef.camera.shake(intensity: 4);
     removeFromParent();
-    gameRef.add(Portal(position: position + Vector2(20, 20) ));
+    gameRef.add(Portal(position: position + Vector2(20, 20)));
 
-
-    super.die();
+    //super.die();
   }
 
-
+  @override
   void update(double dt) {
+    if (!gameRef.sceneBuilderStatus.isRunning) {
+      isObserve = false;
 
-    if (!gameRef.sceneBuilderStatus.isRunning)
-    {
-      isobserve = false ;
       seeAndMoveToPlayer(
-        closePlayer: (Player) {
-          if (!Player.isDead)
-          {
+        closePlayer: (player) {
+          if (!player.isDead) {
             simpleAttackMelee(
-                execute: () =>  SFX ? FlameAudio.play('slash.mp3') : null ,
-                withPush: false,
-                damage: damage *2.8 ,
-                size: size,
-                animationRight: PlayerSpriteSheet2.CutSword()
+              execute: () => SFX ? Sounds.playSFX('slash.mp3') : null,
+              withPush: false,
+              damage: damage * 2.8,
+              size: size,
+              animationRight: PlayerSpriteSheetPlayer.CutSword(),
             );
           }
         },
         observed: () {
-          isobserve = true ;
+          isObserve = true;
         },
-        radiusVision:80,
+        radiusVision: 80,
       );
 
-
-      if (!isobserve)
-      {
+      if (!isObserve) {
         seeAndMoveToAttackRange(
           minDistanceFromPlayer: 128,
-          positioned: (Player) {
-            if (!Player.isDead)
-            {
+          positioned: (player) {
+            if (!player.isDead) {
               simpleAttackRange(
-                  speed: 200,
-                  damage: damage*2,
-                  animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
-                  animationRight: PlayerSpriteSheet2.big_energy_ball(),
-                  collision: CollisionConfig(collisions: [ CollisionArea.rectangle(
-                    size: Vector2.all(width / 2),
-                    align: Vector2(width * 0.25, width * 0.25),
+                speed: 200,
+                damage: damage * 2,
+                animationDestroy: PlayerSpriteSheet3.SmokeAnimation(),
+                animation: PlayerSpriteSheetPlayer.big_energy_ball(),
+                // collision: CollisionConfig(
+                //   collisions: [
+                //     CollisionArea.rectangle(
+                //       size: Vector2.all(width / 2),
+                //       align: Vector2(width * 0.25, width * 0.25),
+                //     ),
+                //   ],
+                // ),
+                collision: RectangleHitbox(
+                  size: Vector2.all(width / 2),
+                  position: Vector2(width * 0.25, width * 0.25),
+                ),
 
-                  ),]),
-                  size: size  );
+                withCollision: true,
+                size: size,
+              );
             }
-          } ,
-          radiusVision: 80*2,
-          runOnlyVisibleInScreen: false,
-          notObserved: () {
-            runRandomMovement(dt,maxDistance: 70,minDistance: 30);
           },
+          radiusVision: 160,
+          //runOnlyVisibleInScreen: false,
+          notObserved: () {
+            runRandomMovement(dt, maxDistance: 70, minDistance: 30);
+            return true;
+          },
+
         );
       }
     }
+
     super.update(dt);
   }
-
 }
+
 
 
 

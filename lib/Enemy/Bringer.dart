@@ -1,20 +1,16 @@
 import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
-import 'package:bonfire_flutter_game/decorations/Items.dart';
-import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flame_audio/flame_audio.dart';
+import 'package:bonfire_flutter_game/constant/Sounds/background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../MainGame.dart';
 import '../constant/constant.dart';
 import '../decorations/Gate_translate.dart';
-import '../decorations/die_Decoration.dart';
+
 bool isobserve = false ;
 Vector2 sizeS = Vector2(93, 93) ;
 double damage = 35 ;
-class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+class Bringer extends SimpleEnemy with RandomMovement ,UseLifeBar{
 
   Bringer(Vector2 position )
       : super(
@@ -26,28 +22,34 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
     initDirection: Direction.down,
   )
   {
-    setupBarLife(
-      barLifePosition: BarLifePorition.top,
+    setupLifeBar(
+      barLifeDrawPosition: BarLifeDrawPosition.top,
       showLifeText: false,
       size: Vector2(40, 3),
       borderWidth: 0,
 
 
     );
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 32),
-          align: Vector2(16, 64),
-        ),
-      ]),
+    // setupCollision(
+    //   CollisionConfig(collisions: [
+    //     CollisionArea.rectangle(
+    //       size: Vector2(16, 32),
+    //       align: Vector2(16, 64),
+    //     ),
+    //   ]),
+    // );
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 32),
+        position: Vector2(16, 64),
+      ),
     );
 
   }
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
+  void receiveDamage(AttackOriginEnum attacker, double damage, identify) {
 
-    // FlameAudio.play(Globals.explosionSound);
+    // Sounds.playSFX(Globals.explosionSound);
     lastDirectionHorizontal == Direction.right ?  animation?.playOnce(SpriteAnimation.load(
       "Enemy/Bringer/Hit_R.png",
       SpriteAnimationData.sequenced(
@@ -67,11 +69,11 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
       config: TextStyle(fontSize: width / 3, color: Colors.red),
     );
 
-    super.receiveDamage(attacker, damage, identify);
+  //  super.receiveDamage(attacker, damage, identify);
   }
   @override
   Future<void> die() async {
-    SFX ? FlameAudio.play('explo_theboss.wav') : null ;
+    SFX ? Sounds.playSFX('explo_theboss.wav') : null ;
     gameRef.camera.shake(intensity: 4);
     removeFromParent();
     lastDirectionHorizontal == Direction.right ?  animation?.playOnce(SpriteAnimation.load(
@@ -90,7 +92,7 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
       ),)) ;
 
     gameRef.add(Portal(position: Vector2(600,120) ));
-    super.die();
+   // super.die();
   }
 
 
@@ -109,7 +111,7 @@ class Bringer extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement
               damage: damage ,
               size: size,
               execute: () {
-                SFX ? FlameAudio.play('slash.mp3') : null ;
+                SFX ? Sounds.playSFX('slash.mp3') : null ;
                 lastDirectionHorizontal == Direction.right ? animation?.playOnce(PlayerSpriteSheet.attack_R(),runToTheEnd: true,size: sizeS) : animation?.playOnce(PlayerSpriteSheet.attack_R(),size: sizeS,runToTheEnd: true,flipX: true) ;
               }
             );

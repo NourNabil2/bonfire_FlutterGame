@@ -3,16 +3,20 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Screens/Start_Screen.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'SharedPreferences/Cash_Save.dart';
+import 'constant/Sounds/background.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
    await CashSaver.init();
-   BonfireGame.INTERVAL_UPDATE_CACHE;
+   BonfireGame.INTERVAL_OPTIMIZE_TREE;
    BonfireGame.INTERVAL_UPDATE_ORDER;
    Flame.device.setLandscape();
    Flame.device.fullScreen();
+  Sounds.initialize();
+    MobileAds.instance.initialize();
 
   runApp( const MyApp() );
 }
@@ -41,7 +45,6 @@ class MyApp extends StatelessWidget {
       ),
 
       home: EasySplashScreen(
-
         backgroundImage: const AssetImage('assets/images/image_Interface/splash.gif'),
         backgroundColor: Colors.black,
         durationInSeconds: 4,

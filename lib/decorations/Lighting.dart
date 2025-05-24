@@ -4,7 +4,7 @@ import 'package:bonfire_flutter_game/player/Main_Player.dart';
 import 'package:flutter/material.dart';
 
 
-class torch extends GameDecoration with Lighting {
+class torch extends GameDecoration  {
 
   torch({required Vector2 position})
       : super.withAnimation(
@@ -31,7 +31,7 @@ class torch extends GameDecoration with Lighting {
   @override
   void onContact(GameComponent component) {
     // component = component as GreenNinjaPlayer;
-    // FlameAudio.play(Globals.fireSound);
+    // Sounds.playSFX(Globals.fireSound);
     // component.showDamage(_damage);
     // component.removeLife(_damage);
   }

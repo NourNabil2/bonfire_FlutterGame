@@ -1,53 +1,35 @@
 import 'dart:io';
-import 'package:admob_flutter/admob_flutter.dart';
-bool test = false ;
-class adsManager
-{
 
+class AdsManager {
+  static bool test = false;
 
-  static String get BannerAds_UnitID {
-
-    if (test == true)
-      {
-return AdmobBanner.testAdUnitId;
-      }
-    else
-if (Platform.isAndroid)
-  {
-    return 'ca-app-pub-9503585436307618/5268566838' ;
-  }
-else {
-  return '';
-}
-  }
-
-  static String get InterstitialAds_UnitID {
-    if (test == true)
-    {
-      return AdmobInterstitial.testAdUnitId;
+  static String get bannerAdUnitId {
+    if (test) {
+      return 'ca-app-pub-3940256099942544/6300978111'; // Official test ad ID
+    } else {
+      return Platform.isAndroid
+          ? 'ca-app-pub-9503585436307618/5268566838'
+          : '';
     }
-    else
-if (Platform.isAndroid)
-  {
-    return 'ca-app-pub-9503585436307618/6134925946' ;
-  }
-else {
-  return '';
-}
   }
 
-  static String get RewardedAds_UnitID {
-    if (test == true)
-    {
-      return AdmobInterstitial.testAdUnitId;
+  static String get interstitialAdUnitId {
+    if (test) {
+      return 'ca-app-pub-3940256099942544/1033173712'; // Official test ad ID
+    } else {
+      return Platform.isAndroid
+          ? 'ca-app-pub-9503585436307618/6134925946'
+          : '';
     }
-    else
-if (Platform.isAndroid)
-  {
-    return 'ca-app-pub-9503585436307618/2920323839' ;
   }
-else {
-  return '';
-}
+
+  static String get rewardedAdUnitId {
+    if (test) {
+      return 'ca-app-pub-3940256099942544/5224354917'; // Official test ad ID
+    } else {
+      return Platform.isAndroid
+          ? 'ca-app-pub-9503585436307618/2920323839'
+          : '';
+    }
   }
 }

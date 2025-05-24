@@ -5,7 +5,6 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/decorations/Items.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
@@ -14,7 +13,7 @@ import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
 
 double damage = 5 ;
-class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+class Bat_purble extends SimpleEnemy with RandomMovement ,UseLifeBar{
 
   Bat_purble(Vector2 position )
       : super(
@@ -26,34 +25,40 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
     initDirection: Direction.down,
   )
   {
-    setupBarLife(
-      barLifePosition: BarLifePorition.top,
+    setupLifeBar(
+      barLifeDrawPosition: BarLifeDrawPosition.top,
       showLifeText: false,
       size: Vector2(10, 1),
       borderWidth: 0,
 
 
     );
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 16),
-          align: Vector2(16, 16),
-        ),
-      ]),
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(16, 16),
+      ),
     );
+    // setupCollision(
+    //   CollisionConfig(collisions: [
+    //     CollisionArea.rectangle(
+    //       size: Vector2(16, 16),
+    //       align: Vector2(16, 16),
+    //     ),
+    //   ]),
+    // );
 
   }
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
+  void receiveDamage(AttackOriginEnum attacker, double damage, identify) {
 
-    // FlameAudio.play(Globals.explosionSound);
+    // Sounds.playSFX(Globals.explosionSound);
     showDamage(
       damage,
       config: TextStyle(fontSize: width / 3, color: Colors.red),
     );
 
-    super.receiveDamage(attacker, damage, identify);
+   // super.receiveDamage(attacker, damage, identify);
   }
   @override
   Future<void> die() async {
@@ -65,7 +70,7 @@ class Bat_purble extends SimpleEnemy with ObjectCollision , AutomaticRandomMovem
      removeFromParent();
 
     gameRef.add(Bat_death(position: position));
-    super.die();
+   // super.die();
   }
 
 

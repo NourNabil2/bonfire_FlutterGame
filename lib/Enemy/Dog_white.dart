@@ -2,10 +2,7 @@
 import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
-import 'package:bonfire_flutter_game/decorations/Items.dart';
-import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flame_audio/flame_audio.dart';
+import 'package:bonfire_flutter_game/constant/Sounds/background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
@@ -14,7 +11,7 @@ import '../decorations/die_Decoration.dart';
 bool isobserve = false ;
 
 double damage = 15 ;
-class Dog_White extends SimpleEnemy with ObjectCollision , AutomaticRandomMovement ,UseBarLife{
+class Dog_White extends SimpleEnemy with RandomMovement ,UseLifeBar{
 
   Dog_White(Vector2 position )
       : super(
@@ -26,42 +23,40 @@ class Dog_White extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
     initDirection: Direction.down,
   )
   {
-    setupBarLife(
-      barLifePosition: BarLifePorition.top,
+    setupLifeBar(
+      barLifeDrawPosition: BarLifeDrawPosition.top,
       showLifeText: false,
       size: Vector2(10, 1),
       borderWidth: 0,
 
 
     );
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 16),
-          align: Vector2(16, 16),
-        ),
-      ]),
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(16, 16),
+      ),
     );
 
   }
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
+  void receiveDamage(AttackOriginEnum attacker, double damage, identify) {
 
-    SFX ? FlameAudio.play('Punch_enemy.wav') : null ;
+    SFX ? Sounds.playSFX('Punch_enemy.wav') : null ;
     showDamage(
       damage,
       config: TextStyle(fontSize: width / 3, color: Colors.red),
     );
 
-    super.receiveDamage(attacker, damage, identify);
+   // super.receiveDamage(attacker, damage, identify);
   }
   @override
   Future<void> die() async {
-    SFX ? FlameAudio.play('wolf_dying.mp3') : null ;
+    SFX ? Sounds.playSFX('wolf_dying.mp3') : null ;
 
     removeFromParent();
     lastDirectionHorizontal == Direction.right ? gameRef.add(Dog_death2(position: position)) : gameRef.add(Dog_death_L2(position: position)) ;
-    super.die();
+   // super.die();
   }
 
 
@@ -81,7 +76,7 @@ class Dog_White extends SimpleEnemy with ObjectCollision , AutomaticRandomMoveme
               damage: damage ,
               size: size,
               execute: () {
-                SFX ? FlameAudio.play('wolf_attack.mp3') : null ;
+                SFX ? Sounds.playSFX('wolf_attack.mp3') : null ;
                 lastDirectionHorizontal == Direction.right ?animation?.playOnce(PlayerSpriteSheet.Dog_attack(),runToTheEnd: true,flipX: true): animation?.playOnce(PlayerSpriteSheet.Dog_attack(),runToTheEnd: true);
               }
             );

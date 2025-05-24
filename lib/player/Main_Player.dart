@@ -1,332 +1,368 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:async' as async;
+
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire_flutter_game/Enemy/Rat.dart';
+import 'package:bonfire_flutter_game/Enemy/Skull.dart';
+import 'package:bonfire_flutter_game/MainGame.dart';
 import 'package:bonfire_flutter_game/Screens/LoseScreen.dart';
+import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
+import 'package:bonfire_flutter_game/constant/Sounds/background.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
-import 'package:flame_audio/flame_audio.dart';
+import 'package:bonfire_flutter_game/decorations/Items.dart';
+import 'package:bonfire_flutter_game/decorations/die_Decoration.dart';
+import 'package:bonfire_flutter_game/player/PlayerSpriteSheetPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../Enemy/Rat.dart';
-import '../Enemy/Skull.dart';
-import '../MainGame.dart';
-import '../SharedPreferences/Cash_Save.dart';
-import '../constant/Sounds/background.dart';
-import '../decorations/Items.dart';
-import 'dart:async' as async;
-import '../decorations/die_Decoration.dart';
-double damagePlayer = 8 ;
+
+double damagePlayer = 8;
 bool showObserveEnemy = false;
 
-class Kinght extends SimplePlayer with ObjectCollision,Lighting {
+class Kinght extends SimplePlayer with BlockMovementCollision, Lighting {
   double stamina = 100;
-  bool Taketorch =  CashSaver.getData(key: 'torch') ?? false ;
-  bool silverKey = false ;
-  bool goldKey = CashSaver.getData(key: 'gold') ?? false ;
-  bool Key_red = CashSaver.getData(key: 'red') ?? false ;
-  bool Power = CashSaver.getData(key: 'Power') ?? false ;
-  bool PowerE = CashSaver.getData(key: 'PowerE') ?? false ;
+  bool Taketorch = CashSaver.getData(key: 'torch') ?? false;
+  bool silverKey = false;
+  bool goldKey = CashSaver.getData(key: 'gold') ?? false;
+  bool Key_red = CashSaver.getData(key: 'red') ?? false;
+  bool Power = CashSaver.getData(key: 'Power') ?? false;
+  bool PowerE = CashSaver.getData(key: 'PowerE') ?? false;
+
+  // Track animation states to prevent unnecessary updates
+  bool _currentlyUsingTorchAnimation = false;
+  bool _lightingSetupComplete = false;
+  bool _mapSixProcessed = false;
 
   async.Timer? _timerStamina;
-  Kinght(Vector2 position )
-      : super (
+
+  Kinght({required Vector2 position})
+      : super(
     position: position,
-    size: currentMap == 4 ? Vector2(80,57) :Vector2(50,37),
-    animation: PlayerSpriteSheet2.simpleDirectionAnimation,
+    size: currentMap == 4 ? Vector2(80, 57) : Vector2(50, 37),
+    animation: PlayerSpriteSheetPlayer.simpleDirectionAnimation,
     life: 200,
     speed: 100,
-    initDirection: Direction.right,
-  )
-  {
-    setupCollision(
-      CollisionConfig(collisions: [
-        CollisionArea.rectangle(
-          size: Vector2(16, 16),
-          align: Vector2(16, 16),
-        ),
-      ]),
+     initDirection: Direction.right,
+  );
+
+  @override
+  Future<void> onLoad() async {
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(16, 16),
+      ),
     );
 
+    // Set initial lighting state
+    _setupInitialLighting();
+
+    return super.onLoad();
+  }
+
+  void _setupInitialLighting() {
+    if (islight) {
+      setupLighting(
+        LightingConfig(
+          radius: width,
+          blurBorder: width * 2,
+          color: Colors.yellow.withOpacity(0.1),
+        ),
+      );
+    } else {
+      setupLighting(
+        LightingConfig(radius: 0, color: Colors.transparent),
+      );
+    }
+    _lightingSetupComplete = true;
   }
 
   @override
   Future<void> update(double dt) async {
-
-
-
-     if (currentMap == 6 && backgroundMusic == false)
-    {
-      backgroundMusic == true ? Sounds.playBackground_forest2() : Sounds.stop_forest2();
-      CashSaver.SaveData(key: 'complete',value: complete+3);
+    // Handle map 6 completion only once
+    if (currentMap == 6 && backgroundMusic == false && !_mapSixProcessed) {
+      _mapSixProcessed = true;
+      backgroundMusic == true
+          ? Sounds.playBackgroundForest()
+          : Sounds.stopBackgroundSound();
+      CashSaver.SaveData(key: 'complete', value: complete + 3);
       selectMap(7);
     }
 
-    if(isDead)
-  {
-     async.Timer(const Duration(milliseconds: 500),() {
-       removeFromParent();
-       lastDirectionHorizontal == Direction.right ? gameRef.add(Player_death_R(position: position)) : gameRef.add(Player_death(position: position));
-     },);
+    if (isDead) {
+      async.Timer(
+        const Duration(milliseconds: 500),
+            () {
+          removeFromParent();
+          lastDirectionHorizontal == Direction.right
+              ? gameRef.add(Player_death_R(position: position))
+              : gameRef.add(Player_death(position: position));
+        },
+      );
+    } else {
+      _verifyStamina();
+      seeEnemy(
+        radiusVision: 200,
+        notObserved: () {
+          showObserveEnemy = false;
+        },
+        observed: (enemies) {
+          if (showObserveEnemy) return;
+          showObserveEnemy = true;
+          _showEmote(emote: wonder);
+        },
+      );
+    }
 
+    // Handle animation changes only when needed
+    await _handleAnimationChanges();
 
-
+    super.update(dt);
   }
-else
-  {
-    _verifyStamina();
-    seeEnemy(
-      radiusVision:  200,
-      notObserved: () {
-        showObserveEnemy = false;
-      },
-      observed: (enemies) {
-        if (showObserveEnemy) return;
-        showObserveEnemy = true;
-        _showEmote(emote: wonder);
 
+  Future<void> _handleAnimationChanges() async {
+    if (islight && !_currentlyUsingTorchAnimation) {
+      // Switch to torch animation
+      await replaceAnimation(
+        SimpleDirectionAnimation(
+          idleRight: PlayerSpriteSheetPlayer.idleRight2,
+          idleLeft: PlayerSpriteSheetPlayer.idleLeft2,
+          runRight: PlayerSpriteSheetPlayer.runRight2,
+          runLeft: PlayerSpriteSheetPlayer.runLeft2,
+        ),
+      );
 
-      }, );
-
-  }
-
-
-    if (islight)
-    {
-      super.animation?.idleRight = await PlayerSpriteSheet2.idleRight2 ;
-      super.animation?.idleLeft = await PlayerSpriteSheet2.idleLeft2 ;
-      super.animation?.runRight = await PlayerSpriteSheet2.runRight2 ;
-      super.animation?.runLeft = await PlayerSpriteSheet2.runLeft2 ;
       setupLighting(
         LightingConfig(
-          radius: width ,
+          radius: width,
           blurBorder: width * 2,
           color: Colors.yellow.withOpacity(0.1),
         ),
       );
 
-    }
-    else
-      {
-        super.animation?.idleRight = await PlayerSpriteSheet2.idleRight ;
-        super.animation?.idleLeft = await PlayerSpriteSheet2.idleLeft ;
-        super.animation?.runRight = await PlayerSpriteSheet2.runRight ;
-        super.animation?.runLeft = await PlayerSpriteSheet2.runLeft ;
-        setupLighting(
+      _currentlyUsingTorchAnimation = true;
+
+    } else if (!islight && _currentlyUsingTorchAnimation) {
+      // Switch back to normal animation
+      await replaceAnimation(
+        SimpleDirectionAnimation(
+          idleRight: PlayerSpriteSheetPlayer.idleRight,
+          idleLeft: PlayerSpriteSheetPlayer.idleLeft,
+          runRight: PlayerSpriteSheetPlayer.runRight,
+          runLeft: PlayerSpriteSheetPlayer.runLeft,
+        ),
+      );
+
+      setupLighting(
         LightingConfig(radius: 0, color: Colors.transparent),
+      );
 
-        );
-
-      }
-
-
-
-    super.update(dt);
-
+      _currentlyUsingTorchAnimation = false;
+    }
   }
 
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-    if (attacker == AttackFromEnum.ENEMY) {
-      SFX ? FlameAudio.play('ough.mp3') : null ;
+  void receiveDamage(AttackOriginEnum attacker, double damage, identify) {
+    if (attacker == AttackOriginEnum.ENEMY) {
+      SFX ? Sounds.playSFX('ough.mp3') : null;
       showDamage(
         damage,
         config: TextStyle(fontSize: width / 3, color: Colors.red),
       );
     }
-    super.receiveDamage(attacker, damage, identify);
+    // super.receiveDamage(attacker, damage, identify);
   }
+
   @override
-  Future<void> die() async {
+  Future<void> onDie() async {
     dead++;
-    interstitial.show();
-    SFX ? FlameAudio.play('body_fall.mp3') : null ;
-    gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.7), blendMode: BlendMode.colorBurn);
+    // interstitial.show();
+    SFX ? Sounds.playSFX('body_fall.mp3') : null;
+    gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.7),
+        blendMode: BlendMode.colorBurn);
     await animation?.playOnce(
       SpriteAnimation.load(
           "Player/MainMovement/player-death.png",
-          SpriteAnimationData.sequenced(amount: 7, stepTime: 0.09, textureSize: Vector2(50, 37),loop: false )
-      ),
-      runToTheEnd: true ,
-      flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
-
+          SpriteAnimationData.sequenced(
+              amount: 7,
+              stepTime: 0.09,
+              textureSize: Vector2(50, 37),
+              loop: false)),
+      runToTheEnd: true,
+      flipX: lastDirectionHorizontal == Direction.right ? false : true,
     );
 
     gameRef.camera.shake(intensity: 4);
-    die_rat = 0 ;
+    die_rat = 0;
     die_Skull = 0;
-    gameRef.overlayManager.add(GameOverScreen.id);
+    gameRef.overlays.add(GameOverScreen.id);
 
-    super.die();
+    super.onDie();
   }
-
 
   @override
-  // ignore: avoid_renaming_method_parameters
-  void joystickAction (JoystickActionEvent press) {
+  void onJoystickAction(JoystickActionEvent press) {
     if (press.event == ActionEvent.DOWN) {
-      if (press.id == AttackType.Swrd || press.id == LogicalKeyboardKey.keyC.keyId) {
-        if (gameRef.player != null && gameRef.player?.isDead == true) return;
-        if (stamina < 15) {
-          return;
-        }
-        else {
-          SFX ? FlameAudio.play('sword_hit.mp3') : null ;
-          decrementStamina(15);
-          animation?.playOnce(
-            PlayerSpriteSheet2.AttackSwrd_R(),
-            runToTheEnd: true ,
-            flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
-          );
-          simpleAttackMelee(
-              damage: damagePlayer * 2,
-              size: size,
-          );
-        }
+      if (press.id == AttackType.Swrd ||
+          press.id == LogicalKeyboardKey.keyC.keyId) {
+        _performSwordAttack();
       }
 
-      if (press.id == AttackType.PowerSwrd || press.id == LogicalKeyboardKey.keyX.keyId) {
-        if (gameRef.player != null && gameRef.player?.isDead == true) return;
-        if (stamina < 15) {
-          return;
-        }
-        else {
-          SFX ? FlameAudio.play('Sword_P.wav') : null ;
-          decrementStamina(20);
-          animation?.playOnce(
-            PlayerSpriteSheet2.AttackSwrd_R(),
-            runToTheEnd: true ,
-            flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
-          );
-          simpleAttackMelee(
-              damage: damagePlayer * 3,
-              size: size,
-            animationRight: PlayerSpriteSheet2.AttackSwrd_FX(),
-          );
-        }
+      if (press.id == AttackType.PowerSwrd ||
+          press.id == LogicalKeyboardKey.keyX.keyId) {
+        _performPowerSwordAttack();
       }
 
-      if (press.id == AttackType.Punch || press.id == LogicalKeyboardKey.keyS.keyId) {
-        if (gameRef.player != null && gameRef.player?.isDead == true) return;
-        if (stamina < 15) {
-          return;
-        }
-        else {
-          SFX ? FlameAudio.play('punch.mp3') : null ;
-          decrementStamina(5);
-          animation?.playOnce(
-            PlayerSpriteSheet2.AttackPunch_R(),
-            runToTheEnd: true ,
-            flipX: lastDirectionHorizontal == Direction.right ?  false  : true,
-          );
-          simpleAttackMelee(
-              damage: damagePlayer / 2,
-              size: size,
-            //animationRight: PlayerSpriteSheet2.AttackPunch_FX(),
-            withPush: true,
-          );
-        }
+      if (press.id == AttackType.Punch ||
+          press.id == LogicalKeyboardKey.keyS.keyId) {
+        _performPunchAttack();
       }
 
-      if (press.id == AttackType.Elec || press.id == LogicalKeyboardKey.keyD.keyId) {
-        if (gameRef.player != null && gameRef.player?.isDead == true) return;
-        if (PowerE) {
-          if (stamina < 15) {
-            return;
-          }
-          else {
-            SFX ? FlameAudio.play('electric_shoot.wav') : null ;
-            decrementStamina(35);
-            animation?.playOnce(
-              PlayerSpriteSheet2.AttackRange_R(),
-              runToTheEnd: true,
-              flipX: lastDirectionHorizontal == Direction.right ? false : true,
-            );
-            simpleAttackMelee(
-              damage: damagePlayer * 3,
-              size: size,
-              animationRight: PlayerSpriteSheet2.AttackElec_FX(),
-            );
-          }
-        }
-        else
-        {
-          SFX ? FlameAudio.play('Wrong.wav') : null ;
-          _showEmote(emote: wrong);
-        }
+      if (press.id == AttackType.Elec ||
+          press.id == LogicalKeyboardKey.keyD.keyId) {
+        _performElectricAttack();
       }
 
-      if (press.id == AttackType.light || press.id == LogicalKeyboardKey.keyV.keyId) {
-        if (gameRef.player != null && gameRef.player?.isDead == true) return;
+      if (press.id == AttackType.light ||
+          press.id == LogicalKeyboardKey.keyV.keyId) {
+        _toggleLight();
+      }
 
-        if (CashSaver.getData(key: 'torch')?? false)
-          {
-            islight == false ? islight = true : islight =false ;
-            SFX ? FlameAudio.play('LighteSroundFX.mp3') : null ;
-          }
-        else
-          {
-            SFX ? FlameAudio.play('Wrong.wav') : null ;
-            _showEmote(emote: wrong);
-          }
-
-
-
-        }
-
-
-      if (press.id == AttackType.range || press.id == LogicalKeyboardKey.keyZ.keyId) {
-
-
-        if (gameRef.player != null && gameRef.player?.isDead == true) return;
-
-        if (Power)
-          {
-            if (stamina < 10) {
-              return;
-            }
-            else
-            {
-              SFX ? FlameAudio.play('range_shoot.mp3') : null ;
-              decrementStamina(15);
-              animation?.playOnce(
-                PlayerSpriteSheet2.AttackRange_R() ,
-                flipX:  lastDirectionHorizontal == Direction.right ?  false  : true,
-                runToTheEnd: true,
-
-              );
-              simpleAttackRange(
-                speed: 400,
-                lightingConfig: LightingConfig(radius: 10, color: Colors.blueAccent,blurBorder: 60),
-                damage: damagePlayer,
-                animationRight: PlayerSpriteSheet2.Wave_R(),
-                animationLeft: PlayerSpriteSheet2.Wave_L(),
-                animationUp: PlayerSpriteSheet2.Wave_U(),
-                animationDown: PlayerSpriteSheet2.Wave_D(),
-                animationDestroy: PlayerSpriteSheet2.FX_Wave(),
-                size: Vector2(30,30),
-              );
-            }
-          }
-        else
-          {
-            SFX ? FlameAudio.play('Wrong.wav') : null ;
-            _showEmote(emote: wrong);
-          }
-
-
-
+      if (press.id == AttackType.range ||
+          press.id == LogicalKeyboardKey.keyZ.keyId) {
+        _performRangeAttack();
       }
     }
-
-    super.joystickAction(press);
+    super.onJoystickAction(press);
   }
 
+  void _performSwordAttack() {
+    if (gameRef.player != null && gameRef.player?.isDead == true) return;
+    if (stamina < 15) return;
 
+    SFX ? Sounds.playSFX('sword_hit.mp3') : null;
+    decrementStamina(15);
+    animation?.playOnce(
+      PlayerSpriteSheetPlayer.AttackSwrd_R(),
+      runToTheEnd: true,
+      flipX: lastDirectionHorizontal == Direction.right ? false : true,
+    );
+    simpleAttackMelee(
+      damage: damagePlayer * 2,
+      size: size,
+    );
+  }
 
+  void _performPowerSwordAttack() {
+    if (gameRef.player != null && gameRef.player?.isDead == true) return;
+    if (stamina < 15) return;
+
+    SFX ? Sounds.playSFX('Sword_P.wav') : null;
+    decrementStamina(20);
+    animation?.playOnce(
+      PlayerSpriteSheetPlayer.AttackSwrd_R(),
+      runToTheEnd: true,
+      flipX: lastDirectionHorizontal == Direction.right ? false : true,
+    );
+    simpleAttackMelee(
+      damage: damagePlayer * 3,
+      size: size,
+      animationRight: PlayerSpriteSheetPlayer.AttackSwrd_FX(),
+    );
+  }
+
+  void _performPunchAttack() {
+    if (gameRef.player != null && gameRef.player?.isDead == true) return;
+    if (stamina < 15) return;
+
+    SFX ? Sounds.playSFX('punch.mp3') : null;
+    decrementStamina(5);
+    animation?.playOnce(
+      PlayerSpriteSheetPlayer.AttackPunch_R(),
+      runToTheEnd: true,
+      flipX: lastDirectionHorizontal == Direction.right ? false : true,
+    );
+    simpleAttackMelee(
+      damage: damagePlayer / 2,
+      size: size,
+      withPush: true,
+    );
+  }
+
+  void _performElectricAttack() {
+    if (gameRef.player != null && gameRef.player?.isDead == true) return;
+
+    if (PowerE) {
+      if (stamina < 15) return;
+
+      SFX ? Sounds.playSFX('electric_shoot.wav') : null;
+      decrementStamina(35);
+      animation?.playOnce(
+        PlayerSpriteSheetPlayer.AttackRange_R(),
+        runToTheEnd: true,
+        flipX: lastDirectionHorizontal == Direction.right ? false : true,
+      );
+      simpleAttackMelee(
+        damage: damagePlayer * 3,
+        size: size,
+        animationRight: PlayerSpriteSheetPlayer.AttackElec_FX(),
+      );
+    } else {
+      SFX ? Sounds.playSFX('Wrong.wav') : null;
+      _showEmote(emote: wrong);
+    }
+  }
+
+  void _toggleLight() {
+    if (gameRef.player != null && gameRef.player?.isDead == true) return;
+
+    if (CashSaver.getData(key: 'torch') ?? false) {
+      islight = !islight;
+      SFX ? Sounds.playSFX('LighteSroundFX.mp3') : null;
+      // Animation will be handled in the next update cycle
+    } else {
+      SFX ? Sounds.playSFX('Wrong.wav') : null;
+      _showEmote(emote: wrong);
+    }
+  }
+
+  void _performRangeAttack() {
+    if (gameRef.player != null && gameRef.player?.isDead == true) return;
+
+    if (Power) {
+      if (stamina < 10) return;
+
+      SFX ? Sounds.playSFX('range_shoot.mp3') : null;
+      decrementStamina(15);
+      animation?.playOnce(
+        PlayerSpriteSheetPlayer.AttackRange_R(),
+        flipX: lastDirectionHorizontal == Direction.right ? false : true,
+        runToTheEnd: true,
+      );
+      simpleAttackRange(
+        speed: 400,
+        lightingConfig: LightingConfig(
+            radius: 10, color: Colors.blueAccent, blurBorder: 60),
+        damage: damagePlayer,
+        animationRight: PlayerSpriteSheetPlayer.Wave_R(),
+        id: SimpleDirectionAnimation(
+          idleLeft: PlayerSpriteSheetPlayer.Wave_L(),
+          idleUp: PlayerSpriteSheetPlayer.Wave_U(),
+          idleDown: PlayerSpriteSheetPlayer.Wave_D(),
+          idleRight: PlayerSpriteSheetPlayer.Wave_R(),
+          runRight: PlayerSpriteSheetPlayer.Wave_R(),
+        ),
+        animationDestroy: PlayerSpriteSheetPlayer.FX_Wave(),
+        size: Vector2(30, 30),
+      );
+    } else {
+      SFX ? Sounds.playSFX('Wrong.wav') : null;
+      _showEmote(emote: wrong);
+    }
+  }
 
   void _verifyStamina() {
-
     if (_timerStamina == null) {
-
       _timerStamina = async.Timer(const Duration(milliseconds: 150), () {
         _timerStamina = null;
       });
@@ -347,242 +383,30 @@ else
     }
   }
 
-
-  Future<void> _showEmote({required String emote }) async {
-    gameRef.add(
-      AnimatedFollowerObject(
-        animation: SpriteAnimation.load(
-          emote,
-          SpriteAnimationData.sequenced(
-            amount: 8,
-            stepTime: 0.1,
-            textureSize: Vector2(32, 32),
-          ),
+  Future<void> _showEmote({required String emote}) async {
+    final emoteObject = AnimatedFollowerGameObject(
+      animation: SpriteAnimation.load(
+        emote,
+        SpriteAnimationData.sequenced(
+          amount: 8,
+          stepTime: 0.1,
+          textureSize: Vector2(32, 32),
+          loop: false, // Don't loop the animation
         ),
-        target: gameRef.player,
-        size: Vector2(16, 16),
-        positionFromTarget: Vector2(18, -15),
       ),
+      target: gameRef.player!,
+      size: Vector2(16, 16),
+      offset: Vector2(18, -15),
+    );
+
+    gameRef.add(emoteObject);
+
+    // Remove the emote after animation completes
+    async.Timer(
+      Duration(milliseconds: (8 * 0.1 * 1000).round()), // 8 frames * 0.1s * 1000ms
+          () {
+        emoteObject.removeFromParent();
+      },
     );
   }
-
-}
-
-
-
-
-class PlayerSpriteSheet2 {
-  static Future<SpriteAnimation> Wave_R() => SpriteAnimation.load(
-    "Effects/wave_R.png",
-    SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.1,
-      textureSize: Vector2(48, 32),
-    ),
-  );
-  static Future<SpriteAnimation> Wave_L() => SpriteAnimation.load(
-    "Effects/wave_L.png",
-    SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.1,
-      textureSize: Vector2(48, 32),
-    ),
-  );
-  static Future<SpriteAnimation> Wave_D() => SpriteAnimation.load(
-    "Effects/wave_D.png",
-    SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.1,
-      textureSize: Vector2(32, 48),
-    ),
-  );
-  static Future<SpriteAnimation> Wave_U() => SpriteAnimation.load(
-    "Effects/wave_Up.png",
-    SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.1,
-      textureSize: Vector2(32, 48),
-    ),
-  );
-
-
-  static Future<SpriteAnimation> FX_Wave() => SpriteAnimation.load(
-    "Effects/hits-wave.png",
-    SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.1,
-      textureSize: Vector2(32, 32),
-    ),
-  );
-
-
-
-  static Future<SpriteAnimation> Shuriken() => SpriteAnimation.load(
-    "Effects/shuriken.png",
-    SpriteAnimationData.sequenced(
-      amount: 2,
-      stepTime: 0.1,
-      textureSize: Vector2(16, 16),
-    ),
-  );
-
-
-
-  static Future<SpriteAnimation> big_energy_ball() => SpriteAnimation.load(
-    "Effects/big_energy_ball.png",
-    SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.1,
-      textureSize: Vector2(24, 24),
-    ),
-  );
-  static Future<SpriteAnimation> CutSword() => SpriteAnimation.load(
-    "Effects/cut.png",
-    SpriteAnimationData.sequenced(
-      amount: 7,
-      stepTime: 0.1,
-      textureSize: Vector2(32, 32),
-    ),
-  );
-  static Future<SpriteAnimation> CutSlash() => SpriteAnimation.load(
-    "Effects/circular_slash.png",
-    SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.1,
-      textureSize: Vector2(32, 32),
-    ),
-  );
-
-  static Future<SpriteAnimation> AttackSwrd_R() => SpriteAnimation.load (
-    "Player/AttackMovement/player-attack.png",
-    SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.05,
-      textureSize: Vector2(50, 37),
-    ),
-  );
-
-  static Future<SpriteAnimation> AttackPunch_R() => SpriteAnimation.load (
-    "Player/AttackMovement/Player-punch-R.png",
-    SpriteAnimationData.sequenced(
-      amount: 9,
-      stepTime: 0.07,
-      textureSize: Vector2(50, 37),
-    ),
-  );
-
-
-  static Future<SpriteAnimation> AttackSwrd_FX() => SpriteAnimation.load (
-    "Effects/Swrd_FX1.png",
-    SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.1,
-      textureSize: Vector2(45, 32),
-    ),
-  );
-
-  static Future<SpriteAnimation> AttackElec_FX() => SpriteAnimation.load (
-    "Effects/Elec.png",
-    SpriteAnimationData.sequenced(
-      amount: 7,
-      stepTime: 0.1,
-      textureSize: Vector2(512, 512),
-    ),
-  );
-
-  static Future<SpriteAnimation> AttackPunch_FX() => SpriteAnimation.load (
-    "Effects/SwrdFX.png",
-    SpriteAnimationData.sequenced(
-      amount: 3,
-      stepTime: 0.1,
-      textureSize: Vector2(65, 27),
-    ),
-  );
-
-
-  static Future<SpriteAnimation> AttackRange_R() => SpriteAnimation.load(
-    "Player/AttackMovement/player-attack-range.png",
-    SpriteAnimationData.sequenced(
-      amount: 3,
-      stepTime: 0.1,
-      textureSize: Vector2(50, 37),
-      loop: false,
-    ),
-  );
-
-
-
-  static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-    "Player/MainMovement/player-idle.png",
-    SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.2,
-      textureSize: Vector2(50, 37),
-    ),
-  );
-  static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
-    "Player/MainMovement/player-idle-left.png",
-    SpriteAnimationData.sequenced(
-      amount: 4,
-      stepTime: 0.2,
-      textureSize: Vector2(50, 37),
-    ),
-  );
-
-  static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
-    "Player/MainMovement/player-run.png",
-    SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.15,
-      textureSize: Vector2(50, 37),
-    ),
-  );
-  static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
-    "Player/MainMovement/player-run-left.png",
-    SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.15,
-      textureSize: Vector2(50, 37),
-    ),
-  );
-
-  static SimpleDirectionAnimation get simpleDirectionAnimation =>
-      SimpleDirectionAnimation(
-        idleRight: idleRight,
-        idleLeft: idleLeft,
-        runRight: runRight,
-        runLeft: runLeft,
-      );
-  static Future<SpriteAnimation> get idleRight2 => SpriteAnimation.load(
-    'Player/Picktorch/player-idle-torch.png',
-    SpriteAnimationData.sequenced(
-      amount:4,
-      stepTime: 0.2,
-      textureSize: Vector2(50, 37),
-    ),
-  );
-  static Future<SpriteAnimation> get idleLeft2 => SpriteAnimation.load(
-    'Player/Picktorch/player-idle-torch-left.png',
-    SpriteAnimationData.sequenced(
-      amount:4,
-      stepTime: 0.2,
-      textureSize: Vector2(50, 37),
-    ),
-  );
-  static Future<SpriteAnimation> get runRight2 => SpriteAnimation.load(
-    "Player/Picktorch/player-run-torch.png",
-    SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.2,
-      textureSize: Vector2(50, 37),
-    ),
-  );
-  static Future<SpriteAnimation> get runLeft2 => SpriteAnimation.load(
-    "Player/Picktorch/player-run-torch-left.png",
-    SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.2,
-      textureSize: Vector2(50, 37),
-    ),
-  );
 }

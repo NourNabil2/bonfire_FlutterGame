@@ -6,8 +6,9 @@ import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/constant.dart';
 import 'package:bonfire_flutter_game/decorations/Gate_translate.dart';
 import 'package:bonfire_flutter_game/player/Main_Player.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/services.dart';
+
+import '../constant/Sounds/background.dart';
 
 
 
@@ -19,7 +20,7 @@ class PotionLife extends GameDecoration with Sensor<Kinght>
   @override
   void onContact(GameComponent component) {
 
-    SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+    SFX ==true ? Sounds.playSFX('power_up.wav') : null ;
 
     gameRef.player!.addLife(lifePotion);
     removeFromParent();
@@ -33,7 +34,7 @@ class add_stamina extends GameDecoration with Sensor<Kinght>
   @override
   void onContact(GameComponent component) {
 
-    SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+    SFX ==true ? Sounds.playSFX('power_up.wav') : null ;
     (gameRef.player as Kinght).stamina += 30;
       if ((gameRef.player as Kinght).stamina > 100) {
         (gameRef.player as Kinght).stamina = 100;
@@ -53,7 +54,7 @@ bool speedup = false ;
  @override
   void onContact(GameComponent component) {
    Future.delayed(const Duration(seconds: 3));
-    SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+    SFX ==true ? Sounds.playSFX('power_up.wav') : null ;
     (gameRef.player as Kinght).speed += 50 ;
     Future.delayed(const Duration(seconds: 3));
     (gameRef.player as Kinght).speed -= 50 ;
@@ -71,7 +72,7 @@ class Elec extends GameDecoration with Sensor<Kinght>
   @override
   void onContact(GameComponent component) {
 
-    SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+    SFX ==true ? Sounds.playSFX('power_up.wav') : null ;
     CashSaver.SaveData(key: 'PowerE',value: true);
     CashSaver.SaveData(key: 'complete',value:complete+ 2);
     (gameRef.player as Kinght).PowerE = true;
@@ -94,7 +95,7 @@ class Radio_House extends GameDecoration with TapGesture
 
   @override
   void onTap() {
-    FlameAudio.play('Radio.mp3');
+    Sounds.playSFX('Radio.mp3');
 
   }
 
@@ -104,7 +105,7 @@ class Radio_House extends GameDecoration with TapGesture
 
 }
 bool r =false ;
-class safe extends GameDecoration with TapGesture ,ObjectCollision
+class safe extends GameDecoration with TapGesture, Vision
 {
   bool showDialog = false ;
   safe({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
@@ -115,16 +116,16 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
 
   ), position: position, size: Vector2.all(20))
   {
-    setupCollision(
-      CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(1,1),
-            align: Vector2(1,-12),
-          ),
-        ],
-      ),
-    );
+    // setupCollision(
+    //   CollisionConfig(
+    //     collisions: [
+    //       CollisionArea.rectangle(
+    //         size: Vector2(1,1),
+    //         align: Vector2(1,-12),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   @override
@@ -196,6 +197,7 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
      if (currentMap == 2)
     {
       (gameRef.player as Kinght).silverKey = true ;
+      SFX ==true ? Sounds.playSFX('power_up.wav') : null ;
     }
 
 
@@ -207,7 +209,7 @@ class safe extends GameDecoration with TapGesture ,ObjectCollision
 
 }
 
-class BedRoom_Door extends GameDecoration with ObjectCollision
+class BedRoom_Door extends GameDecoration with Vision
 {
   bool showDialog = false;
   BedRoom_Door({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
@@ -220,14 +222,20 @@ class BedRoom_Door extends GameDecoration with ObjectCollision
 
 
       position: position, size: Vector2(30,30)) {
-    setupCollision(
-      CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(30,20),
-            align: Vector2(1,10),
-          ),
-        ],
+    // setupCollision(
+    //   CollisionConfig(
+    //     collisions: [
+    //       CollisionArea.rectangle(
+    //         size: Vector2(30,20),
+    //         align: Vector2(1,10),
+    //       ),
+    //     ],
+    //   ),
+    // );
+    add(
+      RectangleHitbox(
+        size: Vector2(16, 16),
+        position: Vector2(16, 16),
       ),
     );
   }
@@ -240,12 +248,12 @@ class BedRoom_Door extends GameDecoration with ObjectCollision
         observed: (player) {
           Kinght p = player as Kinght;
           if (p.silverKey == true) {
-            SFX ? FlameAudio.play('Door_open_sound_effect.mp3') : null ;
+            SFX ? Sounds.playSFX('Door_open_sound_effect.mp3') : null ;
             p.silverKey = false;
             removeFromParent();
           } else if (p.goldKey == true)
             {
-              SFX ? FlameAudio.play('Door_open_sound_effect.mp3') : null ;
+              SFX ? Sounds.playSFX('Door_open_sound_effect.mp3') : null ;
               p.silverKey = false;
               removeFromParent();
             }
@@ -303,7 +311,7 @@ bool showDialog = false ;
 
     if ((gameRef.player as Kinght).Key_red == true)
     {
-      SFX ==true ? FlameAudio.play('power_up.wav') : null ;
+      SFX ==true ? Sounds.playSFX('power_up.wav') : null ;
       gameRef.add(PotionLife(position: position + Vector2(20, 20)));
       removeFromParent();
     }
@@ -347,7 +355,7 @@ class Mirror_C_B extends GameDecoration with Sensor<Kinght>
 
 }
 
-class Mirror_C extends GameDecoration
+class Mirror_C extends GameDecoration with Vision
 {
   bool finish = false ;
   Mirror_C({required Vector2 position}) : super.withSprite(
@@ -357,6 +365,7 @@ class Mirror_C extends GameDecoration
   @override
   void update(double dt) {
     super.update(dt);
+
       seeComponent(
         radiusVision: 50,
         gameRef.player!,
@@ -364,8 +373,8 @@ class Mirror_C extends GameDecoration
           if (!finish) {
             finish = true ;
             gameRef.add(Mirror_C_B(position: position));
-            FlameAudio.play('Mirror_Crack.mp3',volume: 0.9);
-            gameRef.add(AnimatedFollowerObject(
+            Sounds.playSFX('Mirror_Crack.mp3',volume: 0.9);
+            gameRef.add(AnimatedFollowerGameObject(
               animation: SpriteAnimation.load(
                 unclear,
                 SpriteAnimationData.sequenced(
@@ -374,9 +383,9 @@ class Mirror_C extends GameDecoration
                   textureSize: Vector2(32, 32),
                 ),
               ),
-              target: gameRef.player,
+              target: gameRef.player!,
               size: Vector2(16, 16),
-              positionFromTarget: Vector2(18, -15),
+              offset: Vector2(18, -15),
             ),);
             removeFromParent();
           }
@@ -410,7 +419,7 @@ class Picktorch extends GameDecoration with Sensor<Kinght>
       CashSaver.SaveData(key: 'torch', value: true);
     }
     removeFromParent();
-    SFX ? FlameAudio.play('pick_Key.mp3') : null ;
+    SFX ? Sounds.playSFX('pick_Key.mp3') : null ;
   }
 }
 
@@ -436,7 +445,7 @@ class Key_silver extends GameDecoration with Sensor<Kinght>
 
       component.silverKey = true ;
     }
-    SFX ? FlameAudio.play('pick_Key.mp3') : null ;
+    SFX ? Sounds.playSFX('pick_Key.mp3') : null ;
     removeFromParent();
 
   }
@@ -466,7 +475,7 @@ class Key_Gold extends GameDecoration with Sensor<Kinght>
       component.goldKey = true ;
       CashSaver.SaveData(key: 'gold', value: true);
     }
-    SFX ? FlameAudio.play('pick_Key.mp3') : null ;
+    SFX ? Sounds.playSFX('pick_Key.mp3') : null ;
     removeFromParent();
 
   }
@@ -496,14 +505,14 @@ class Key_red extends GameDecoration with Sensor<Kinght>
       component.Key_red = true ;
       CashSaver.SaveData(key: 'red', value: true);
     }
-    SFX ? FlameAudio.play('pick_Key.mp3') : null ;
+    SFX ? Sounds.playSFX('pick_Key.mp3') : null ;
     removeFromParent();
 
   }
 }
 
 Vector2 portal = Vector2(2285, 2252);
-class Tower_1 extends GameDecoration with TapGesture ,ObjectCollision
+class Tower_1 extends GameDecoration with TapGesture ,Vision
 {
   Tower_1({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
     "items/tower.png",
@@ -514,14 +523,20 @@ class Tower_1 extends GameDecoration with TapGesture ,ObjectCollision
     ],loop: true ),
 
   ), position: position, size: Vector2.all(48)){
-    setupCollision(
-      CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(30,20),
-            align: Vector2(1,10),
-          ),
-        ],
+    // setupCollision(
+    //   CollisionConfig(
+    //     collisions: [
+    //       CollisionArea.rectangle(
+    //         size: Vector2(30,20),
+    //         align: Vector2(1,10),
+    //       ),
+    //     ],
+    //   ),
+    // );
+    add(
+      RectangleHitbox(
+        size: Vector2(30, 20),
+        position: Vector2(1, 10),
       ),
     );
   }
@@ -533,8 +548,12 @@ class Tower_1 extends GameDecoration with TapGesture ,ObjectCollision
       {
         gameRef.add(Portal(position: portal));
       }
-    tower_ON ++ ;
-    SFX ? FlameAudio.play('PowerUP.wav') : null ;
+    else
+    {
+      tower_ON ++ ;
+    }
+
+    SFX ? Sounds.playSFX('PowerUP.wav') : null ;
     removeFromParent();
     gameRef.add(Tower_1on(position: position));
 
@@ -558,7 +577,7 @@ class Tower_1on  extends GameDecoration {
 
 }
 
-class Tower_2 extends GameDecoration with TapGesture ,ObjectCollision
+class Tower_2 extends GameDecoration with TapGesture ,Vision
 {
   Tower_2({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
 
@@ -570,14 +589,20 @@ class Tower_2 extends GameDecoration with TapGesture ,ObjectCollision
     ],loop: false),
 
   ), position: position, size: Vector2.all(48)){
-    setupCollision(
-      CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(30,20),
-            align: Vector2(1,10),
-          ),
-        ],
+    // setupCollision(
+    //   CollisionConfig(
+    //     collisions: [
+    //       CollisionArea.rectangle(
+    //         size: Vector2(30,20),
+    //         align: Vector2(1,10),
+    //       ),
+    //     ],
+    //   ),
+    // );
+    add(
+      RectangleHitbox(
+        size: Vector2(30, 20),
+        position: Vector2(1, 10),
       ),
     );
   }
@@ -591,7 +616,7 @@ class Tower_2 extends GameDecoration with TapGesture ,ObjectCollision
     else {
       tower_ON ++ ;
     }
-    SFX ? FlameAudio.play('PowerUP.wav') : null ;
+    SFX ? Sounds.playSFX('PowerUP.wav') : null ;
     removeFromParent();
     gameRef.add(Tower_2on(position: position));
 
@@ -620,7 +645,7 @@ class Tower_2on  extends GameDecoration {
 
 }
 
-class Tower_3 extends GameDecoration with TapGesture ,ObjectCollision
+class Tower_3 extends GameDecoration with TapGesture ,Vision
 {
   Tower_3({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
 
@@ -632,14 +657,20 @@ class Tower_3 extends GameDecoration with TapGesture ,ObjectCollision
     ],loop: false),
 
   ), position: position, size: Vector2.all(48)){
-    setupCollision(
-      CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(30,20),
-            align: Vector2(1,10),
-          ),
-        ],
+    // setupCollision(
+    //   CollisionConfig(
+    //     collisions: [
+    //       CollisionArea.rectangle(
+    //         size: Vector2(30,20),
+    //         align: Vector2(1,10),
+    //       ),
+    //     ],
+    //   ),
+    // );
+    add(
+      RectangleHitbox(
+        size: Vector2(30, 20),
+        position: Vector2(1, 10),
       ),
     );
   }
@@ -653,7 +684,7 @@ class Tower_3 extends GameDecoration with TapGesture ,ObjectCollision
     else {
       tower_ON ++ ;
     }
-    SFX ? FlameAudio.play('PowerUP.wav') : null ;
+    SFX ? Sounds.playSFX('PowerUP.wav') : null ;
     removeFromParent();
     gameRef.add(Tower_3on(position: position));
   }
@@ -686,7 +717,7 @@ class Tower_3on  extends GameDecoration
 
 
 
-class Portal_Mind extends GameDecoration with TapGesture ,ObjectCollision
+class Portal_Mind extends GameDecoration with TapGesture
 {
   Portal_Mind({required Vector2 position}): super.withAnimation(animation: SpriteAnimation.load(
 
@@ -698,14 +729,20 @@ class Portal_Mind extends GameDecoration with TapGesture ,ObjectCollision
     ],loop: false),
 
   ), position: position, size: Vector2.all(100)){
-    setupCollision(
-      CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(50,50),
-            align: Vector2(1,10),
-          ),
-        ],
+    // setupCollision(
+    //   CollisionConfig(
+    //     collisions: [
+    //       CollisionArea.rectangle(
+    //         size: Vector2(50,50),
+    //         align: Vector2(1,10),
+    //       ),
+    //     ],
+    //   ),
+    // );
+    add(
+      RectangleHitbox(
+        size: Vector2(30, 20),
+        position: Vector2(1, 10),
       ),
     );
   }

@@ -1,9 +1,10 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/util/talk/say.dart';
+import 'package:bonfire_flutter_game/player/PlayerSpriteSheetPlayer.dart';
 import 'package:flutter/material.dart';
 import '../MainGame.dart';
 import '../SharedPreferences/Cash_Save.dart';
-import '../player/Main_Player.dart';
+
 
 
 // id for typeattack
@@ -19,7 +20,7 @@ int dead = 0;
 
 Say speak({required String text , required bool isPlayer , spritesheet })=> Say(
   text: [TextSpan(text: text),],
-  person: SizedBox(height: 100,width: 100,child: isPlayer ? PlayerSpriteSheet2.idleRight.asWidget() : spritesheet ,),
+  person: SizedBox(height: 100,width: 100,child: isPlayer ? PlayerSpriteSheetPlayer.idleRight.asWidget() : spritesheet ,),
   personSayDirection: isPlayer ? PersonSayDirection.LEFT :PersonSayDirection.RIGHT ,
 );
 

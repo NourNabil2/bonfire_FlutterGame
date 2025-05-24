@@ -29,8 +29,9 @@ class PauseScreen extends StatelessWidget {
             MaterialButton(
                 onPressed: () {
                   backgroundMusic ? Sounds.resumeBackgroundSound() : null ;
-                  game.overlayManager.remove(PauseScreen.id);
-                  game.gameController!.gameRef.resumeEngine();
+                  game.overlays.remove(PauseScreen.id);
+                  game.pauseEngine();
+
                 },
                 child: TextMenu(title: 'Resume')
             ),
