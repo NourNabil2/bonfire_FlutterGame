@@ -30,7 +30,7 @@ class PauseScreen extends StatelessWidget {
                 onPressed: () {
                   backgroundMusic ? Sounds.resumeBackgroundSound() : null ;
                   game.overlays.remove(PauseScreen.id);
-                  game.pauseEngine();
+                  game.resumeEngine();
 
                 },
                 child: TextMenu(title: 'Resume')
