@@ -1,9 +1,11 @@
 import 'dart:core';
+import 'dart:developer';
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire_flutter_game/Enemy/Boss_Ninja.dart';
 import 'package:bonfire_flutter_game/Enemy/Dark_Ninja_Enemy.dart';
 import 'package:bonfire_flutter_game/SharedPreferences/Cash_Save.dart';
 import 'package:bonfire_flutter_game/constant/DynamicMap.dart';
+import 'package:bonfire_flutter_game/constant/adService.dart';
 import 'package:bonfire_flutter_game/constant/admob_manager.dart';
 import 'package:bonfire_flutter_game/decorations/Lighting.dart';
 import 'package:bonfire_flutter_game/followers/You.dart';
@@ -42,78 +44,82 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
   InterstitialAd? interstitialAd;
   RewardedAd? rewardedAd;
   BannerAd? bannerAd;
-
+  bool isBannerAdLoaded = false;
+  final AdsService _adsService = AdsService();
   @override
   void initState() {
     super.initState();
-
-    // Initialize Google Mobile Ads SDK
-    MobileAds.instance.initialize().then((status) {
-      print("Google Mobile Ads SDK Initialized: ${status.adapterStatuses[0]!.state}");
-      // Load interstitial ad
-      InterstitialAd.load(
-        adUnitId: AdsManager.interstitialAdUnitId,
-        request: const AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(
-          onAdLoaded: (InterstitialAd ad) {
-            interstitialAd = ad;
-            interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-              onAdDismissedFullScreenContent: (InterstitialAd ad) {
-                ad.dispose();
-                _loadInterstitialAd();
-              },
-              onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-                ad.dispose();
-                _loadInterstitialAd();
-              },
-            );
-          },
-          onAdFailedToLoad: (LoadAdError error) {
-            print('Interstitial ad failed to load: $error');
-          },
-        ),
-      );
-
-      // Load rewarded ad
-      RewardedAd.load(
-        adUnitId: AdsManager.rewardedAdUnitId,
-        request: AdRequest(),
-        rewardedAdLoadCallback: RewardedAdLoadCallback(
-          onAdLoaded: (RewardedAd ad) {
-            rewardedAd = ad;
-            rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-              onAdDismissedFullScreenContent: (RewardedAd ad) {
-                ad.dispose();
-                _loadRewardedAd();
-              },
-              onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-                ad.dispose();
-                _loadRewardedAd();
-              },
-            );
-          },
-          onAdFailedToLoad: (LoadAdError error) {
-            print('Rewarded ad failed to load: $error');
-          },
-        ),
-      );
-
-      // Load banner ad
-      bannerAd = BannerAd(
-        adUnitId: AdsManager.bannerAdUnitId,
-        size: AdSize.banner,
-        request: AdRequest(),
-        listener: BannerAdListener(
-          onAdLoaded: (Ad ad) {
-            print('Banner ad loaded.');
-          },
-          onAdFailedToLoad: (Ad ad, LoadAdError error) {
-            print('Banner ad failed to load: $error');
-          },
-        ),
-      );
-      bannerAd!.load();
-    });
+    _adsService.initialize();
+    // // Initialize Google Mobile Ads SDK
+    // MobileAds.instance.initialize().then((status) {
+    //   log("Google Mobile Ads SDK Initialized: ${status.adapterStatuses[0]!.state}");
+    //   // Load interstitial ad
+    //   InterstitialAd.load(
+    //     adUnitId: AdsManager.interstitialAdUnitId,
+    //     request: const AdRequest(),
+    //     adLoadCallback: InterstitialAdLoadCallback(
+    //       onAdLoaded: (InterstitialAd ad) {
+    //         interstitialAd = ad;
+    //         interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+    //           onAdDismissedFullScreenContent: (InterstitialAd ad) {
+    //             ad.dispose();
+    //             _loadInterstitialAd();
+    //           },
+    //           onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+    //             ad.dispose();
+    //             _loadInterstitialAd();
+    //           },
+    //         );
+    //       },
+    //       onAdFailedToLoad: (LoadAdError error) {
+    //         print('Interstitial ad failed to load: $error');
+    //       },
+    //     ),
+    //   );
+    //
+    //   // Load rewarded ad
+    //   RewardedAd.load(
+    //     adUnitId: AdsManager.rewardedAdUnitId,
+    //     request: AdRequest(),
+    //     rewardedAdLoadCallback: RewardedAdLoadCallback(
+    //       onAdLoaded: (RewardedAd ad) {
+    //         rewardedAd = ad;
+    //         rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+    //           onAdDismissedFullScreenContent: (RewardedAd ad) {
+    //             ad.dispose();
+    //             _loadRewardedAd();
+    //           },
+    //           onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+    //             ad.dispose();
+    //             _loadRewardedAd();
+    //           },
+    //         );
+    //       },
+    //       onAdFailedToLoad: (LoadAdError error) {
+    //         print('Rewarded ad failed to load: $error');
+    //       },
+    //     ),
+    //   );
+    //
+    //   // Load banner ad
+    //   bannerAd = BannerAd(
+    //     adUnitId: AdsManager.bannerAdUnitId,
+    //     size: AdSize.banner,
+    //     request: AdRequest(),
+    //     listener: BannerAdListener(
+    //       onAdLoaded: (Ad ad) {
+    //         print('Banner ad loaded.');
+    //         setState(() {
+    //           isBannerAdLoaded = true;
+    //         });
+    //       },
+    //       onAdFailedToLoad: (Ad ad, LoadAdError error) {
+    //         print('Banner ad failed to load: $error');
+    //       },
+    //     ),
+    //   );
+    //   bannerAd!.load();
+    // });
 
     // Initialize other necessary data
     complete = CashSaver.getData(key: 'complete') ?? 0;
@@ -130,10 +136,11 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
 
   @override
   void dispose() {
-    FlameAudio.bgm.dispose();;
-    interstitialAd!.dispose();
-    rewardedAd!.dispose();
-    bannerAd!.dispose();
+    FlameAudio.bgm.dispose();
+    _adsService.disposeAds();
+    // interstitialAd?.dispose();
+    // rewardedAd?.dispose();
+    // bannerAd?.dispose();
     super.dispose();
   }
 
@@ -177,17 +184,24 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
         children: [
           _buildGameContent(),
 
-        if (bannerAd != null)
-    Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        height: 50,
-        child: AdWidget(ad: bannerAd!),
-      ),),
-          // Display banner ad at the bottom of the screen
-
+          // Show banner ad with ValueListenableBuilder
+          ValueListenableBuilder<bool>(
+            valueListenable: _adsService.bannerNotifier,
+            builder: (context, isVisible, _) {
+              if (isVisible && _adsService.bannerAd != null) {
+                return Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    width: _adsService.bannerAd!.size.width.toDouble(),
+                    height: _adsService.bannerAd!.size.height.toDouble(),
+                    child: AdWidget(ad: _adsService.bannerAd!),
+                  ),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          ),
         ],
       ),
     );
@@ -208,7 +222,7 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
               'nothing': (properties) => Shadow(properties.position),
             },
           ),
-          Player: Kinght(position: Vector2(90, 90)),
+          player: Kinght(position: Vector2(90, 90)),
         );
       case 1:
         return MainMap(
@@ -234,7 +248,7 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
               'Skeleton': (properties) => Skeleton(properties.position),
             },
           ),
-          Player: Kinght(position: Vector2(90, 90)),
+          player: Kinght(position: Vector2(90, 90)),
         );
     // Add other cases for different maps here...
       default:
@@ -258,7 +272,7 @@ class _Just_Like_You_Game extends State<Just_Like_YouGame> {
               'portal_X': (properties) => Portal_Mind(position: properties.position),
             },
           ),
-          Player: Kinght(position: Vector2(90, 90)),
+          player: Kinght(position: Vector2(90, 90)),
         );
     }
   }

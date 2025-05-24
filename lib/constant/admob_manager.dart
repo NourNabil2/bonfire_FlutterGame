@@ -8,7 +8,7 @@ class AdsManager {
       return 'ca-app-pub-3940256099942544/6300978111'; // Official test ad ID
     } else {
       return Platform.isAndroid
-          ? 'ca-app-pub-9503585436307618/5268566838'
+          ? 'ca-app-pub-9503585436307618/8810919380'
           : '';
     }
   }

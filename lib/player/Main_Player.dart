@@ -176,6 +176,7 @@ class Kinght extends SimplePlayer with BlockMovementCollision, Lighting {
   @override
   Future<void> onDie() async {
     dead++;
+
     // interstitial.show();
     SFX ? Sounds.playSFX('body_fall.mp3') : null;
     gameRef.colorFilter?.animateTo(Colors.red.withOpacity(0.7),

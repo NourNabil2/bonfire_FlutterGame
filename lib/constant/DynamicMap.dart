@@ -39,7 +39,7 @@ Widget buildBannerAd() {
 Widget MainMap({
   required double tiledSize,
   required GameMap map,
-  required Player Player,
+  required Player player,
   Color lightingMap = Colors.transparent,
 }) =>
     BonfireWidget(
@@ -158,5 +158,5 @@ Widget MainMap({
           ],
         ),
       ],
-      player: Player,
+      player: player,
     );

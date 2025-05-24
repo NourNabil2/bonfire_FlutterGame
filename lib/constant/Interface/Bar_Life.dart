@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class BarLife_Component extends InterfaceComponent {
   double padding = 20;
-  double widthBar = 90;
+  double widthBar = 120;
   double strokeWidth = 12;
   double maxLife = 0;
   double life = 0;
@@ -40,7 +40,7 @@ class BarLife_Component extends InterfaceComponent {
   }
 
   void _drawLife(Canvas canvas) {
-    double xBar = 113;
+    double xBar = 0;
     double yBar = 26.5;
     canvas.drawLine(
         Offset(xBar, yBar),
@@ -62,8 +62,8 @@ class BarLife_Component extends InterfaceComponent {
   }
 
   void _drawStamina(Canvas canvas) {
-    double xBar = 113;
-    double yBar = (width - 31) / 3;
+    double xBar = 0;
+    double yBar = (width - 15) / 3;
 
     double currentBarStamina = (stamina * widthBar) / maxStamina;
 
