@@ -1,9 +1,17 @@
-# 🎮🎮 BonfierGame - Just Like You
+<div align="center">
 
-A Flutter Game .
+# 🎮 BonfierGame – AwakenendA 
+fun Flutter game — try the web version quickly before downloading..
 
+[![Play Web Demo](https://img.shields.io/badge/Play_Web_Demo-Visit-0ea5e9?style=for-the-badge&logo=firefox-browser)](https://awakened-eight.vercel.app/)
+[![Download](https://img.shields.io/badge/Download-APK-34d399?style=for-the-badge&logo=android)](https://drive.google.com/file/d/1kU9g3E3tCxXVxa9tR_ZDe5rMtZ5Tft0P/view?usp=sharing)
 
-<a href="https://drive.google.com/file/d/1kU9g3E3tCxXVxa9tR_ZDe5rMtZ5Tft0P/view?usp=sharing"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="200"></img></a>
+![Made with Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white)
+![Platform](https://img.shields.io/badge/Platform-Web_/_Android-8b5cf6)
+
+</div>
+
 
 Don't forget to star⭐ the repo if you like what you see😉.
 
